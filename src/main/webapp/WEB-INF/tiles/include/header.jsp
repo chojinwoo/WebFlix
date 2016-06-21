@@ -39,7 +39,7 @@
                         <li><a href="#">CSS</a></li>
                         <li class="divider"></li><li>
                         <sec:authorize access="hasRole('ROLE_ADMIN')">
-                            <a href="/admin">ADMIN</a></li>
+                            <a href="/admin/main">ADMIN</a></li>
                             <li class="divider"></li>
                         </sec:authorize>
 

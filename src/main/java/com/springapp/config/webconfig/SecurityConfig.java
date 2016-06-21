@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().authenticated().antMatchers("/").permitAll().antMatchers("/login").permitAll().antMatchers("/signup").permitAll()
+        http.authorizeRequests().anyRequest().authenticated().antMatchers("/").permitAll().antMatchers("/login").permitAll().antMatchers("/signup").permitAll().antMatchers("/admin").hasRole("ADMIN")
                 .and().csrf().disable()
                 .formLogin().loginPage("/").loginPage("/login").loginProcessingUrl("/loginProcess").permitAll().usernameParameter("id").passwordParameter("password").defaultSuccessUrl("/")
                 .failureHandler(customAuthenticationFailureHandler()).successForwardUrl("/main").permitAll()

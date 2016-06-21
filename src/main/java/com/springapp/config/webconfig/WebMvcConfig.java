@@ -8,6 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
@@ -27,6 +28,14 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
     private Environment env;
+
+    /*멀티파트 리졸버*/
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setDefaultEncoding("utf-8");
+        return multipartResolver;
+    }
 
 
     @Bean
