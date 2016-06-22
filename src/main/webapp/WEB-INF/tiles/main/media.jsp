@@ -88,38 +88,107 @@
                     <!--     start Tab Panel 1 (Reviews Sections) -->
 
                     <li>
-                        <h2 id="title3" class="uk-text-contrast uk-margin-large-top">${video.title3}<span class="rating uk-margin-small-left uk-h4 uk-text-warning">
-                                                <i class="uk-icon-star "></i>
-                                                <i class="uk-icon-star"></i>
-                                                <i class="uk-icon-star"></i>
-                                                <i class="uk-icon-star"></i>
-                                                <i class="uk-icon-star"></i>
-                                            </span></h2>
+                        <h2 id="title3" class="uk-text-contrast uk-margin-large-top">${video.title3}
+                            <span class="rating uk-margin-small-left uk-h4 uk-text-warning">
+                                <c:set var="rate" value="${video.star}"/>
+                                <c:if test="${rate == 0}">
+                                    <i class="uk-icon-star-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                </c:if>
+                                <c:if test="${rate == 1}">
+                                    <i class="uk-icon-star-half-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                </c:if>
+                                <c:if test="${rate == 2}">
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                </c:if>
+                                <c:if test="${rate == 3}">
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star-half-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                </c:if>
+                                <c:if test="${rate == 4}">
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                </c:if>
+                                <c:if test="${rate == 5}">
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star-half-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                </c:if>
+                                <c:if test="${rate == 6}">
+                                    <i class="uk-icon-star-"></i>
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                </c:if>
+                                <c:if test="${rate == 7}">
+                                    <i class="uk-icon-star-"></i>
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star-half-o"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                </c:if>
+                                <c:if test="${rate == 8}">
+                                    <i class="uk-icon-star-"></i>
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star-o"></i>
+                                </c:if>
+                                <c:if test="${rate == 9}">
+                                    <i class="uk-icon-star-"></i>
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star-half-o"></i>
+                                </c:if>
+                                <c:if test="${rate == 10}">
+                                    <i class="uk-icon-star-"></i>
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star"></i>
+                                    <i class="uk-icon-star"></i>
+                                </c:if>
+                            </span>
+                        </h2>
                         <ul class="uk-subnav uk-subnav-line">
-                            <li ><i class="uk-icon-star uk-margin-small-right"></i> 9.5</li>
+                            <li ><i class="uk-icon-star uk-margin-small-right"></i> ${video.star}</li>
                             <li id="play_time"><i class="uk-icon-clock-o uk-margin-small-right"></i> 108 Mins</li>
-                            <li>    March 04, 2016</li>
+                            <li>    ${video.start_date}</li>
                         </ul>
                         <hr/>
-                        <p class="uk-text-muted uk-h4">Following the events of Age of Ultron, the collective governments of the world pass an act designed to regulate all superhuman activity. This polarizes opinion amongst the Avengers, causing two factions to side with Iron Man or Captain America, which causes an epic battle between former allies.</p>
+                        <p class="uk-text-muted uk-h4">${video.story}</p>
                         <dl class="uk-description-list-horizontal uk-margin-top">
                             <dt>Starring</dt>
                             <dd><ul class="uk-subnav ">
-                                <li><a href="#">Actor 1</a></li>
-                                <li><a href="#">Actor 2</a></li>
-                                <li><a href="#">Actor 3</a></li>
+                                <li><a href="#">${video.actor}</a></li>
                             </ul></dd>
                             <dt>Genres</dt>
                             <dd><ul class="uk-subnav ">
-                                <li><a href="#">Comedy </a></li>
-                                <li><a href="#">Romance</a></li>
-                                <li><a href="#">Crime</a></li>
+                                <li><a href="#">${video.genre}</a></li>
                             </ul></dd>
                             <dt>Countries</dt>
                             <dd><ul class="uk-subnav ">
-                                <li><a href="#">Canada</a></li>
-                                <li><a href="#">USA</a></li>
-                                <li><a href="#">United Kingdom</a></li>
+                                <li><a href="#">${video.country}</a></li>
                             </ul></dd>
                         </dl>
 
@@ -255,18 +324,9 @@
         <div class="uk-margin" data-uk-slideset="{small: 2, medium: 4, large: 6}">
             <div class="uk-slidenav-position uk-margin">
                 <ul class="uk-slideset uk-grid uk-flex-center">
-                    <li><a href="media.html"><img src="https://image.tmdb.org/t/p/w342/d4KNaTrltq6bpkFS01pYtyXa09m.jpg" width="600" height="400" alt=""/></a></li>
-                    <li><a href="media.html"><img src="https://image.tmdb.org/t/p/w342/cGOPbv9wA5gEejkUN892JrveARt.jpg" width="600" height="400" alt=""/></a></li>
-                    <li><a href="media.html"><img src="https://image.tmdb.org/t/p/w342/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg" width="600" height="400" alt=""/></a></li>
-                    <li><a href="media.html"><img src="https://image.tmdb.org/t/p/w342/1yeVJox3rjo2jBKrrihIMj7uoS9.jpg" width="600" height="400" alt=""/></a></li>
-                    <li><a href="media.html"><img src="https://image.tmdb.org/t/p/w342/811DjJTon9gD6hZ8nCjSitaIXFQ.jpg" width="600" height="400" alt=""/></a></li>
-                    <li><a href="media.html"><img src="https://image.tmdb.org/t/p/w342/fTplI1NCSuEDP4ITLcTps739fcC.jpg" width="600" height="400" alt=""/></a></li>
-                    <li><a href="media.html"><img src="https://image.tmdb.org/t/p/w342/lUFK7ElGCk9kVEryDJHICeNdmd1.jpg" width="600" height="400" alt=""/></a></li>
-                    <li><a href="media.html"><img src="https://image.tmdb.org/t/p/w342/qMJ7DSAQeTdBEs9tGFohWs2aB6n.jpg" width="600" height="400" alt=""/></a></li>
-                    <li><a href="media.html"><img src="https://image.tmdb.org/t/p/w342/t2mZzQXjpQxmqtJOPpe8Dr2YpMl.jpg" width="600" height="400" alt=""/></a></li>
-                    <li><a href="media.html"><img src="https://image.tmdb.org/t/p/w342/tpoVEYvm6qcXueZrQYJNRLXL88s.jpg" width="600" height="400" alt=""/></a></li>
-                    <li><a href="media.html"><img src="https://image.tmdb.org/t/p/w342/uduCNFTuEcbvhvK8rrvNdf3ahzW.jpg" width="600" height="400" alt=""/></a></li>
-                    <li><a href="media.html"><img src="https://image.tmdb.org/t/p/w342/zSouWWrySXshPCT4t3UKCQGayyo.jpg" width="600" height="400" alt=""/></a></li>
+                    <c:forEach items="${same_video}" var="video">
+                        <li><a href="/media/${video.video_seq}"><img src="${video.filePath}thumbnail/${video.thumbnail}" width="600" height="400" alt=""/></a></li>
+                    </c:forEach>
                 </ul>
                 <a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slideset-item="previous"></a>
                 <a href="#" class="uk-slidenav uk-slidenav-next uk-slidenav-contrast" data-uk-slideset-item="next"></a>

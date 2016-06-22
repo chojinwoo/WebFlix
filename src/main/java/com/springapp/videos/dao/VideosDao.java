@@ -16,4 +16,5 @@ public interface VideosDao {
     public VideoFavouritesEntity findFavouriteVideoSeq(Integer video_seq);
     public void favouriteSave(VideoFavouritesEntity videoFavouritesEntity);
     public void favouriteDelete(Integer video_favourites_seq);
+    public List<VideosEntity> findVideoTitle1AndTitle2(String title1, String title2);
 }

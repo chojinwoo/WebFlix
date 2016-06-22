@@ -20,6 +20,7 @@ public class UsersEntity implements UserDetails {
     private String password;
     private String name;
     private String email;
+    private boolean enable = false;
     private List<AuthEntity> authEntities;
     private HashSet<GrantedAuthority> authorities;
 
@@ -101,6 +102,16 @@ public class UsersEntity implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Basic
+    @Column(name = "enable")
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id")

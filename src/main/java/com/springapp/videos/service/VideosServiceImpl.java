@@ -51,4 +51,9 @@ public class VideosServiceImpl implements VideosService {
         }
 
     }
+
+    @Override
+    public List<VideosEntity> findVideoTitle1AndTitle2(String title1, String title2) {
+        return this.videosDao.findVideoTitle1AndTitle2(title1, title2);
+    }
 }

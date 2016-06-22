@@ -32,7 +32,7 @@ public class UsersDaoImpl implements UsersDao {
 
     @Override
     public UsersEntity loadUserByUsername(String username) {
-        return this.usersRepository.findOne(username);
+        return this.usersRepository.findOneIdAndEnable(username);
     }
 
     @Override

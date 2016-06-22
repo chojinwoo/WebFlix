@@ -62,4 +62,9 @@ public class VideosDaoImpl implements VideosDao {
     public void favouriteDelete(Integer video_favourites_seq) {
         this.videoFavouritesRepository.delete(video_favourites_seq);
     }
+
+    @Override
+    public List<VideosEntity> findVideoTitle1AndTitle2(String title1, String title2) {
+        return this.videosRepository.findVideoTitle1AndTitle2(title1, title2);
+    }
 }

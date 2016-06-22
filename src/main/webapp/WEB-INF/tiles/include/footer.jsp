@@ -1,3 +1,4 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: bangae1
@@ -20,15 +21,21 @@
             <form class="uk-search">
                 <input class="uk-search-field" type="search" placeholder="Search..."/>
             </form>
+            <sec:authorize access="isAnonymous()">
             <div class="uk-button-group">
                 <a class="uk-button uk-button-link uk-button-large uk-text-muted" href="signup.html">Sign up</a>
                 <a class="uk-button uk-button-success uk-button-large uk-margin-left" href="login.html"><i class="uk-icon-lock uk-margin-small-right"></i> Log in</a>
             </div>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
+                <div class="uk-button-group">
+                    <span data-toggle="dropdown" class="uk-button uk-button-link uk-button-large dropdown-toggle"><sec:authentication property="principal.name"/> </span>
+                </div>
+            </sec:authorize>
         </div>
         <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav="data-uk-nav">
             <li href="#">
-                <i class="uk-icon-heart uk-margin-small-right"></i>
-                <a href="#">Favourites</a>
+                <a href="#"><i class="uk-icon-heart uk-margin-small-right"></i>Favourites</a>
             </li>
             <li class="uk-active">
                 <a href="#">All</a>

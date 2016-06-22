@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.springframework.integration:spring-integration-mail:4.3.0.RELEASE">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.integration/spring-integration-mail/4.3.0.RELEASE/e3364303e663320f69a5cb5f4692f5d9731e3c4d/spring-integration-mail-4.3.0.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.integration/spring-integration-mail/4.3.0.RELEASE/7e79936214ae3d2466bd972c54fd6193df1dbbe8/spring-integration-mail-4.3.0.RELEASE-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
