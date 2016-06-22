@@ -12,7 +12,7 @@ public interface VideosDao {
     public List<VideosEntity> findAll();
     public VideosEntity findOne(Integer seq);
     public VideoFavouritesEntity findFavouritesIdAndSeq(String id, String video_seq);
-    public List<VideoFavouritesEntity> findFavouriteId(String id);
+    public List<VideosEntity> findVideoListFavouriteId(String id);
     public VideoFavouritesEntity findFavouriteVideoSeq(Integer video_seq);
     public void favouriteSave(VideoFavouritesEntity videoFavouritesEntity);
     public void favouriteDelete(Integer video_favourites_seq);

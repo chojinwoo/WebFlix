@@ -14,4 +14,5 @@ public interface VideosService {
     public VideoFavouritesEntity findFavouritesIdAndSeq(String id, String video_seq);
     public String favouriteSave(VideoFavouritesEntity videoFavouritesEntity);
     public List<VideosEntity> findVideoTitle1AndTitle2(String title1, String title2);
+    public List<VideosEntity> findVideoListFavouriteId(String id);
 }

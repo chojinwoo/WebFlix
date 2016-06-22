@@ -7,8 +7,6 @@ import com.springapp.videos.repository.VideosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -44,8 +42,8 @@ public class VideosDaoImpl implements VideosDao {
     }
 
     @Override
-    public List<VideoFavouritesEntity> findFavouriteId(String id) {
-        return this.videoFavouritesRepository.findFavouriteId(id);
+    public List<VideosEntity> findVideoListFavouriteId(String id) {
+        return this.videosRepository.findVideoListFavouriteId(id);
     }
 
     @Override
@@ -67,4 +65,5 @@ public class VideosDaoImpl implements VideosDao {
     public List<VideosEntity> findVideoTitle1AndTitle2(String title1, String title2) {
         return this.videosRepository.findVideoTitle1AndTitle2(title1, title2);
     }
+
 }

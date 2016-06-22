@@ -24,24 +24,25 @@
         <div id="tm-left-section" class="uk-width-medium-3-10 uk-width-large-2-10 uk    -hidden-small">
             <div class="uk-panel">
                 <ul class="uk-nav  uk-nav-side uk-nav-parent-icon uk-margin-bottom" data-uk-nav="">
-                    <li><a href="#"><i class="uk-icon-heart uk-margin-small-right" style="color:red;"></i>Favourites</a></li>
-                    <li class="uk-active"><a href="#">All</a></li>
-                    <li><a href="#">Featured</a></li>
-                    <li><a href="#">Movies</a></li>
-                    <li><a href="#">TV Shows</a></li>
-                    <li><a href="#">Music</a></li>
-                    <li class="uk-parent ">
-                        <a href="#">Genre</a>
+                    <sec:authorize access="isAuthenticated()">
+                        <li id="favorites"><a href="/favorites_list"><i class="uk-icon-heart uk-margin-small-right"></i>즐겨찾기</a></li>
+                    </sec:authorize>
+                    <li id="all" class="uk-active"><a href="/">전체</a></li>
+                    <li id="featured"><a href="#">추천</a></li>
+                    <li><a href="#">영화</a></li>
+                    <li><a href="#">드라마</a></li>
+                    <li class="uk-parent" id="genre">
+                        <a href="#">장르</a>
                         <ul class="uk-nav-sub">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Animation</a> </li>
-                            <li><a href="#">Anime</a> </li>
-                            <li><a href="#">Adventure</a> </li>
-                            <li><a href="#">Biography</a> </li>
-                            <li><a href="#">Comedy</a> </li>
-                            <li><a href="#">Crime</a> </li>
-                            <li><a href="#">Romance</a> </li>
-                            <li><a href="#">Documentary</a> </li>
+                            <li><a href="#">액션</a></li>
+                            <li><a href="#">판타지</a></li>
+                            <li><a href="#">애니메이션</a> </li>
+                            <li><a href="#">SF</a> </li>
+                            <li><a href="#">어드벤쳐</a> </li>
+                            <li><a href="#">코믹</a> </li>
+                            <li><a href="#">스릴러</a> </li>
+                            <li><a href="#">로맨스</a> </li>
+                            <li><a href="#">다큐</a> </li>
                         </ul>
                     </li>
                     <li class="uk-nav-divider"></li>
@@ -87,6 +88,7 @@
             <div class="uk-grid-width-small-1-3 uk-grid-width-medium-1-4 uk-grid-width-large-1-5" data-uk-grid="{gutter: 20}">
                 <c:forEach items="${videos}" var="video">
                     <div>
+                        <input type="hidden" class="video_genre" value="${video.genre}"/>
                         <div class="uk-overlay uk-overlay-hover">
                             <img src="${video.filePath}thumbnail/${video.thumbnail}" alt="Image" />
                             <div class="uk-overlay-panel uk-overlay-fade uk-overlay-background  uk-overlay-icon"></div>

@@ -3,7 +3,6 @@ package com.springapp.videos.service;
 import com.springapp.videos.dao.VideosDao;
 import com.springapp.videos.entity.VideoFavouritesEntity;
 import com.springapp.videos.entity.VideosEntity;
-import com.springapp.videos.repository.VideosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -53,7 +52,14 @@ public class VideosServiceImpl implements VideosService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<VideosEntity> findVideoTitle1AndTitle2(String title1, String title2) {
         return this.videosDao.findVideoTitle1AndTitle2(title1, title2);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<VideosEntity> findVideoListFavouriteId(String id) {
+        return this.videosDao.findVideoListFavouriteId(id);
     }
 }

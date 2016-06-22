@@ -12,14 +12,13 @@
 <script>
     $(document).ready(function() {
 
-        var video = document.getElementById("video");
+        $('#play_time').text(Math.floor($('video')[0].duration) + '분');
 
-        $('#play_time').text(Math.floor(video.currentTime.duration) + '분');
         $('#watchVideo').click(function() {
             $('#tm-media-section').css('display', 'none');
             $('#video-player').css('display', 'block');
             var currentTime = localStorage.getItem($('#title3').text());
-            video.currentTime = currentTime;
+            $('video')[0].currentTime = currentTime;
 //            video.play();
         })
 
@@ -71,7 +70,7 @@
                 <form id="favourite_form">
                     <input type="hidden" name="video_seq" value="${video.video_seq}"/>
                     <input type="hidden" name="id" value="<sec:authentication property="principal.id"/>"/>
-                    <button type="button" id="favourite" class="uk-button uk-button-link uk-text-muted uk-button-large uk-width-1-1 uk-margin-top" href="login.html"><i class="uk-icon-heart uk-margin-small-right" style="<c:if test='${video.video_seq != null}'>color:red;</c:if>"/> </i> Add to Favourites</button>
+                    <button type="button" id="favourite" class="uk-button uk-button-link uk-text-muted uk-button-large uk-width-1-1 uk-margin-top" href="login.html"><i class="uk-icon-heart uk-margin-small-right" style="<c:if test='${video_favourites.video_seq != null}'>color:red;</c:if>"/> </i> Add to Favourites</button>
                 </form>
             </div>
             <div class="uk-width-medium-7-10">
@@ -300,7 +299,7 @@
 
                     <li>
                         <div class="uk-cover uk-margin-top" style="height: 400px;">
-                            <iframe data-uk-cover="data-uk-cover" src="" width="560" height="315" frameborder="0" allowfullscreen=""></iframe>
+                            <%--<iframe data-uk-cover="data-uk-cover" src="" width="560" height="315" frameborder="0" allowfullscreen=""></iframe>--%>
                         </div>
                     </li>
 

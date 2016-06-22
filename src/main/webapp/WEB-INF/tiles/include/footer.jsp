@@ -13,6 +13,8 @@
     <title>Title</title>
 </head>
 <body>
+
+
 <!--     start Offcanvas Menu   -->
 
 <div id="offcanvas" class="uk-offcanvas">
@@ -34,37 +36,36 @@
             </sec:authorize>
         </div>
         <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav="data-uk-nav">
-            <li href="#">
-                <a href="#"><i class="uk-icon-heart uk-margin-small-right"></i>Favourites</a>
+            <sec:authorize access="isAuthenticated()">
+                <li id="favorites">
+                    <a href="/favorites_list"><i class="uk-icon-heart uk-margin-small-right"></i>즐겨찾기</a>
+                </li>
+            </sec:authorize>
+            <li id="all" class="uk-active">
+                <a href="/">전체</a>
             </li>
-            <li class="uk-active">
-                <a href="#">All</a>
+            <li id="featured">
+                <a href="#">추천</a>
             </li>
             <li>
-                <a href="#">Featured</a>
+                <a href="#">영화</a>
             </li>
             <li>
-                <a href="#">Movies</a>
-            </li>
-            <li>
-                <a href="index.html">TV Shows</a>
+                <a href="index.html">드라마</a>
             </li>
 
-            <li>
-                <a href="index.html.html">Music</a>
-            </li>
-            <li class="uk-parent">
-                <a href="#">Genre</a>
+            <li class="uk-parent" id="genre">
+                <a href="#">장르</a>
                 <ul class="uk-nav-sub">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Animation</a> </li>
-                    <li><a href="#">Anime</a> </li>
-                    <li><a href="#">Adventure</a> </li>
-                    <li><a href="#">Biography</a> </li>
-                    <li><a href="#">Comedy</a> </li>
-                    <li><a href="#">Crime</a> </li>
-                    <li><a href="#">Romance</a> </li>
-                    <li><a href="#">Documentary</a> </li>
+                    <li><a href="#">액션</a></li>
+                    <li><a href="#">판타지</a></li>
+                    <li><a href="#">애니메이션</a> </li>
+                    <li><a href="#">SF</a> </li>
+                    <li><a href="#">어드벤쳐</a> </li>
+                    <li><a href="#">코믹</a> </li>
+                    <li><a href="#">스릴러</a> </li>
+                    <li><a href="#">로맨스</a> </li>
+                    <li><a href="#">다큐</a> </li>
                 </ul>
             </li>
             <li class="uk-nav-divider"></li>
@@ -88,7 +89,18 @@
 
 <!--     ./ Offcanvas Menu   -->
 <!--     Include JS   -->
-
+<script>
+    $('.uk-nav li:not(#genre, #favorites, #all, #featured)').click(function(e) {
+        var genre = $(this).find('a').text();
+        $('.video_genre').closest('div').show();
+        console.log(genre);
+        $.each($('.video_genre'), function() {
+            if($(this).val().indexOf(genre) < 0 ) {
+                $(this).closest('div').hide();
+            }
+        })
+    })
+</script>
 
 </body>
 </html>

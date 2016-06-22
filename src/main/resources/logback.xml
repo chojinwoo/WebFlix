@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
-    <property name="LOGS_ABSOLUTE_PATH" value="C:/apache-tomcat-8.0.35/log" />
+    <property name="LOGS_ABSOLUTE_PATH" value="/appl/tomcat8/log" />
     <timestamp key="byTime" datePattern="yyyyMMdd'T'HH"/>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOGS_ABSOLUTE_PATH}/mei.'%d{yyyy-MM-dd}'.log</file>
+        <file>${LOGS_ABSOLUTE_PATH}/mei.%d{yyyy-MM-dd}.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOGS_ABSOLUTE_PATH}/mei.'%d{yyyy-MM-dd}'.log</fileNamePattern>
+            <fileNamePattern>${LOGS_ABSOLUTE_PATH}/mei.%d{yyyy-MM-dd}.log</fileNamePattern>
         </rollingPolicy>
     </appender>
 
@@ -20,8 +20,8 @@
     </appender>
 
 
-    <logger name="org.springframework" level="info" />
-    <logger name="org.springframework.security" level="info" />
+    <logger name="org.springframework" level="error" />
+    <logger name="org.springframework.security" level="error" />
 
     <root level="info">
         <appender-ref ref="STDOUT" />
@@ -42,7 +42,7 @@
     </logger>
 
     <logger name="org.springframework.web">
-        <level value="debug" />
+        <level value="error" />
     </logger>
 
     <logger name="org.hibernate.type">

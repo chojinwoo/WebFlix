@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().anyRequest().authenticated().antMatchers("/").permitAll().antMatchers("/login").permitAll().antMatchers("/signup").permitAll().antMatchers("/admin").hasRole("ADMIN")
                 .and().csrf().disable()
                 .formLogin().loginPage("/").loginPage("/login").loginProcessingUrl("/loginProcess").permitAll().usernameParameter("id").passwordParameter("password").defaultSuccessUrl("/")
-                .failureHandler(customAuthenticationFailureHandler()).successForwardUrl("/main").permitAll()
+                .failureHandler(customAuthenticationFailureHandler()).successForwardUrl("/").permitAll()
                 .and().logout().deleteCookies("JSESSIONID").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").permitAll()
                 .and().rememberMe().tokenValiditySeconds(1209600).rememberMeParameter("remember-me").key("uniqueAndSecret");
 
@@ -79,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                 HttpSession session = request.getSession();
                 System.out.println("로그인 성공 ::: " + authentication.getDetails());
-                RequestDispatcher rd = request.getRequestDispatcher("/main");
+                RequestDispatcher rd = request.getRequestDispatcher("/");
                 UsersEntity usersEntity  = (UsersEntity) authentication.getPrincipal();
                 session.setAttribute("username", usersEntity.getUsername());
                 session.setAttribute("authorities", authentication.getAuthorities());
