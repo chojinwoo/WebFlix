@@ -12,7 +12,12 @@
 <script>
     $(document).ready(function() {
 
-        $('#play_time').text(Math.floor($('video')[0].duration) + '분');
+        var interval = setInterval(duration, 1000);
+
+        function duration() {
+            $('#play_time').text(Math.floor($('video')[0].duration / 60) + '분');
+            clearInterval(interval);
+        }
 
         $('#watchVideo').click(function() {
             $('#tm-media-section').css('display', 'none');
@@ -171,7 +176,7 @@
                         </h2>
                         <ul class="uk-subnav uk-subnav-line">
                             <li ><i class="uk-icon-star uk-margin-small-right"></i> ${video.star}</li>
-                            <li id="play_time"><i class="uk-icon-clock-o uk-margin-small-right"></i> 108 Mins</li>
+                            <li id="play_time"><i class="uk-icon-clock-o uk-margin-small-right"></i> </li>
                             <li>    ${video.start_date}</li>
                         </ul>
                         <hr/>
@@ -319,12 +324,16 @@
 
 <div class="uk-block ">
     <div class="uk-container-center uk-container uk-margin-large-bottom">
-        <h3 class="uk-margin-large-bottom uk-text-contrast">You might also like</h3>
+        <h3 class="uk-margin-large-bottom uk-text-contrast">관련영상</h3>
         <div class="uk-margin" data-uk-slideset="{small: 2, medium: 4, large: 6}">
             <div class="uk-slidenav-position uk-margin">
                 <ul class="uk-slideset uk-grid uk-flex-center">
                     <c:forEach items="${same_video}" var="video">
-                        <li><a href="/media/${video.video_seq}"><img src="${video.filePath}thumbnail/${video.thumbnail}" width="600" height="400" alt=""/></a></li>
+                        <li>
+                            <a href="/media/${video.video_seq}"><img src="${video.filePath}thumbnail/${video.thumbnail}" width="600" height="400" alt=""/>
+                                <span class="uk-preview-title">${video.title3}</span>
+                            </a>
+                        </li>
                     </c:forEach>
                 </ul>
                 <a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slideset-item="previous"></a>
