@@ -31,15 +31,15 @@ public class AdminServiceImpl implements AdminService {
                 VideosEntity en = new VideosEntity();
                 en.setActor((String) map.get("actor"));
                 en.setCountry((String) map.get("country"));
-                en.setFileName((String) map.get("file_name"));
-                en.setFilePath(env.getProperty("file.path") + map.get("file_path"));
+                en.setFile_name((String) map.get("file_name"));
+                en.setFile_path(env.getProperty("file.path") + map.get("file_path"));
                 if (map.get("flag").equals("Y")) {
                     en.setFlag(true);
                 } else {
                     en.setFlag(false);
                 }
                 en.setGenre((String) map.get("genre"));
-                en.setRegDate((String) map.get("reg_date"));
+                en.setReg_date((String) map.get("reg_date"));
                 en.setStar(Double.parseDouble((String) map.get("star")));
                 en.setStart_date((String) map.get("start_date"));
                 en.setStory((String) map.get("story"));

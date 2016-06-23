@@ -20,9 +20,9 @@ public class VideosEntity {
     private String story; /* 스토리 */
     private String actor; /* 배우 */
     private String country; /* 제작 국가 */
-    private String regDate;
-    private String fileName;
-    private String filePath;
+    private String reg_date;
+    private String file_name;
+    private String file_path;
     private String thumbnail;
     private boolean flag;
 
@@ -135,22 +135,22 @@ public class VideosEntity {
 
     @Basic
     @Column(name = "file_name")
-    public String getFileName() {
-        return fileName;
+    public String getFile_name() {
+        return file_name;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setFile_name(String file_name) {
+        this.file_name = file_name;
     }
 
     @Basic
     @Column(name = "file_path")
-    public String getFilePath() {
-        return filePath;
+    public String getFile_path() {
+        return file_path;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setFile_path(String file_path) {
+        this.file_path = file_path;
     }
 
     @Basic
@@ -165,12 +165,12 @@ public class VideosEntity {
 
     @Basic
     @Column(name = "reg_date")
-    public String getRegDate() {
-        return regDate;
+    public String getReg_date() {
+        return reg_date;
     }
 
-    public void setRegDate(String regDate) {
-        this.regDate = regDate;
+    public void setReg_date(String reg_date) {
+        this.reg_date = reg_date;
     }
 
     @Basic
@@ -191,9 +191,9 @@ public class VideosEntity {
                 ", title1='" + title1 + '\'' +
                 ", title2='" + title2 + '\'' +
                 ", title3='" + title3 + '\'' +
-                ", regDate='" + regDate + '\'' +
-                ", fileName='" + fileName + '\'' +
-                ", filePath='" + filePath + '\'' +
+                ", reg_date='" + reg_date + '\'' +
+                ", file_name='" + file_name + '\'' +
+                ", file_path='" + file_path + '\'' +
                 ", thumbnail='" + thumbnail + '\'' +
                 ", flag=" + flag +
                 '}';

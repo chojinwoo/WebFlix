@@ -2,10 +2,12 @@ package com.springapp.admin.contoller;
 
 import com.springapp.admin.service.AdminService;
 import com.springapp.common.service.ExcelService;
+import com.springapp.videos.service.VideosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,8 +36,12 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private VideosService videosService;
+
     @RequestMapping(value="/main", method = RequestMethod.GET)
-    public String admin() {
+    public String admin(Model model) {
+        model.addAttribute("videos", this.videosService.findAll());
         return "admin/admin";
     }
 

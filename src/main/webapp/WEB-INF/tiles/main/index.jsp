@@ -82,3 +82,135 @@
     </div>
 </div>
 <!--     ./ Main Section   -->
+<script>
+    $(document).ready(function() {
+
+        function drawGrid(rowCount, video, favourite) {
+            var row = [];
+            row.push('<div class="uk-grid" data-uk-grid-margin>');
+            $.each(video, function(i) {
+                var favouriteFlag = 'N';
+                var video_seq = this.video_seq;
+                $.each(favourite, function () {
+                    if (this.video_seq == video_seq) {
+                        favouriteFlag = 'Y';
+                        return false;
+                    }
+                })
+
+                row.push('<div class="video-row uk-width-large-1-4 uk-width-medium-1-3 uk-row-first" data-favourite="'+favouriteFlag+'" data-genre="'+this.genre+'" data-title3="'+this.title3+'">');
+                row.push('    <div class="uk-overlay uk-overlay-hover">');
+                row.push('        <img class="video-thumbnail" src="'+this.filePath + 'thumbnail/' + this.thumbnail+'" alt="Image" />');
+                row.push('        <div class="uk-overlay-panel uk-overlay-fade uk-overlay-background  uk-overlay-icon"></div>');
+                row.push('        <a class="uk-position-cover video-media" href="/media/' + video_seq+'"></a>');
+                row.push('    </div>');
+                row.push('    <div class="uk-panel" >');
+                row.push('        <h5 class="uk-panel-title video-title">'+this.title3+'</h5>');
+                row.push('        <p>');
+                row.push('            <span class="rating">');
+                row.push('                <i class="uk-icon-star"></i>');
+                row.push('                <i class="uk-icon-star"></i>');
+                row.push('                <i class="uk-icon-star"></i>');
+                row.push('                <i class="uk-icon-star"></i>');
+                row.push('                <i class="uk-icon-star"></i>');
+                row.push('            </span>');
+                row.push('            <span class="video-start-date" class="uk-float-right">'+this.start_date.substr(0, 4)+'</span>');
+                row.push('        </p>');
+                row.push('    </div>');
+                row.push('</div>');
+
+                if (i % rowCount == (rowCount -1)) {
+                    row.push('</div>');
+                    $('#tm-right-section').append(row.join(''));
+                    row = [];
+                    row.push('<div class="uk-grid" data-uk-grid-margin>');
+                }
+
+                if((i+1) == Object.keys(video).length) {
+                    row.push('</div>');
+                    $('#tm-right-section').append(row.join(''));
+                    var paging = [];
+                    paging.push('<div class="uk-margin-large-top uk-margin-bottom">');
+                    paging.push('<ul class="uk-pagination">');
+                    paging.push('<li class="uk-disabled"><span><i class="uk-icon-angle-double-left"></i></span></li>');
+                    paging.push('<li class="uk-active"><span>1</span></li>');
+                    paging.push('<li><a href="#">2</a></li>');
+                    paging.push('<li><a href="#">3</a></li>');
+                    paging.push('<li><a href="#">4</a></li>');
+                    paging.push('<li><span>...</span></li>');
+                    paging.push('<li><a href="#">20</a></li>');
+                    paging.push('<li><a href="#"><i class="uk-icon-angle-double-right"></i></a></li>');
+                    paging.push('</ul>');
+                    paging.push('</div>');
+                    $('#tm-right-section').append(paging.join(''));
+                }
+            });
+        }
+
+
+
+        var video = JSON.parse('${json_videos}');
+        var favourite = JSON.parse('${json_video_favourite}');
+        drawGrid(20, video, favourite);
+
+        $('.uk-nav li:not(#genre, #featured)').click(function(e) {
+            $('#tm-right-section').empty();
+            var sortVideo = new Array();
+            var genre = $(this).find('a').text();
+            if($(this).attr('id') != 'all') {
+                $.each(video, function() {
+                    if(this.genre.indexOf(genre) > -1 ) {
+                        sortVideo.push(this);
+                    }
+                })
+                drawGrid(20, sortVideo, favourite);
+            } else if($(this).attr('id') == 'all') {
+                drawGrid(20, video, favourite);
+            }
+        })
+
+        /*nav bar 추천 클릭시 이벤트 */
+        $('.uk-nav #favorites').click(function(e) {
+            $('#tm-right-section').empty();
+            var sortVideo = [];
+            $.each(video, function() {
+                var video_row = this;
+                var video_seq = this.video_seq;
+                $.each(favourite, function() {
+                    if(this.video_seq == video_seq) {
+                        sortVideo.push(video_row);
+                    }
+                })
+            })
+
+            drawGrid(20, sortVideo, favourite);
+        })
+
+        var oldSearch = "";
+        $('.uk-search-field').keyup(function() {
+            var sortVideo = [];
+            var search = $(this).val();
+
+            if(search != oldSearch) {
+                $('#tm-right-section').empty();
+
+                if(search != "" && search != null) {
+                    $.each(video, function() {
+                        if(this.title3.indexOf(search) > -1 ) {
+                            sortVideo.push(this);
+                        }
+                    })
+
+                    drawGrid(20, sortVideo,favourite);
+                } else {
+                    $('#tm-right-section').empty();
+                    drawGrid(20, video, favourite);
+                }
+            }
+
+
+
+            oldSearch = search;
+        });
+    })
+</script>
