@@ -56,7 +56,7 @@
 <div id="video-player">
     <i class="fa fa-chevron-circle-left fa-3x play-back" aria-hidden="true" ></i>
     <video id="video" width="100%" controls="controls">
-        <source src="${video.filePath}${video.fileName}" type="video/mp4"/>
+        <source src="${video.file_path}${video.file_name}" type="video/mp4"/>
     </video>
 </div>
 <div id="tm-media-section" class="uk-block uk-block-small">
@@ -69,7 +69,7 @@
         <div class="uk-grid">
             <div class="uk-width-medium-3-10">
                 <div  class="media-cover">
-                    <img src="${video.filePath}thumbnail/${video.thumbnail}" alt="Image" class="uk-scrollspy-inview uk-animation-fade"/>
+                    <img src="${video.file_path}thumbnail/${video.thumbnail}" alt="Image" class="uk-scrollspy-inview uk-animation-fade"/>
                 </div>
                 <button id="watchVideo" class="uk-button uk-button-primary uk-button-large uk-width-1-1 uk-margin-top"><i class="uk-icon-television uk-margin-small-right"></i> Watch Now</button>
                 <form id="favourite_form">
@@ -330,7 +330,7 @@
                 <ul class="uk-slideset uk-grid uk-flex-center">
                     <c:forEach items="${same_video}" var="video">
                         <li>
-                            <a href="/media/${video.video_seq}"><img src="${video.filePath}thumbnail/${video.thumbnail}" width="600" height="400" alt=""/>
+                            <a href="/media/${video.video_seq}"><img src="${video.file_path}thumbnail/${video.thumbnail}" width="600" height="400" alt=""/>
                                 <span class="uk-preview-title">${video.title3}</span>
                             </a>
                         </li>

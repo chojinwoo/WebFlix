@@ -100,7 +100,7 @@
 
                 row.push('<div class="video-row uk-width-large-1-4 uk-width-medium-1-3 uk-row-first" data-favourite="'+favouriteFlag+'" data-genre="'+this.genre+'" data-title3="'+this.title3+'">');
                 row.push('    <div class="uk-overlay uk-overlay-hover">');
-                row.push('        <img class="video-thumbnail" src="'+this.filePath + 'thumbnail/' + this.thumbnail+'" alt="Image" />');
+                row.push('        <img class="video-thumbnail" src="'+this.file_path + 'thumbnail/' + this.thumbnail+'" alt="Image" />');
                 row.push('        <div class="uk-overlay-panel uk-overlay-fade uk-overlay-background  uk-overlay-icon"></div>');
                 row.push('        <a class="uk-position-cover video-media" href="/media/' + video_seq+'"></a>');
                 row.push('    </div>');
