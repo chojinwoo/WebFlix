@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%--
   Created by IntelliJ IDEA.
   User: bangae1
@@ -8,15 +9,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<style>
-    .dropdown-menu>li>a {
-        color:white;
-    }
-
-    .dropdown-menu {
-        background-color:#191010;
-    }
-</style>
+<script>
+    $(document).ready(function() {
+        $('.uk-search').css('display','inline-block');
+    })
+</script>
 <!--     start Main Section   -->
 <div class="uk-container uk-container-center uk-margin-large-top uk-margin-large-bottom">
 
@@ -24,10 +21,8 @@
         <div id="tm-left-section" class="uk-width-medium-3-10 uk-width-large-2-10 uk    -hidden-small">
             <div class="uk-panel">
                 <ul class="uk-nav  uk-nav-side uk-nav-parent-icon uk-margin-bottom" data-uk-nav="">
-                    <sec:authorize access="isAuthenticated()">
-                        <li id="favorites"><a href="/favorites_list"><i class="uk-icon-heart uk-margin-small-right"></i>즐겨찾기</a></li>
-                    </sec:authorize>
-                    <li id="all" class="uk-active"><a href="/">전체</a></li>
+                    <li id="favorites"><a href="#"><i class="uk-icon-heart uk-margin-small-right"></i>즐겨찾기</a></li>
+                    <li id="all" class="uk-active"><a href="#">전체</a></li>
                     <li id="featured"><a href="#">추천</a></li>
                     <li><a href="#">영화</a></li>
                     <li><a href="#">드라마</a></li>
@@ -82,48 +77,7 @@
                 </sec:authorize>
             </div>
         </div>
-
-
         <div id="tm-right-section" class="uk-width-large-8-10 uk-width-medium-7-10"  data-uk-scrollspy="{cls:'uk-animation-fade', target:'img'}">
-            <div class="uk-grid-width-small-1-3 uk-grid-width-medium-1-4 uk-grid-width-large-1-5" data-uk-grid="{gutter: 20}">
-                <c:forEach items="${videos}" var="video">
-                    <div>
-                        <input type="hidden" class="video_genre" value="${video.genre}"/>
-                        <div class="uk-overlay uk-overlay-hover">
-                            <img src="${video.filePath}thumbnail/${video.thumbnail}" alt="Image" />
-                            <div class="uk-overlay-panel uk-overlay-fade uk-overlay-background  uk-overlay-icon"></div>
-                            <sec:authorize access="isAuthenticated()">
-                                <a class="uk-position-cover" href="/media/${video.video_seq}"></a>
-                            </sec:authorize>
-                        </div>
-                        <div class="uk-panel" >
-                            <h5 class="uk-panel-title">${video.title3}</h5>
-                            <p>
-                                            <span class="rating">
-                                                <i class="uk-icon-star"></i>
-                                                <i class="uk-icon-star"></i>
-                                                <i class="uk-icon-star"></i>
-                                                <i class="uk-icon-star"></i>
-                                                <i class="uk-icon-star"></i>
-                                            </span>
-                                <span class="uk-float-right">2016</span>
-                            </p>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-            <div class="uk-margin-large-top uk-margin-bottom">
-                <ul class="uk-pagination">
-                    <li class="uk-disabled"><span><i class="uk-icon-angle-double-left"></i></span></li>
-                    <li class="uk-active"><span>1</span></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><span>...</span></li>
-                    <li><a href="#">20</a></li>
-                    <li><a href="#"><i class="uk-icon-angle-double-right"></i></a></li>
-                </ul>
-            </div>
         </div>
     </div>
 </div>

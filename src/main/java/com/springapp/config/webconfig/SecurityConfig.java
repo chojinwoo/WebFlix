@@ -53,9 +53,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().authenticated().antMatchers("/").permitAll().antMatchers("/login").permitAll().antMatchers("/signup").permitAll().antMatchers("/admin").hasRole("ADMIN")
+        http.authorizeRequests().anyRequest().authenticated().antMatchers("/login").permitAll().antMatchers("/signup").permitAll().antMatchers("/admin").hasRole("ADMIN")
                 .and().csrf().disable()
-                .formLogin().loginPage("/").loginPage("/login").loginProcessingUrl("/loginProcess").permitAll().usernameParameter("id").passwordParameter("password").defaultSuccessUrl("/")
+                .formLogin().loginPage("/login").loginProcessingUrl("/loginProcess").permitAll().usernameParameter("id").passwordParameter("password").defaultSuccessUrl("/")
                 .failureHandler(customAuthenticationFailureHandler()).successForwardUrl("/").permitAll()
                 .and().logout().deleteCookies("JSESSIONID").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").permitAll()
                 .and().rememberMe().tokenValiditySeconds(1209600).rememberMeParameter("remember-me").key("uniqueAndSecret");
@@ -67,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
                 System.out.println("로그인 실패 ::: " + exception.getMessage());
-                response.sendRedirect("/");
+                response.sendRedirect("/login");
             }
         };
         return fail;

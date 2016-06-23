@@ -16,8 +16,6 @@
     <title>Webflix - Streaming Media Theme - Homepage v1</title>
     <link rel="apple-touch-icon-precomposed" href="/resources/img/apple-touch-icon.png"/>
 
-    <link rel="stylesheet" href="/resources/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/resources/css/bootstrap-theme.css"/>
     <!--     Include UIKit CSS   -->
     <link rel="stylesheet" href="/resources/css/uikit.css"/>
     <!--     Theme CSS   -->
@@ -52,7 +50,6 @@
     </style>
 
     <script type="text/javascript" src="/resources/js/jquery-2.1.4.js"></script>
-    <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
 
     <script src="/resources/js/simplebar.min.js"></script>
     <script src="/resources/js/uikit.min.js"></script>
