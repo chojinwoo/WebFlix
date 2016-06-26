@@ -11,14 +11,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Webflix - Streaming Media Theme - Sign up</title>
-    <link rel="shortcut icon" href="resources/img/favicon.ico" type="resources/img/x-icon"/>
-    <link rel="apple-touch-icon-precomposed" href="/resources/img/apple-touch-icon.png"/>
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico" type="resources/img/x-icon"/>
+    <link rel="apple-touch-icon-precomposed" href="${pageContext.request.contextPath}/resources/img/apple-touch-icon.png"/>
 
     <!--     Include UIKit CSS   -->
-    <link rel="stylesheet" href="/resources/css/uikit.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/uikit.css"/>
 
     <!--     Theme CSS   -->
-    <link rel="stylesheet" href="/resources/css/theme.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/theme.css"/>
     <style>
         body {
             width: 100%;
@@ -27,13 +27,35 @@
     </style>
 </head>
 <body  class="uk-height-1-1" cz-shortcut-listen="true">
+
+<!--     start Top Navbar   -->
+
+<div class="tm-navbar tm-navbar-overlay tm-navbar-transparent tm-navbar-contrast">
+    <nav class="uk-navbar uk-margin-top">
+        <div class="uk-container-center uk-container">
+            <ul class="uk-navbar-nav">
+                <li><a href="${pageContext.request.contextPath}/"><i class="uk-icon-medium uk-icon-arrow-left"></i></a></li>
+
+            </ul>
+            <div class="uk-navbar-flip">
+                <ul class="uk-navbar-nav">
+                    <li><a href="${pageContext.request.contextPath}/login ">login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<!--     ./ Top Navbar   -->
 <div class="uk-overlay uk-text-center uk-vertical-align uk-height-1-1">
-    <img class="uk-animation-fade tm-bg-cover" src="resources/img/bg.jpg" width="100%" height="100%" alt=""/>
+    <img class="uk-animation-fade tm-bg-cover" src="${pageContext.request.contextPath}/resources/img/bg.jpg" width="100%" height="100%" alt=""/>
     <div class="uk-vertical-align  uk-overlay-panel uk-overlay-background">
         <div class=" uk-vertical-align-middle uk-text-center  uk-width-medium-3-10 uk-width-large-2-10 uk-container-center">
 
             <div class="uk-margin-large-bottom  uk-animation-reverse uk-animation-scale uk-animation-hover">
-                <img class="uk-margin uk-margin-remove" width="200" height="40" alt="logo" src="resources/img/logo.svg"/>
+                <a href="${pageContext.request.contextPath}/">
+                    <img class="uk-margin uk-margin-remove" width="200" height="40" alt="logo" src="${pageContext.request.contextPath}/resources/img/logo.svg"/>
+                </a>
             </div>
             <form  class=" uk-form">
                 <h2 class="uk-margin-large-bottom uk-text-muted">회원가입</h2>
@@ -89,8 +111,8 @@
                 <input class="uk-search-field" type="search" placeholder="Search..."/>
             </form>
             <div class="uk-button-group">
-                <a class="uk-button uk-button-link uk-button-large uk-text-muted" href="signup.html">Sign up</a>
-                <a class="uk-button uk-button-success uk-button-large uk-margin-left" href="login.html"><i class="uk-icon-lock uk-margin-small-right"></i> Log in</a>
+                <a class="uk-button uk-button-link uk-button-large uk-text-muted" href="${pageContext.request.contextPath}/signup">Sign up</a>
+                <a class="uk-button uk-button-success uk-button-large uk-margin-left" href="${pageContext.request.contextPath}/login"><i class="uk-icon-lock uk-margin-small-right"></i> Log in</a>
             </div>
         </div>
         <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav="data-uk-nav">
@@ -128,22 +150,7 @@
                     <li><a href="#">Documentary</a> </li>
                 </ul>
             </li>
-            <li class="uk-nav-divider"></li>
-            <li class="uk-nav-header">Pages</li>
-            <li><a href=""> Home</a></li>
-            <li><a href=""> FAQ's</a></li>
-            <li><a href=""> Terms Conditions</a></li>
-            <li><a href=""> Privacy Policy</a></li>
-            <li><a href=""> Contact Us</a></li>
         </ul>
-        <div class="uk-panel uk-text-center">
-            <ul class="uk-subnav">
-                <li><a href="#" class="uk-icon-hover uk-icon-medium uk-icon-facebook-square"></a></li>
-                <li><a href="#" class="uk-icon-hover uk-icon-medium uk-icon-twitter"></a></li>
-                <li><a href="#" class="uk-icon-hover uk-icon-medium uk-icon-instagram"></a></li>
-                <li><a href="#" class="uk-icon-hover uk-icon-medium uk-icon-pinterest"></a></li>
-            </ul>
-        </div>
     </div>
 </div>
 
@@ -151,7 +158,7 @@
 
 <!--  Include JS  -->
 
-<script src="/resources/js/jquery-3.0.0.js"></script>
-<script src="/resources/js/uikit.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-2.1.4.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/uikit.min.js"></script>
 </body>
 </html>

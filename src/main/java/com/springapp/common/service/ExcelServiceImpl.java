@@ -1,12 +1,12 @@
 package com.springapp.common.service;
 
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.apache.poi.xssf.usermodel.*;
+import org.apache.taglibs.standard.lang.jstl.Evaluator;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,10 +24,11 @@ public class ExcelServiceImpl implements ExcelService {
 
         FileInputStream fis = null;
         XSSFWorkbook workbook = null;
-
+        DecimalFormat df = new DecimalFormat();
         try {
             workbook = new XSSFWorkbook(is);
 
+            FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
             XSSFSheet sheet = workbook.getSheetAt(0);
             int idx = sheet.getPhysicalNumberOfRows();
             System.out.println(idx);
@@ -40,8 +41,18 @@ public class ExcelServiceImpl implements ExcelService {
                     String value = "";
                     switch (cell.getCellType()){
                         case XSSFCell.CELL_TYPE_FORMULA:
-                            value=cell.getCellFormula();
-                            break;
+                            if(!(cell.toString().equalsIgnoreCase("")) ){
+                                if(evaluator.evaluateFormulaCell(cell)==XSSFCell.CELL_TYPE_NUMERIC){
+                                    double fddata = cell.getNumericCellValue();
+                                    value = df.format(fddata);
+                                }else if(evaluator.evaluateFormulaCell(cell)==XSSFCell.CELL_TYPE_STRING){
+                                    value = cell.getStringCellValue();
+                                }else if(evaluator.evaluateFormulaCell(cell)==XSSFCell.CELL_TYPE_BOOLEAN){
+                                    boolean fbdata = cell.getBooleanCellValue();
+                                    value = String.valueOf(fbdata);
+                                }
+                                break;
+                            }
                         case XSSFCell.CELL_TYPE_NUMERIC:
                             value=cell.getNumericCellValue()+"";
                             break;

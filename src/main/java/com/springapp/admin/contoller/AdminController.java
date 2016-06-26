@@ -2,6 +2,7 @@ package com.springapp.admin.contoller;
 
 import com.springapp.admin.service.AdminService;
 import com.springapp.common.service.ExcelService;
+import com.springapp.common.service.UploadService;
 import com.springapp.videos.service.VideosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
@@ -39,12 +41,23 @@ public class AdminController {
     @Autowired
     private VideosService videosService;
 
+    @Autowired
+    private UploadService uploadService;
+
     @RequestMapping(value="/main", method = RequestMethod.GET)
     public String admin(Model model) {
-        model.addAttribute("videos", this.videosService.findAll());
+        model.addAttribute("videos", this.videosService.adminFindAll());
         return "admin/admin";
     }
 
+    @RequestMapping(value="/video_up", method = RequestMethod.POST)
+    @ResponseBody
+    public String video_up(MultipartRequest multipartRequest, @RequestParam("filePath")String filePath) {
+        List<MultipartFile> files = multipartRequest.getFiles("files");
+
+        uploadService.videoUpload(files, filePath);
+        return "success";
+    }
 
     @RequestMapping(value="/excel_up", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
     @ResponseBody

@@ -21,7 +21,7 @@
 <!--     start Header Section   -->
 <nav id="tm-header" class="uk-navbar">
     <div class="uk-container uk-container-center ">
-        <a class="uk-navbar-brand uk-hidden-small" href="/"><i class="uk-icon-small uk-text-primary uk-margin-small-right uk-icon-play-circle"></i> WEBFLIX</a>
+        <a class="uk-navbar-brand uk-hidden-small" href="${pageContext.request.contextPath}/"><i class="uk-icon-small uk-text-primary uk-margin-small-right uk-icon-play-circle"></i> WEBFLIX</a>
 
         <form class="uk-search uk-margin-small-top uk-margin-left uk-hidden-small" style="display:none;">
             <input id="video_search" class="uk-search-field" type="search" placeholder="Search..." autocomplete="off"/>
@@ -31,8 +31,8 @@
         <sec:authorize access="isAnonymous()">
             <div class="uk-navbar-flip uk-hidden-small">
                 <div class="uk-button-group">
-                    <a class="uk-button uk-button-link uk-button-large" href="/signup">Sign up</a>
-                    <a class="uk-button uk-button-success uk-button-large uk-margin-left" href="/login"><i class="uk-icon-lock uk-margin-small-right"></i> Log in</a>
+                    <%--<a class="uk-button uk-button-link uk-button-large" href="${pageContext.request.contextPath}/signup">Sign up</a>--%>
+                    <a class="uk-button uk-button-success uk-button-large uk-margin-left" href="${pageContext.request.contextPath}/login"><i class="uk-icon-lock uk-margin-small-right"></i> Log in</a>
                 </div>
             </div>
         </sec:authorize>
@@ -49,11 +49,11 @@
                                 <li class="uk-nav-divider"></li>
                                 <li class="nav-header">ADMIN</li>
                                 <li><a href="#">USER</a></li>
-                                <li><a href="/admin/main">VIDEO</a></li>
+                                <li><a href="${pageContext.request.contextPath}/admin/main">VIDEO</a></li>
                             </sec:authorize>
 
                             <li class="uk-nav-divider"></li>
-                            <li><a href="/logout">로그아웃</a></li>
+                            <li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
                         </ul>
                     </div>
                 </div>

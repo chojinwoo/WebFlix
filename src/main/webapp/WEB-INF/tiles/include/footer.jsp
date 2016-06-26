@@ -25,8 +25,8 @@
             </form>
             <sec:authorize access="isAnonymous()">
             <div class="uk-button-group">
-                <a class="uk-button uk-button-link uk-button-large uk-text-muted" href="signup.html">Sign up</a>
-                <a class="uk-button uk-button-success uk-button-large uk-margin-left" href="login.html"><i class="uk-icon-lock uk-margin-small-right"></i> Log in</a>
+                <%--<a class="uk-button uk-button-link uk-button-large uk-text-muted" href="signup.html">Sign up</a>--%>
+                <a class="uk-button uk-button-success uk-button-large uk-margin-left" href="${pageContext.request.contextPath}/login"><i class="uk-icon-lock uk-margin-small-right"></i> Log in</a>
             </div>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">

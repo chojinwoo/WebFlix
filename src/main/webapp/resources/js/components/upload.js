@@ -1,4 +1,3 @@
-/*! UIkit 2.26.3 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(addon) {
 
     var component;
@@ -116,9 +115,9 @@
                 if(!matchName(settings.allow, file.name)) {
 
                     if(typeof(settings.notallowed) == 'string') {
-                       alert(settings.notallowed);
+                        alert(settings.notallowed);
                     } else {
-                       settings.notallowed(file, settings);
+                        settings.notallowed(file, settings);
                     }
                     return;
                 }
@@ -133,26 +132,26 @@
                 uploaded = 0,
                 allow    = true;
 
-                settings.beforeAll(files);
+            settings.beforeAll(files);
 
-                settings.complete = function(response, xhr){
+            settings.complete = function(response, xhr){
 
-                    uploaded = uploaded + 1;
+                uploaded = uploaded + 1;
 
-                    complete(response, xhr);
+                complete(response, xhr);
 
-                    if (settings.filelimit && uploaded >= settings.filelimit){
-                        allow = false;
-                    }
+                if (settings.filelimit && uploaded >= settings.filelimit){
+                    allow = false;
+                }
 
-                    if (allow && uploaded<count){
-                        upload([files[uploaded]], settings);
-                    } else {
-                        settings.allcomplete(response, xhr);
-                    }
-                };
+                if (allow && uploaded<count){
+                    upload([files[uploaded]], settings);
+                } else {
+                    settings.allcomplete(response, xhr);
+                }
+            };
 
-                upload([files[0]], settings);
+            upload([files[0]], settings);
 
         } else {
 

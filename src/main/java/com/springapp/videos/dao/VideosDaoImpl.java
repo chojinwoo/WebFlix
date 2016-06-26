@@ -24,7 +24,12 @@ public class VideosDaoImpl implements VideosDao {
 
     @Override
     public List<VideosEntity> findAll() {
-        return this.videosRepository.findAll(sortByTitle3());
+        return this.videosRepository.findAll2();
+    }
+
+    @Override
+    public List<VideosEntity> adminFindAll() {
+        return this.videosRepository.findAll();
     }
 
     private Sort sortByTitle3() {

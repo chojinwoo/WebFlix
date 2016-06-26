@@ -1,5 +1,5 @@
-group 'SpringDataJpa'
-version '1.0-SNAPSHOT'
+group 'WebFlix'
+version ''
 
 apply plugin: 'java'
 apply plugin: 'war'
@@ -49,7 +49,7 @@ dependencies {
     compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '1.10.1.RELEASE'
     compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.1.0.Final'
     compile group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'
-    compile group: 'com.oracle', name:'ojdbc6', version: '11.2.0.3'
+//    compile group: 'com.oracle', name:'ojdbc6', version: '11.2.0.3'
 
 
     /*etc*/

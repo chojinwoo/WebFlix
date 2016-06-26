@@ -26,6 +26,11 @@ public class VideosServiceImpl implements VideosService {
     }
 
     @Override
+    public List<VideosEntity> adminFindAll() {
+        return videosDao.adminFindAll();
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public VideosEntity findOne(Integer seq) {
         return videosDao.findOne(seq);

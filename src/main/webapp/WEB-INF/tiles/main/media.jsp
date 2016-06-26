@@ -56,20 +56,20 @@
 <div id="video-player">
     <i class="fa fa-chevron-circle-left fa-3x play-back" aria-hidden="true" ></i>
     <video id="video" width="100%" controls="controls">
-        <source src="${video.file_path}${video.file_name}" type="video/mp4"/>
+        <source src="${pageContext.request.contextPath}${video.file_path}${video.file_name}" type="video/mp4"/>
     </video>
 </div>
 <div id="tm-media-section" class="uk-block uk-block-small">
 
     <div class="uk-container uk-container-center uk-width-8-10">
         <div class="media-container  uk-container-center">
-            <a class="uk-button uk-button-large uk-button-link uk-text-muted" href="/"><i class=" uk-icon-arrow-left uk-margin-small-right"></i> Back</a>
+            <a class="uk-button uk-button-large uk-button-link uk-text-muted" href="${pageContext.request.contextPath}/"><i class=" uk-icon-arrow-left uk-margin-small-right"></i> Back</a>
         </div>
 
         <div class="uk-grid">
             <div class="uk-width-medium-3-10">
                 <div  class="media-cover">
-                    <img src="${video.file_path}thumbnail/${video.thumbnail}" alt="Image" class="uk-scrollspy-inview uk-animation-fade"/>
+                    <img src="${pageContext.request.contextPath}${video.file_path}thumbnail/${video.thumbnail}" alt="Image" class="uk-scrollspy-inview uk-animation-fade"/>
                 </div>
                 <button id="watchVideo" class="uk-button uk-button-primary uk-button-large uk-width-1-1 uk-margin-top"><i class="uk-icon-television uk-margin-small-right"></i> Watch Now</button>
                 <form id="favourite_form">
@@ -225,7 +225,7 @@
                                 <li>
                                     <article class="uk-comment uk-panel uk-panel-space uk-panel-box-secondary">
                                         <header class="uk-comment-header">
-                                            <img class="uk-comment-avatar uk-border-circle" src="/resources/img/avatar3.jpg" width="50" height="50" alt=""/>
+                                            <img class="uk-comment-avatar uk-border-circle" src="${pageContext.request.contextPath}/resources/img/avatar3.jpg" width="50" height="50" alt=""/>
                                             <h4 class="uk-comment-title">@movielover</h4>
                                             <div class="uk-comment-meta">2 days ago </div>
                                         </header>
@@ -237,7 +237,7 @@
                                 <li>
                                     <article class="uk-comment uk-panel uk-panel-space uk-panel-box-secondary">
                                         <header class="uk-comment-header">
-                                            <img class="uk-comment-avatar uk-border-circle" src="/resources/img/avatar1.jpg" width="50" height="50" alt=""/>
+                                            <img class="uk-comment-avatar uk-border-circle" src="${pageContext.request.contextPath}/resources/img/avatar1.jpg" width="50" height="50" alt=""/>
                                             <h4 class="uk-comment-title">@movielover</h4>
                                             <div class="uk-comment-meta">5 days ago </div>
                                         </header>
@@ -249,7 +249,7 @@
                                 <li>
                                     <article class="uk-comment uk-panel uk-panel-space uk-panel-box-secondary">
                                         <header class="uk-comment-header">
-                                            <img class="uk-comment-avatar uk-border-circle" src="/resources/img/avatar4.svg" width="50" height="50" alt=""/>
+                                            <img class="uk-comment-avatar uk-border-circle" src="${pageContext.request.contextPath}/resources/img/avatar4.svg" width="50" height="50" alt=""/>
                                             <h4 class="uk-comment-title">@movielover</h4>
                                             <div class="uk-comment-meta">23 days ago </div>
                                         </header>
@@ -261,7 +261,7 @@
                                 <li>
                                     <article class="uk-comment uk-panel uk-panel-space uk-panel-box-secondary">
                                         <header class="uk-comment-header">
-                                            <img class="uk-comment-avatar uk-border-circle" src="/resources/img/avatar3.jpg" width="50" height="50" alt=""/>
+                                            <img class="uk-comment-avatar uk-border-circle" src="${pageContext.request.contextPath}/resources/img/avatar3.jpg" width="50" height="50" alt=""/>
                                             <h4 class="uk-comment-title">@movielover</h4>
                                             <div class="uk-comment-meta">7 days ago </div>
                                         </header>
@@ -273,7 +273,7 @@
                                 <li>
                                     <article class="uk-comment uk-panel uk-panel-space uk-panel-box-secondary">
                                         <header class="uk-comment-header">
-                                            <img class="uk-comment-avatar uk-border-circle" src="/resources/img/avatar2.jpg" width="50" height="50" alt=""/>
+                                            <img class="uk-comment-avatar uk-border-circle" src="${pageContext.request.contextPath}/resources/img/avatar2.jpg" width="50" height="50" alt=""/>
                                             <h4 class="uk-comment-title">@movielover</h4>
                                             <div class="uk-comment-meta">84 days ago </div>
                                         </header>
@@ -285,7 +285,7 @@
                                 <li>
                                     <article class="uk-comment uk-panel uk-panel-space uk-panel-box-secondary">
                                         <header class="uk-comment-header">
-                                            <img class="uk-comment-avatar uk-border-circle" src="/resources/img/avatar1.jpg" width="50" height="50" alt=""/>
+                                            <img class="uk-comment-avatar uk-border-circle" src="${pageContext.request.contextPath}/resources/img/avatar1.jpg" width="50" height="50" alt=""/>
                                             <h4 class="uk-comment-title">@movielover</h4>
                                             <div class="uk-comment-meta">3 days ago </div>
                                         </header>
@@ -330,7 +330,7 @@
                 <ul class="uk-slideset uk-grid uk-flex-center">
                     <c:forEach items="${same_video}" var="video">
                         <li>
-                            <a href="/media/${video.video_seq}"><img src="${video.file_path}thumbnail/${video.thumbnail}" width="600" height="400" alt=""/>
+                            <a href="${pageContext.request.contextPath}/media/${video.video_seq}"><img src="${pageContext.request.contextPath}${video.file_path}thumbnail/${video.thumbnail}" width="600" height="400" alt=""/>
                                 <span class="uk-preview-title">${video.title3}</span>
                             </a>
                         </li>

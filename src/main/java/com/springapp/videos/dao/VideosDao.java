@@ -10,6 +10,7 @@ import java.util.List;
  */
 public interface VideosDao {
     public List<VideosEntity> findAll();
+    public List<VideosEntity> adminFindAll();
     public VideosEntity findOne(Integer seq);
     public VideoFavouritesEntity findFavouritesIdAndSeq(String id, String video_seq);
     public List<VideosEntity> findVideoListFavouriteId(String id);

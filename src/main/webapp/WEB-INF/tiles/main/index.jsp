@@ -78,6 +78,7 @@
             </div>
         </div>
         <div id="tm-right-section" class="uk-width-large-8-10 uk-width-medium-7-10"  data-uk-scrollspy="{cls:'uk-animation-fade', target:'img'}">
+
         </div>
     </div>
 </div>
@@ -87,6 +88,7 @@
 
         function drawGrid(rowCount, video, favourite) {
             var row = [];
+            var pageMax = 1;
             row.push('<div class="uk-grid" data-uk-grid-margin>');
             $.each(video, function(i) {
                 var favouriteFlag = 'N';
@@ -100,9 +102,9 @@
 
                 row.push('<div class="video-row uk-width-large-1-4 uk-width-medium-1-3 uk-row-first" data-favourite="'+favouriteFlag+'" data-genre="'+this.genre+'" data-title3="'+this.title3+'">');
                 row.push('    <div class="uk-overlay uk-overlay-hover">');
-                row.push('        <img class="video-thumbnail" src="'+this.file_path + 'thumbnail/' + this.thumbnail+'" alt="Image" />');
+                row.push('        <img class="video-thumbnail" src="${pageContext.request.contextPath}'+this.file_path + 'thumbnail/' + this.thumbnail+'" alt="Image" />');
                 row.push('        <div class="uk-overlay-panel uk-overlay-fade uk-overlay-background  uk-overlay-icon"></div>');
-                row.push('        <a class="uk-position-cover video-media" href="/media/' + video_seq+'"></a>');
+                row.push('        <a class="uk-position-cover video-media" href="${pageContext.request.contextPath}/media/' + video_seq+'"></a>');
                 row.push('    </div>');
                 row.push('    <div class="uk-panel" >');
                 row.push('        <h5 class="uk-panel-title video-title">'+this.title3+'</h5>');
@@ -123,7 +125,8 @@
                     row.push('</div>');
                     $('#tm-right-section').append(row.join(''));
                     row = [];
-                    row.push('<div class="uk-grid" data-uk-grid-margin>');
+                    row.push('<div class="uk-grid" data-uk-grid-margin  style="display:none;">');
+                    pageMax++;
                 }
 
                 if((i+1) == Object.keys(video).length) {
@@ -132,17 +135,26 @@
                     var paging = [];
                     paging.push('<div class="uk-margin-large-top uk-margin-bottom">');
                     paging.push('<ul class="uk-pagination">');
-                    paging.push('<li class="uk-disabled"><span><i class="uk-icon-angle-double-left"></i></span></li>');
-                    paging.push('<li class="uk-active"><span>1</span></li>');
-                    paging.push('<li><a href="#">2</a></li>');
-                    paging.push('<li><a href="#">3</a></li>');
-                    paging.push('<li><a href="#">4</a></li>');
-                    paging.push('<li><span>...</span></li>');
-                    paging.push('<li><a href="#">20</a></li>');
-                    paging.push('<li><a href="#"><i class="uk-icon-angle-double-right"></i></a></li>');
+//                    paging.push('<li class="uk-disabled"><span><i class="uk-icon-angle-double-left"></i/*></span></li>');
+//                    paging.push('<li class="uk-active"><span>1</span></li>');
+//                    paging.push('<li><a href="#">2</a></li>');
+//                    paging.push('<li><a href="#">3</a></li>');
+//                    paging.push('<li><a href="#">4</a></li>');
+//                    paging.push('<li><span>...</span></li>');
+//                    paging.push('<li><a href="#">20</a></li>');
+//                    paging.push('<li><a href="#"><i class="uk-icon-angle-double-right"></i></a></li>');*/
                     paging.push('</ul>');
                     paging.push('</div>');
                     $('#tm-right-section').append(paging.join(''));
+                    var pagination = UIkit.pagination($('.uk-pagination'), {
+                        items:pageMax,
+                        itemOnPage:1
+                    });
+
+                    $('.uk-pagination').on('select.uk.pagination', function(e, pageIndex){
+                        $('#tm-right-section .uk-grid').hide();
+                        $('#tm-right-section .uk-grid:eq('+pageIndex+')').show();
+                    });
                 }
             });
         }
@@ -157,6 +169,9 @@
             $('#tm-right-section').empty();
             var sortVideo = new Array();
             var genre = $(this).find('a').text();
+
+            $('.uk-nav li').removeClass('uk-active');
+            $(this).addClass('uk-active');
             if($(this).attr('id') != 'all') {
                 $.each(video, function() {
                     if(this.genre.indexOf(genre) > -1 ) {
