@@ -29,33 +29,12 @@ public class UploadServiceImpl implements UploadService {
             createDir.mkdir();
         }
         for(MultipartFile file : files) {
+            String fileName = file.getOriginalFilename();
             try {
-                String fileName = file.getOriginalFilename();
-                is = file.getInputStream();
-                fos = new FileOutputStream(absolutePath + filePath + "/" + fileName);
-                byte[] b= file.getBytes();
-                int s = 0;
-                while((s = is.read(b)) > -1) {
-                    fos.write(b, 0, s);
-                }
-                fos.flush();
+                file.transferTo(new File(absolutePath + filePath + "/" + fileName));
             } catch (IOException e) {
                 e.printStackTrace();
                 msg = "전송실패";
-            } finally {
-                if(is != null) try {
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    msg = "전송실패";
-                }
-
-                if(fos != null) try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    msg = "전송실패";
-                }
             }
         }
         return msg;

@@ -93,7 +93,9 @@
             <div id="upload-drop" class="uk-placeholder uk-text-center">
                 <i class="uk-icon-cloud-upload uk-icon-medium uk-text-muted uk-margin-small-right"></i> 영화업로드 : <a class="uk-form-file">파일선택<input id="upload-select" name="files" type="file" multiple="multiple" accept="video/*"></a>.
             </div>
-
+            <div id="progressbar" class="uk-progress uk-hidden">
+                <div class="uk-progress-bar" style="width: 0%;">0%</div>
+            </div>
         </form>
         </p>
         <div class="uk-modal-footer uk-text-right">
@@ -101,9 +103,6 @@
             <button type="button" id="btn-upload" class="uk-button uk-button-primary">저장</button>
         </div>
     </div>
-</div>
-<div id="progressbar" class="progress-panel uk-hidden">
-    <img src="${pageContext.request.contextPath}/resources/img/CircleRoller.gif" class="progress"/>
 </div>
 <form id="hiddenForm"></form>
 <form id="uploadForm" enctype="multipart/form-data">
@@ -120,7 +119,7 @@
                 var html = [];
                 html.push('<div class="uk-grid">');
                 html.push('<div class="uk-width-1-2">'+name+'</div>');
-                html.push('<div class="uk-width-1-2">'+size+'</div>');
+                html.push('<div class="uk-width-1-2 uk-text-right">'+size+'</div>');
                 html.push('</div>');
                 $('#movieUploadForm').append(html.join(''));
             }
@@ -129,26 +128,49 @@
         $('#btn-upload').click(function() {
             var progressbar = $("#progressbar");
             var formData = new FormData($('#movieUploadForm')[0]);
+            var bar         = progressbar.find('.uk-progress-bar');
             $.ajax({
                 url:'${pageContext.request.contextPath}/admin/video_up',
                 data:formData,
                 type:'post',
                 processData:false,
                 contentType:false,
-                async:false,
                 beforeSend:function(xhr, setting) {
+                    bar.css("width", "0%").text("0%");
                     progressbar.removeClass("uk-hidden");
                 }, error:function(xhr, status, error) {
                     alert(error)
                 }, success: function(data) {
+                    bar.css("width", "100%").text("100%");
+
                     setTimeout(function(){
                         progressbar.addClass("uk-hidden");
                     }, 250);
 
                     alert(data)
+                }, xhr: function () {
+                    var xhr = new window.XMLHttpRequest();
+                    console.log(1);
+                    bar.css("width", '0%').text('0%');
+                    xhr.upload.addEventListener("progress", function (evt) {
+                        var percentComplete = evt.loaded / evt.total;
+                        bar.css("width", percentComplete * 100 + '%').text(percentComplete * 100 + '%');
+                        if (percentComplete === 1) {
+                            progressbar.addClass("uk-hidden");
+                        }
+                    }, false);
+
+                    xhr.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            bar.css("width", percentComplete * 100 + '%').text(percentComplete * 100 + '%');
+                        }
+                    }, false);
+                    return xhr;
                 }
             })
         })
+
 
         $('#excel_upload').click(function() {
             $('#file').trigger('click');
