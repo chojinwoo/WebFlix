@@ -14,12 +14,12 @@ public class VideosEntity {
     private String title1;
     private String title2;
     private String title3;
-    private String genre; /* 장르 */
-    private double star;/* 별점 */
-    private String start_date; /* 상영일 */
-    private String story; /* 스토리 */
-    private String actor; /* 배우 */
-    private String country; /* 제작 국가 */
+    private String genre;
+    private double star;
+    private String start_date;
+    private String story;
+    private String actor;
+    private String country;
     private String reg_date;
     private String file_name;
     private String file_path;

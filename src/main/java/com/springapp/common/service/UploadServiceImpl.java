@@ -14,18 +14,20 @@ import java.util.List;
  */
 @Service
 @PropertySource("classpath:application.properties")
-public class UploadServiceImpl implements UploadService {
+public class UploadServiceImpl implements UploadService, Serializable {
     @Autowired
     private Environment env;
 
     public String videoUpload(List<MultipartFile> files, String filePath) {
-        String msg = "전송성공";
+        String msg = "Send To Success";
         InputStream is = null;
         FileOutputStream fos = null;
 
         String absolutePath = env.getProperty("file.absolutePath");
         File createDir = new File(absolutePath + filePath);
+        System.out.println(absolutePath + filePath);
         if(!createDir.isDirectory()) {
+            System.out.println("Folder create");
             createDir.mkdir();
         }
         for(MultipartFile file : files) {
@@ -34,7 +36,7 @@ public class UploadServiceImpl implements UploadService {
                 file.transferTo(new File(absolutePath + filePath + "/" + fileName));
             } catch (IOException e) {
                 e.printStackTrace();
-                msg = "전송실패";
+                msg = "Send To Filed";
             }
         }
         return msg;

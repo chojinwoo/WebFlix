@@ -29,7 +29,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Autowired
     private Environment env;
 
-    /*멀티파트 리졸버*/
     @Bean
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
@@ -47,8 +46,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(new String[] {"/resources/**"}).addResourceLocations(new String[]{"/resources/"});
-        registry.addResourceHandler(new String[] {"/attach/**"}).addResourceLocations(new String[]{"/attach/"});
+        registry.addResourceHandler(new String[]{"/resources/**"}).addResourceLocations(new String[]{"/resources/"});
+        registry.addResourceHandler(new String[]{"/attach/**"}).addResourceLocations(new String[]{"/attach/"});
     }
 
     @Override
@@ -57,7 +56,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public InternalResourceViewResolver viewResolver(){
+    public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver resourceViewResolver = new InternalResourceViewResolver();
         resourceViewResolver.setPrefix("/WEB-INF/tiles");
         resourceViewResolver.setSuffix(".jsp");
@@ -96,13 +95,4 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         return mailSender;
 
     }
-/*
-ffmpeg -i "C:\attach\HeroesSeason1\Heroes.S01E01.720p.HDTV.x264.mp4" -an -filter scale=768:-1 -ss 00:10:01 -r 1 -vframes 1 -y "%d.jpg"
-*
-	echo ffmpeg start
-
-	ffmpeg -i "%dir%\%%i" -an -filter scale=768:-1 -ss 00:10:01 -r 1 -vframes 1 -y "%d.jpg"
-
-	echo ffmpeg end
-* */
 }

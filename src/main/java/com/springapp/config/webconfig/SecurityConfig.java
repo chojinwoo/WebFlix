@@ -66,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         AuthenticationFailureHandler fail = new AuthenticationFailureHandler() {
             @Override
             public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-                System.out.println("로그인 실패 ::: " + exception.getMessage());
+                System.out.println("login Filed ::: " + exception.getMessage());
                 response.sendRedirect("/login");
             }
         };
@@ -78,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                 HttpSession session = request.getSession();
-                System.out.println("로그인 성공 ::: " + authentication.getDetails());
+                System.out.println("Login Success ::: " + authentication.getDetails());
                 RequestDispatcher rd = request.getRequestDispatcher("/");
                 UsersEntity usersEntity  = (UsersEntity) authentication.getPrincipal();
                 session.setAttribute("username", usersEntity.getUsername());
