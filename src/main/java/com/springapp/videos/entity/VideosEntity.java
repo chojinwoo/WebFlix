@@ -11,21 +11,14 @@ import javax.persistence.*;
 @Table(schema = "bangae1", name = "videos")
 public class VideosEntity {
     private int video_seq;
-    private String title1;
-    private String title2;
+    private int video_kind_seq;
     private String title3;
-    private String genre;
-    private double star;
-    private String start_date;
     private String story;
-    private String actor;
-    private String country;
     private String reg_date;
     private String file_name;
     private String file_path;
     private String thumbnail;
-    private boolean flag;
-
+    private VideoKindEntity videoKindEntity;
 
     public VideosEntity() {
     }
@@ -42,33 +35,13 @@ public class VideosEntity {
     }
 
     @Basic
-    @Column(name = "genre")
-    public String getGenre() {
-        return genre;
+    @Column(name="video_kind_seq")
+    public int getVideo_kind_seq() {
+        return video_kind_seq;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    @Basic
-    @Column(name = "title1")
-    public String getTitle1() {
-        return title1;
-    }
-
-    public void setTitle1(String title1) {
-        this.title1 = title1;
-    }
-
-    @Basic
-    @Column(name = "title2")
-    public String getTitle2() {
-        return title2;
-    }
-
-    public void setTitle2(String title2) {
-        this.title2 = title2;
+    public void setVideo_kind_seq(int video_kind_seq) {
+        this.video_kind_seq = video_kind_seq;
     }
 
     @Basic
@@ -82,27 +55,6 @@ public class VideosEntity {
     }
 
     @Basic
-    @Column(name = "star")
-    public double getStar() {
-        return star;
-    }
-
-    public void setStar(double star) {
-        this.star = star;
-    }
-
-    @Basic
-    @Column(name = "start_date")
-    public String getStart_date() {
-        return start_date;
-    }
-
-    public void setStart_date(String start_date) {
-        this.start_date = start_date;
-    }
-
-
-    @Basic
     @Column(name = "story", length = 6000)
     @Type(type="text")
     public String getStory() {
@@ -111,26 +63,6 @@ public class VideosEntity {
 
     public void setStory(String story) {
         this.story = story;
-    }
-
-    @Basic
-    @Column(name = "actor")
-    public String getActor() {
-        return actor;
-    }
-
-    public void setActor(String actor) {
-        this.actor = actor;
-    }
-
-    @Basic
-    @Column(name="country")
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     @Basic
@@ -173,29 +105,29 @@ public class VideosEntity {
         this.reg_date = reg_date;
     }
 
-    @Basic
-    @Column(name = "flag")
-    public boolean isFlag() {
-        return flag;
+    @ManyToOne
+    @JoinColumn(name = "video_kind_seq", insertable = false, updatable = false)
+    public VideoKindEntity getVideoKindEntity() {
+        return videoKindEntity;
     }
 
-    public void setFlag(boolean flag) {
-        this.flag = flag;
+    public void setVideoKindEntity(VideoKindEntity videoKindEntity) {
+        this.videoKindEntity = videoKindEntity;
     }
 
     @Override
     public String toString() {
         return "VideosEntity{" +
                 "video_seq=" + video_seq +
-                ", genre=" + genre +
-                ", title1='" + title1 + '\'' +
-                ", title2='" + title2 + '\'' +
+//                ", genre=" + genre +
+//                ", title1='" + title1 + '\'' +
+//                ", title2='" + title2 + '\'' +
                 ", title3='" + title3 + '\'' +
                 ", reg_date='" + reg_date + '\'' +
                 ", file_name='" + file_name + '\'' +
                 ", file_path='" + file_path + '\'' +
                 ", thumbnail='" + thumbnail + '\'' +
-                ", flag=" + flag +
+//                ", flag=" + flag +
                 '}';
     }
 }

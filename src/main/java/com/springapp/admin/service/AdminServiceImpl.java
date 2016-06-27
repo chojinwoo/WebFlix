@@ -29,23 +29,23 @@ public class AdminServiceImpl implements AdminService {
         try {
             for (HashMap map : videoList) {
                 VideosEntity en = new VideosEntity();
-                en.setActor((String) map.get("actor"));
-                en.setCountry((String) map.get("country"));
+                en.getVideoKindEntity().setActor((String) map.get("actor"));
+                en.getVideoKindEntity().setCountry((String) map.get("country"));
                 en.setFile_name((String) map.get("file_name"));
                 en.setFile_path(env.getProperty("file.path") + map.get("file_path"));
                 if (map.get("flag").equals("Y")) {
-                    en.setFlag(true);
+                    en.getVideoKindEntity().setFlag(true);
                 } else {
-                    en.setFlag(false);
+                    en.getVideoKindEntity().setFlag(false);
                 }
-                en.setGenre((String) map.get("genre"));
+                en.getVideoKindEntity().setGenre((String) map.get("genre"));
                 en.setReg_date((String) map.get("reg_date"));
-                en.setStar(Double.parseDouble((String) map.get("star")));
-                en.setStart_date((String) map.get("start_date"));
+                en.getVideoKindEntity().setStar(Double.parseDouble((String) map.get("star")));
+                en.getVideoKindEntity().setStart_date((String) map.get("start_date"));
                 en.setStory((String) map.get("story"));
                 en.setThumbnail((String) map.get("thumbnail"));
-                en.setTitle1((String) map.get("title1"));
-                en.setTitle2((String) map.get("title2"));
+                en.getVideoKindEntity().setTitle1((String) map.get("title1"));
+                en.getVideoKindEntity().setTitle2((String) map.get("title2"));
                 en.setTitle3((String) map.get("title3"));
 
 

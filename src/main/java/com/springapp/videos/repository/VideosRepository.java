@@ -7,15 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by bangae11 on 2016-06-19.
  */
 public interface VideosRepository extends JpaRepository<VideosEntity, Integer> {
-    @Query(value= "select * from videos where flag = true order by title3" ,nativeQuery = true)
-    List<VideosEntity> findAll2();
-
     @Query(value = "select a.* from videos as a inner join video_favourites as b on a.video_seq = b.video_seq and b.id = :id", nativeQuery = true)
     List<VideosEntity> findVideoListFavouriteId(@Param("id") String id);
 

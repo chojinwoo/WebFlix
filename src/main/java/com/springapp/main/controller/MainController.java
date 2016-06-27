@@ -2,6 +2,7 @@ package com.springapp.main.controller;
 
 import com.springapp.users.entity.UsersEntity;
 import com.springapp.videos.entity.VideoFavouritesEntity;
+import com.springapp.videos.entity.VideoKindEntity;
 import com.springapp.videos.entity.VideosEntity;
 import com.springapp.videos.service.VideosService;
 import org.json.JSONArray;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -29,9 +31,9 @@ public class MainController {
             UsersEntity usersEntity = (UsersEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             List<VideosEntity> videoList = this.videosService.findAll();
             List<VideosEntity> favouriteList =this.videosService.findVideoListFavouriteId(usersEntity.getId());
-            model.addAttribute("videos", videoList);
-            model.addAttribute("video_favourite", favouriteList);
-            model.addAttribute("json_videos", new JSONArray(videoList).toString());
+            List<VideoKindEntity> videoKindEntities = this.videosService.findVideoKindAll();
+            model.addAttribute("json_videoKind", new JSONArray(videoKindEntities).toString());
+            model.addAttribute("json_videos", videoList);
             model.addAttribute("json_video_favourite", new JSONArray(favouriteList).toString());
             return "main/index";
         }catch(Exception e) {
@@ -43,9 +45,9 @@ public class MainController {
         UsersEntity usersEntity = (UsersEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<VideosEntity> videoList = this.videosService.findAll();
         List<VideosEntity> favouriteList =this.videosService.findVideoListFavouriteId(usersEntity.getId());
-        model.addAttribute("videos", videoList);
-        model.addAttribute("video_favourite", favouriteList);
-        model.addAttribute("json_videos", new JSONArray(videoList).toString());
+        List<VideoKindEntity> videoKindEntities = this.videosService.findVideoKindAll();
+        model.addAttribute("json_videoKind", new JSONArray(videoKindEntities).toString());
+        model.addAttribute("json_videos", videoList);
         model.addAttribute("json_video_favourite", new JSONArray(favouriteList).toString());
         return "main/index";
     }

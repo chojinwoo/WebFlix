@@ -95,7 +95,7 @@ public class VideosController implements Serializable {
         VideosEntity videosEntity = videosService.findOne(Integer.parseInt(video_seq));
         model.addAttribute("video", videosEntity);
         model.addAttribute("video_favourites", videosService.findFavouritesIdAndSeq(usersEntity.getId(), video_seq));
-        model.addAttribute("same_video", videosService.findVideoTitle1AndTitle2(videosEntity.getTitle1(), videosEntity.getTitle2()));
+        model.addAttribute("same_video", videosService.findVideoTitle1AndTitle2(videosEntity.getVideoKindEntity().getTitle1(), videosEntity.getVideoKindEntity().getTitle2()));
         return "main/media";
     }
 

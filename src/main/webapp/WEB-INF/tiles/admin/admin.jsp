@@ -90,6 +90,19 @@
                 <label class="uk-form-label">파일경로</label>
                 <input type="text" class="uk-width-1-1" name="filePath"/>
             </div>
+            <div class="uk-form">
+                <label class="uk-form-label">Title1</label>
+                <input type="text" class="uk-width-1-1" name="title1"/>
+            </div>
+            <div class="uk-form">
+                <label class="uk-form-label">Title2</label>
+                <input type="text" class="uk-width-1-1" name="title2"/>
+            </div>
+            <div class="uk-form">
+                <label class="uk-form-label">커버사진</label>
+                <input type="file" class="uk-width-1-1" name="cover_name"/>
+            </div>
+
             <div id="upload-drop" class="uk-placeholder uk-text-center">
                 <i class="uk-icon-cloud-upload uk-icon-medium uk-text-muted uk-margin-small-right"></i> 영화업로드 : <a class="uk-form-file">파일선택<input id="upload-select" name="files" type="file" multiple="multiple" accept="video/*"></a>.
             </div>

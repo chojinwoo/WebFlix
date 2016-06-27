@@ -1,8 +1,10 @@
 package com.springapp.videos.dao;
 
 import com.springapp.videos.entity.VideoFavouritesEntity;
+import com.springapp.videos.entity.VideoKindEntity;
 import com.springapp.videos.entity.VideosEntity;
 import com.springapp.videos.repository.VideoFavouritesRepository;
+import com.springapp.videos.repository.VideoKindRepository;
 import com.springapp.videos.repository.VideosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -22,9 +24,12 @@ public class VideosDaoImpl implements VideosDao {
     @Autowired
     private VideoFavouritesRepository videoFavouritesRepository;
 
+    @Autowired
+    private VideoKindRepository videoKindRepository;
+
     @Override
     public List<VideosEntity> findAll() {
-        return this.videosRepository.findAll2();
+        return this.videosRepository.findAll();
     }
 
     @Override
@@ -69,6 +74,11 @@ public class VideosDaoImpl implements VideosDao {
     @Override
     public List<VideosEntity> findVideoTitle1AndTitle2(String title1, String title2) {
         return this.videosRepository.findVideoTitle1AndTitle2(title1, title2);
+    }
+
+    @Override
+    public List<VideoKindEntity> findVideoKindAll() {
+        return this.videoKindRepository.findAll();
     }
 
 }

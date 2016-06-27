@@ -2,6 +2,7 @@ package com.springapp.videos.service;
 
 import com.springapp.videos.dao.VideosDao;
 import com.springapp.videos.entity.VideoFavouritesEntity;
+import com.springapp.videos.entity.VideoKindEntity;
 import com.springapp.videos.entity.VideosEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,8 @@ import java.util.List;
  * Created by bangae11 on 2016-06-19.
  */
 @Service
-public class VideosServiceImpl implements VideosService {
+public class
+VideosServiceImpl implements VideosService {
 
     @Autowired
     private VideosDao videosDao;
@@ -66,5 +68,10 @@ public class VideosServiceImpl implements VideosService {
     @Transactional(readOnly = true)
     public List<VideosEntity> findVideoListFavouriteId(String id) {
         return this.videosDao.findVideoListFavouriteId(id);
+    }
+
+    @Override
+    public List<VideoKindEntity> findVideoKindAll() {
+        return this.videosDao.findVideoKindAll();
     }
 }

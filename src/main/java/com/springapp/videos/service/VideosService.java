@@ -1,6 +1,7 @@
 package com.springapp.videos.service;
 
 import com.springapp.videos.entity.VideoFavouritesEntity;
+import com.springapp.videos.entity.VideoKindEntity;
 import com.springapp.videos.entity.VideosEntity;
 
 import java.util.List;
@@ -16,4 +17,5 @@ public interface VideosService {
     public String favouriteSave(VideoFavouritesEntity videoFavouritesEntity);
     public List<VideosEntity> findVideoTitle1AndTitle2(String title1, String title2);
     public List<VideosEntity> findVideoListFavouriteId(String id);
+    public List<VideoKindEntity> findVideoKindAll();
 }

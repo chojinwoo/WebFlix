@@ -1,6 +1,7 @@
 package com.springapp.videos.dao;
 
 import com.springapp.videos.entity.VideoFavouritesEntity;
+import com.springapp.videos.entity.VideoKindEntity;
 import com.springapp.videos.entity.VideosEntity;
 
 import java.util.List;
@@ -18,4 +19,5 @@ public interface VideosDao {
     public void favouriteSave(VideoFavouritesEntity videoFavouritesEntity);
     public void favouriteDelete(Integer video_favourites_seq);
     public List<VideosEntity> findVideoTitle1AndTitle2(String title1, String title2);
+    public List<VideoKindEntity> findVideoKindAll();
 }

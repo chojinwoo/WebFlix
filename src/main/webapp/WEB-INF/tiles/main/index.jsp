@@ -87,6 +87,7 @@
     $(document).ready(function() {
 
         function drawGrid(rowCount, video, favourite) {
+            $('#tm-right-section').empty();
             var row = [];
             var pageMax = 1;
             row.push('<div class="uk-grid" data-uk-grid-margin>');
@@ -116,7 +117,7 @@
                 row.push('                <i class="uk-icon-star"></i>');
                 row.push('                <i class="uk-icon-star"></i>');
                 row.push('            </span>');
-                row.push('            <span class="video-start-date" class="uk-float-right">'+this.start_date.substr(0, 4)+'</span>');
+                row.push('            <span class="video-start-date" class="uk-float-right">'+this.videoKindEntity.start_date.substr(0, 4)+'</span>');
                 row.push('        </p>');
                 row.push('    </div>');
                 row.push('</div>');
@@ -135,14 +136,6 @@
                     var paging = [];
                     paging.push('<div class="uk-margin-large-top uk-margin-bottom">');
                     paging.push('<ul class="uk-pagination">');
-//                    paging.push('<li class="uk-disabled"><span><i class="uk-icon-angle-double-left"></i/*></span></li>');
-//                    paging.push('<li class="uk-active"><span>1</span></li>');
-//                    paging.push('<li><a href="#">2</a></li>');
-//                    paging.push('<li><a href="#">3</a></li>');
-//                    paging.push('<li><a href="#">4</a></li>');
-//                    paging.push('<li><span>...</span></li>');
-//                    paging.push('<li><a href="#">20</a></li>');
-//                    paging.push('<li><a href="#"><i class="uk-icon-angle-double-right"></i></a></li>');*/
                     paging.push('</ul>');
                     paging.push('</div>');
                     $('#tm-right-section').append(paging.join(''));
@@ -161,12 +154,85 @@
 
 
 
+        function drawGridKind(rowCount, video_kind) {
+            $('#tm-right-section').empty();
+            var row = [];
+            var pageMax = 1;
+            row.push('<div class="uk-grid" data-uk-grid-margin>');
+            $.each(video_kind, function(i) {
+                row.push('<div class="video-row uk-width-large-1-4 uk-width-medium-1-3 uk-row-first" data-genre="'+this.videosEntities.genre+'" data-title3="'+this.title1+this.title2+'">');
+                row.push('    <div class="uk-overlay uk-overlay-hover">');
+                row.push('        <img class="video-thumbnail" src="${pageContext.request.contextPath}'+this.coverPath + this.coverName+'" alt="Image" />');
+                row.push('        <div class="uk-overlay-panel uk-overlay-fade uk-overlay-background  uk-overlay-icon"></div>');
+                row.push('        <a class="uk-position-cover video-media" href="${pageContext.request.contextPath}/viewList/' + this.video_kind_seq+'"></a>');
+                row.push('    </div>');
+                row.push('    <div class="uk-panel" >');
+                row.push('        <h5 class="uk-panel-title video-title">'+this.title1+this.title2+'</h5>');
+                row.push('        <p>');
+                row.push('            <span class="rating">');
+                row.push('                <i class="uk-icon-star"></i>');
+                row.push('                <i class="uk-icon-star"></i>');
+                row.push('                <i class="uk-icon-star"></i>');
+                row.push('                <i class="uk-icon-star"></i>');
+                row.push('                <i class="uk-icon-star"></i>');
+                row.push('            </span>');
+                row.push('            <span class="video-start-date" class="uk-float-right">'+this.videoKindEntity.start_date.substr(0, 4)+'</span>');
+                row.push('        </p>');
+                row.push('    </div>');
+                row.push('</div>');
+
+                if (i % rowCount == (rowCount -1)) {
+                    row.push('</div>');
+                    $('#tm-right-section').append(row.join(''));
+                    row = [];
+                    row.push('<div class="uk-grid" data-uk-grid-margin  style="display:none;">');
+                    pageMax++;
+                }
+
+                if((i+1) == Object.keys(video_kind).length) {
+                    row.push('</div>');
+                    $('#tm-right-section').append(row.join(''));
+                    var paging = [];
+                    paging.push('<div class="uk-margin-large-top uk-margin-bottom">');
+                    paging.push('<ul class="uk-pagination">');
+                    paging.push('</ul>');
+                    paging.push('</div>');
+                    $('#tm-right-section').append(paging.join(''));
+                    var pagination = UIkit.pagination($('.uk-pagination'), {
+                        items:pageMax,
+                        itemOnPage:1
+                    });
+
+                    $('.uk-pagination').on('select.uk.pagination', function(e, pageIndex){
+                        $('#tm-right-section .uk-grid').hide();
+                        $('#tm-right-section .uk-grid:eq('+pageIndex+')').show();
+                    });
+                }
+            });
+        }
+
+
+        var video_kind = JSON.parse('${json_videoKind}');
+        console.log('${json_videoKind}')
         var video = JSON.parse('${json_videos}');
         var favourite = JSON.parse('${json_video_favourite}');
-        drawGrid(20, video, favourite);
+
+
+        function draw() {
+            if(!$('#kind_view').prop('checked')) {
+                drawGrid(20, video, favourite);
+            } else {
+                drawGridKind(20, video_kind);
+            }
+        }
+
+        draw();
+
+        $('#kind_view').click(function() {
+            draw();
+        })
 
         $('.uk-nav li:not(#genre, #featured)').click(function(e) {
-            $('#tm-right-section').empty();
             var sortVideo = new Array();
             var genre = $(this).find('a').text();
 
@@ -178,15 +244,13 @@
                         sortVideo.push(this);
                     }
                 })
-                drawGrid(20, sortVideo, favourite);
+                draw();
             } else if($(this).attr('id') == 'all') {
-                drawGrid(20, video, favourite);
+                draw();
             }
         })
-
         /*nav bar 추천 클릭시 이벤트 */
         $('.uk-nav #favorites').click(function(e) {
-            $('#tm-right-section').empty();
             var sortVideo = [];
             $.each(video, function() {
                 var video_row = this;
@@ -198,7 +262,7 @@
                 })
             })
 
-            drawGrid(20, sortVideo, favourite);
+            draw();
         })
 
         var oldSearch = "";
@@ -207,7 +271,6 @@
             var search = $(this).val();
 
             if(search != oldSearch) {
-                $('#tm-right-section').empty();
 
                 if(search != "" && search != null) {
                     $.each(video, function() {
@@ -216,15 +279,11 @@
                         }
                     })
 
-                    drawGrid(20, sortVideo,favourite);
+                    draw();
                 } else {
-                    $('#tm-right-section').empty();
-                    drawGrid(20, video, favourite);
+                    draw();
                 }
             }
-
-
-
             oldSearch = search;
         });
     })
