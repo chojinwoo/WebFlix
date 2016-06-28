@@ -1,5 +1,6 @@
 package com.springapp.main.controller;
 
+import com.google.gson.Gson;
 import com.springapp.users.entity.UsersEntity;
 import com.springapp.videos.entity.VideoFavouritesEntity;
 import com.springapp.videos.entity.VideoKindEntity;
@@ -29,12 +30,7 @@ public class MainController {
     public String login(Model model) {
         try {
             UsersEntity usersEntity = (UsersEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            List<VideosEntity> videoList = this.videosService.findAll();
-            List<VideosEntity> favouriteList =this.videosService.findVideoListFavouriteId(usersEntity.getId());
-            List<VideoKindEntity> videoKindEntities = this.videosService.findVideoKindAll();
-            model.addAttribute("json_videoKind", new JSONArray(videoKindEntities).toString());
-            model.addAttribute("json_videos", videoList);
-            model.addAttribute("json_video_favourite", new JSONArray(favouriteList).toString());
+            mainSet(model, usersEntity);
             return "main/index";
         }catch(Exception e) {
             return "/login/login";
@@ -43,12 +39,12 @@ public class MainController {
     @RequestMapping(value="/", method=RequestMethod.POST)
     public String main(Model model) {
         UsersEntity usersEntity = (UsersEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<VideosEntity> videoList = this.videosService.findAll();
-        List<VideosEntity> favouriteList =this.videosService.findVideoListFavouriteId(usersEntity.getId());
-        List<VideoKindEntity> videoKindEntities = this.videosService.findVideoKindAll();
-        model.addAttribute("json_videoKind", new JSONArray(videoKindEntities).toString());
-        model.addAttribute("json_videos", videoList);
-        model.addAttribute("json_video_favourite", new JSONArray(favouriteList).toString());
+        mainSet(model, usersEntity);
         return "main/index";
+    }
+
+    private void mainSet(Model model, UsersEntity usersEntity) {
+        List<VideoKindEntity> videoKindEntities = this.videosService.findVideoKindAll();
+        model.addAttribute("json_videoKind", new Gson().toJson(videoKindEntities));
     }
 }

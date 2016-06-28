@@ -36,9 +36,6 @@
             </sec:authorize>
         </div>
         <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav="data-uk-nav">
-            <li id="favorites">
-                <a href="#"><i class="uk-icon-heart uk-margin-small-right"></i>즐겨찾기
-            </li>
             <li id="all" class="uk-active">
                 <a href="#">전체</a>
             </li>

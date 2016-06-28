@@ -14,7 +14,7 @@ import java.util.List;
 public interface UsersRepository extends JpaRepository<UsersEntity, String> {
 
     @Query(value= "select * from users where id = :id and enable = true", nativeQuery = true)
-    UsersEntity findOneIdAndEnable(@Param("id")String id);
+    UsersEntity findOneIdAndEnable(@Param("id") String id);
 
     @Query(value = "select * from users inner join auth on users.id = auth.id and users.id = :id", nativeQuery = true)
     List<UsersEntity> usersFindAll(@Param("id") String id);

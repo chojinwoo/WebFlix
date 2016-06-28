@@ -14,14 +14,60 @@
         $('.uk-search').css('display','inline-block');
     })
 </script>
+<style>
+    .slideView > img {
+        width:100%;
+    }
+</style>
 <!--     start Main Section   -->
 <div class="uk-container uk-container-center uk-margin-large-top uk-margin-large-bottom">
-
+    <div id="playList" class="uk-grid" style="width:100%;padding:10px 0px 10px 0px;">
+        <div class="uk-width-medium-2-3">
+            <div style="height:90%">
+                <ul id="subnav-pill-content" class="uk-switcher" id="info-switcher">
+                    <li class="uk-active">
+                        <p>히어로즈시즌4</p>
+                        <p>평화</p>
+                        <p>평점: 9.5</p>
+                    </li>
+                    <li class="">
+                        <div class="uk-margin" data-uk-slideset="{small: 2, medium: 4, large: 6, animation: 'scale', duration:200}">
+                            <div class="uk-slidenav-position uk-margin">
+                                <ul class="uk-slideset uk-grid uk-flex-center uk-grid-width-1-1 uk-grid-width-large-1-6 uk-grid-width-medium-1-4 uk-grid-width-small-1-2">
+                                    <li class="uk-active slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true">1화</li>
+                                    <li class="uk-active slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true">2화</li>
+                                    <li class="uk-active slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true">3화</li>
+                                    <li class="uk-active slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true"></li>
+                                    <li class="uk-active slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true"></li>
+                                    <li class="uk-active slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true"></li>
+                                    <li style="display: none;" class="slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true"></li>
+                                    <li style="display: none;" class="slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true"></li>
+                                    <li style="display: none;" class="slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true"></li>
+                                    <li style="display: none;" class="slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true"></li>
+                                </ul>
+                                <a href="#" class="uk-slidenav uk-slidenav-previous" data-uk-slideset-item="previous"></a>
+                                <a href="#" class="uk-slidenav uk-slidenav-next" data-uk-slideset-item="next"></a>
+                            </div>
+                            <ul class="uk-slideset-nav uk-dotnav uk-flex-center"><li data-uk-slideset-item="0" class="uk-active"><a></a></li><li data-uk-slideset-item="1" class=""><a></a></li></ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div style="height:10%;">
+                <ul class="uk-subnav uk-subnav-pill" data-uk-switcher="{connect:'#subnav-pill-content'}">
+                    <li class="uk-active" id="movieInfo"><a href="#">영화정보</a></li>
+                    <li class="" id="videoList"><a href="#">회차정보</a></li>
+                </ul>
+            </div>
+        </div>
+        <div  class="uk-width-medium-1-3">
+            <img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" style="width:100%; height:300px;">
+        </div>
+    </div>
     <div class="uk-grid">
         <div id="tm-left-section" class="uk-width-medium-3-10 uk-width-large-2-10 uk    -hidden-small">
             <div class="uk-panel">
                 <ul class="uk-nav  uk-nav-side uk-nav-parent-icon uk-margin-bottom" data-uk-nav="">
-                    <li id="favorites"><a href="#"><i class="uk-icon-heart uk-margin-small-right"></i>즐겨찾기</a></li>
                     <li id="all" class="uk-active"><a href="#">전체</a></li>
                     <li id="featured"><a href="#">추천</a></li>
                     <li><a href="#">영화</a></li>
@@ -82,77 +128,11 @@
         </div>
     </div>
 </div>
+
+
 <!--     ./ Main Section   -->
 <script>
     $(document).ready(function() {
-
-        function drawGrid(rowCount, video, favourite) {
-            $('#tm-right-section').empty();
-            var row = [];
-            var pageMax = 1;
-            row.push('<div class="uk-grid" data-uk-grid-margin>');
-            $.each(video, function(i) {
-                var favouriteFlag = 'N';
-                var video_seq = this.video_seq;
-                $.each(favourite, function () {
-                    if (this.video_seq == video_seq) {
-                        favouriteFlag = 'Y';
-                        return false;
-                    }
-                })
-
-                row.push('<div class="video-row uk-width-large-1-4 uk-width-medium-1-3 uk-row-first" data-favourite="'+favouriteFlag+'" data-genre="'+this.genre+'" data-title3="'+this.title3+'">');
-                row.push('    <div class="uk-overlay uk-overlay-hover">');
-                row.push('        <img class="video-thumbnail" src="${pageContext.request.contextPath}'+this.file_path + 'thumbnail/' + this.thumbnail+'" alt="Image" />');
-                row.push('        <div class="uk-overlay-panel uk-overlay-fade uk-overlay-background  uk-overlay-icon"></div>');
-                row.push('        <a class="uk-position-cover video-media" href="${pageContext.request.contextPath}/media/' + video_seq+'"></a>');
-                row.push('    </div>');
-                row.push('    <div class="uk-panel" >');
-                row.push('        <h5 class="uk-panel-title video-title">'+this.title3+'</h5>');
-                row.push('        <p>');
-                row.push('            <span class="rating">');
-                row.push('                <i class="uk-icon-star"></i>');
-                row.push('                <i class="uk-icon-star"></i>');
-                row.push('                <i class="uk-icon-star"></i>');
-                row.push('                <i class="uk-icon-star"></i>');
-                row.push('                <i class="uk-icon-star"></i>');
-                row.push('            </span>');
-                row.push('            <span class="video-start-date" class="uk-float-right">'+this.videoKindEntity.start_date.substr(0, 4)+'</span>');
-                row.push('        </p>');
-                row.push('    </div>');
-                row.push('</div>');
-
-                if (i % rowCount == (rowCount -1)) {
-                    row.push('</div>');
-                    $('#tm-right-section').append(row.join(''));
-                    row = [];
-                    row.push('<div class="uk-grid" data-uk-grid-margin  style="display:none;">');
-                    pageMax++;
-                }
-
-                if((i+1) == Object.keys(video).length) {
-                    row.push('</div>');
-                    $('#tm-right-section').append(row.join(''));
-                    var paging = [];
-                    paging.push('<div class="uk-margin-large-top uk-margin-bottom">');
-                    paging.push('<ul class="uk-pagination">');
-                    paging.push('</ul>');
-                    paging.push('</div>');
-                    $('#tm-right-section').append(paging.join(''));
-                    var pagination = UIkit.pagination($('.uk-pagination'), {
-                        items:pageMax,
-                        itemOnPage:1
-                    });
-
-                    $('.uk-pagination').on('select.uk.pagination', function(e, pageIndex){
-                        $('#tm-right-section .uk-grid').hide();
-                        $('#tm-right-section .uk-grid:eq('+pageIndex+')').show();
-                    });
-                }
-            });
-        }
-
-
 
         function drawGridKind(rowCount, video_kind) {
             $('#tm-right-section').empty();
@@ -160,7 +140,7 @@
             var pageMax = 1;
             row.push('<div class="uk-grid" data-uk-grid-margin>');
             $.each(video_kind, function(i) {
-                row.push('<div class="video-row uk-width-large-1-4 uk-width-medium-1-3 uk-row-first" data-genre="'+this.videosEntities.genre+'" data-title3="'+this.title1+this.title2+'">');
+                row.push('<div class="video-row uk-width-large-1-4 uk-width-medium-1-3 uk-row-first" data-genre="'+this.genre+'" data-title3="'+this.title1+this.title2+'">');
                 row.push('    <div class="uk-overlay uk-overlay-hover">');
                 row.push('        <img class="video-thumbnail" src="${pageContext.request.contextPath}'+this.coverPath + this.coverName+'" alt="Image" />');
                 row.push('        <div class="uk-overlay-panel uk-overlay-fade uk-overlay-background  uk-overlay-icon"></div>');
@@ -176,7 +156,7 @@
                 row.push('                <i class="uk-icon-star"></i>');
                 row.push('                <i class="uk-icon-star"></i>');
                 row.push('            </span>');
-                row.push('            <span class="video-start-date" class="uk-float-right">'+this.videoKindEntity.start_date.substr(0, 4)+'</span>');
+                row.push('            <span class="video-start-date" class="uk-float-right">'+this.start_date.substr(0, 4)+'</span>');
                 row.push('        </p>');
                 row.push('    </div>');
                 row.push('</div>');
@@ -213,17 +193,10 @@
 
 
         var video_kind = JSON.parse('${json_videoKind}');
-        console.log('${json_videoKind}')
-        var video = JSON.parse('${json_videos}');
-        var favourite = JSON.parse('${json_video_favourite}');
-
+        <%--var favourite = JSON.parse('${json_video_favourite}');--%>
 
         function draw() {
-            if(!$('#kind_view').prop('checked')) {
-                drawGrid(20, video, favourite);
-            } else {
-                drawGridKind(20, video_kind);
-            }
+            drawGridKind(20, video_kind);
         }
 
         draw();
@@ -248,21 +221,6 @@
             } else if($(this).attr('id') == 'all') {
                 draw();
             }
-        })
-        /*nav bar 추천 클릭시 이벤트 */
-        $('.uk-nav #favorites').click(function(e) {
-            var sortVideo = [];
-            $.each(video, function() {
-                var video_row = this;
-                var video_seq = this.video_seq;
-                $.each(favourite, function() {
-                    if(this.video_seq == video_seq) {
-                        sortVideo.push(video_row);
-                    }
-                })
-            })
-
-            draw();
         })
 
         var oldSearch = "";

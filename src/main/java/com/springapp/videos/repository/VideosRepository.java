@@ -18,5 +18,5 @@ public interface VideosRepository extends JpaRepository<VideosEntity, Integer> {
     List<VideosEntity> findVideoListFavouriteId(@Param("id") String id);
 
     @Query(value = "select * from videos where title1 = :title1 and title2 = :title2 order by title3 asc", nativeQuery = true)
-    List<VideosEntity> findVideoTitle1AndTitle2(@Param("title1")String tite1, @Param("title2")String title2);
+    List<VideosEntity> findVideoTitle1AndTitle2(@Param("title1") String tite1, @Param("title2") String title2);
 }

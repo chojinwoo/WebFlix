@@ -38,10 +38,6 @@
         </sec:authorize>
         <sec:authorize access="isAuthenticated()">
             <div class="uk-navbar-flip uk-hidden-small" >
-                <div class="switch" style="display: inline-block;vertical-align: middle;position: relative;">
-                    <input id="kind_view" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
-                    <label for="kind_view"></label>
-                </div>
                 <div class="uk-button-dropdown" data-uk-dropdown="{mode=click}" aria-haspopup="true" aria-expended="false">
                     <button class="uk-button uk-button-link uk-button-large"><sec:authentication property="principal.name"/> <i class="uk-icon-caret-down"></i></button>
                     <div class="uk-dropdown uk-dropdown-bottom" style="top:30px;left:-100px">

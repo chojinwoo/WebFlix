@@ -1,7 +1,6 @@
 package com.springapp.videos.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * Created by bangae1 on 2016-06-27.
@@ -20,7 +19,6 @@ public class VideoKindEntity {
     private double star;
     private String start_date;
     private boolean flag;
-    private List<VideosEntity> videosEntities;
 
     @Id
     @Column(name = "video_kind_seq")
@@ -131,16 +129,6 @@ public class VideoKindEntity {
 
     public void setFlag(boolean flag) {
         this.flag = flag;
-    }
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name="video_kind_seq")
-    public List<VideosEntity> getVideosEntities() {
-        return videosEntities;
-    }
-
-    public void setVideosEntities(List<VideosEntity> videosEntities) {
-        this.videosEntities = videosEntities;
     }
 
     @Override
