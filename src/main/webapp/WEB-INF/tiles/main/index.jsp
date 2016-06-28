@@ -53,7 +53,7 @@
                     </li>
                 </ul>
             </div>
-            <div style="height:10%;">
+            <div style="height:10%; padding-bottom:10px;">
                 <ul class="uk-subnav uk-subnav-pill" data-uk-switcher="{connect:'#subnav-pill-content'}">
                     <li class="uk-active" id="movieInfo"><a href="#">영화정보</a></li>
                     <li class="" id="videoList"><a href="#">회차정보</a></li>
