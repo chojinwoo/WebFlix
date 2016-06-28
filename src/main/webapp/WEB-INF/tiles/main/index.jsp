@@ -18,72 +18,122 @@
     .slideView > img {
         width:100%;
     }
+    .uk-overlay {
+        display:block;
+    }
+    @media (min-width: 960px) {
+        .uk-grid-width-large-1-4 > * {
+            width: 25%;
+        }
+    }
+
+    @media (min-width: 768px) and (max-width: 960px) {
+        .uk-grid-width-medium-1-4 > * {
+            width: 50%;
+        }
+    }
+
+    #playList-slide {
+        height:300px;
+    }
+
+    .slideView > img {
+        height:250px;
+        cursor:pointer;
+    }
+
+    .uk-slidenav {
+        color:white;
+    }
+
+    .uk-dotnav > .uk-active > * {
+        background: rgba(100, 100, 100, 1);
+    }
+
+    .uk-dotnav > * > * {
+        background: rgba(50, 50, 50, 0.7);
+    }
+
+    .mv-container {
+        position: absolute;
+        display: none;
+        width: 100%;
+        top: 0px;
+        z-index: 2000;
+    }
+
+    .mv-video {
+        width: 100%;
+        height: 100%;
+        position: absolute
+    }
+
+    .mv-cancel {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 3000;
+        cursor: pointer;
+    }
+
+    #playList {
+        width: 100%;
+        padding: 10px 0px 10px 0px;
+        display: none;
+    }
 </style>
 <!--     start Main Section   -->
+<div id="video" class="mv-container">
+
+    <div id="video-cancel" class="mv-cancel"><i class="uk-icon-arrow-circle-left uk-icon-large"></i></div>
+</div>
 <div class="uk-container uk-container-center uk-margin-large-top uk-margin-large-bottom">
-    <div id="playList" class="uk-grid" style="width:100%;padding:10px 0px 10px 0px;">
+    <div id="playList" class="uk-grid">
         <div class="uk-width-medium-2-3">
             <div style="height:90%">
                 <ul id="subnav-pill-content" class="uk-switcher" id="info-switcher">
-                    <li class="uk-active">
-                        <p>히어로즈시즌4</p>
-                        <p>평화</p>
-                        <p>평점: 9.5</p>
+                    <li class="uk-active" id="playList-info">
+                        <h2 id="playList-info-title3"></h2>
+                        <p id="playList-info-story"></p>
+                        <p id="playList-info-genre"></p>
+                        <p id="playList-info-star"></p>
+                        <p id="playList-info-actor"></p>
                     </li>
-                    <li class="">
-                        <div class="uk-margin" data-uk-slideset="{small: 2, medium: 4, large: 6, animation: 'scale', duration:200}">
-                            <div class="uk-slidenav-position uk-margin">
-                                <ul class="uk-slideset uk-grid uk-flex-center uk-grid-width-1-1 uk-grid-width-large-1-6 uk-grid-width-medium-1-4 uk-grid-width-small-1-2">
-                                    <li class="uk-active slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true">1화</li>
-                                    <li class="uk-active slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true">2화</li>
-                                    <li class="uk-active slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true">3화</li>
-                                    <li class="uk-active slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true"></li>
-                                    <li class="uk-active slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true"></li>
-                                    <li class="uk-active slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true"></li>
-                                    <li style="display: none;" class="slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true"></li>
-                                    <li style="display: none;" class="slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true"></li>
-                                    <li style="display: none;" class="slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true"></li>
-                                    <li style="display: none;" class="slideView"><img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" data-holder-rendered="true"></li>
-                                </ul>
-                                <a href="#" class="uk-slidenav uk-slidenav-previous" data-uk-slideset-item="previous"></a>
-                                <a href="#" class="uk-slidenav uk-slidenav-next" data-uk-slideset-item="next"></a>
-                            </div>
-                            <ul class="uk-slideset-nav uk-dotnav uk-flex-center"><li data-uk-slideset-item="0" class="uk-active"><a></a></li><li data-uk-slideset-item="1" class=""><a></a></li></ul>
-                        </div>
+                    <li class="slide-append-target">
+
                     </li>
                 </ul>
             </div>
             <div style="height:10%; padding-bottom:10px;">
-                <ul class="uk-subnav uk-subnav-pill" data-uk-switcher="{connect:'#subnav-pill-content'}">
+                <ul id="playList-nav" class="uk-subnav uk-subnav-pill" data-uk-switcher="{connect:'#subnav-pill-content'}">
                     <li class="uk-active" id="movieInfo"><a href="#">영화정보</a></li>
-                    <li class="" id="videoList"><a href="#">회차정보</a></li>
                 </ul>
             </div>
         </div>
         <div  class="uk-width-medium-1-3">
-            <img src="${pageContext.request.contextPath}/resources/img/HeroesSeason4.png" style="width:100%; height:300px;">
+            <img id="playList-cover" src="" style="width:100%; height:400px;">
         </div>
     </div>
     <div class="uk-grid">
         <div id="tm-left-section" class="uk-width-medium-3-10 uk-width-large-2-10 uk    -hidden-small">
             <div class="uk-panel">
                 <ul class="uk-nav  uk-nav-side uk-nav-parent-icon uk-margin-bottom" data-uk-nav="">
-                    <li id="all" class="uk-active"><a href="#">전체</a></li>
-                    <li id="featured"><a href="#">추천</a></li>
-                    <li><a href="#">영화</a></li>
-                    <li><a href="#">드라마</a></li>
+                    <li id="all" class="uk-active"><a href="#all">전체</a></li>
+                    <li id="featured"><a href="#featured">추천</a></li>
+                    <li><a href="#movie">영화</a></li>
+                    <li><a href="#drama">드라마</a></li>
                     <li class="uk-parent" id="genre">
-                        <a href="#">장르</a>
+                        <a href="#genre">장르</a>
                         <ul class="uk-nav-sub">
-                            <li><a href="#">액션</a></li>
-                            <li><a href="#">판타지</a></li>
-                            <li><a href="#">애니메이션</a> </li>
-                            <li><a href="#">SF</a> </li>
-                            <li><a href="#">어드벤쳐</a> </li>
-                            <li><a href="#">코믹</a> </li>
-                            <li><a href="#">스릴러</a> </li>
-                            <li><a href="#">로맨스</a> </li>
-                            <li><a href="#">다큐</a> </li>
+                            <li><a href="#action">액션</a></li>
+                            <li><a href="#fantasy">판타지</a></li>
+                            <li><a href="#animation">애니메이션</a> </li>
+                            <li><a href="#sf">SF</a> </li>
+                            <li><a href="#advence">어드벤쳐</a> </li>
+                            <li><a href="#comic">코믹</a> </li>
+                            <li><a href="#horror ">스릴러</a> </li>
+                            <li><a href="#romance">로맨스</a> </li>
+                            <li><a href="#documentary">다큐</a> </li>
                         </ul>
                     </li>
                     <li class="uk-nav-divider"></li>
@@ -133,35 +183,20 @@
 <!--     ./ Main Section   -->
 <script>
     $(document).ready(function() {
-
-        $(document).on('click',$('.video-media'), function(e) {
-            var video_kind_seq = $(e.target).attr('data-kind-seq');
-            $.ajax({
-                url:"${pageContext.request.contextPath}/viewList/"+video_kind_seq,
-                type:'post',
-                dataType:'json',
-                success:function(data) {
-                    alert(data);
-                }, error:function(xhr, status, error) {
-                    console.log(error);
-                }
-            })
-        })
-
         function drawGridKind(rowCount, video_kind) {
             $('#tm-right-section').empty();
             var row = [];
             var pageMax = 1;
             row.push('<div class="uk-grid" data-uk-grid-margin>');
             $.each(video_kind, function(i) {
-                row.push('<div class="video-row uk-width-large-1-4 uk-width-medium-1-3 uk-row-first" data-genre="'+this.genre+'" data-title3="'+this.title1+this.title2+'">');
+                row.push('<div class="video-row uk-width-large-1-4 uk-width-medium-1-3 uk-row-first" data-genre="'+this.genre+'" data-title3="'+this.title1+ " " +this.title2+'">');
                 row.push('    <div class="uk-overlay uk-overlay-hover">');
                 row.push('        <img class="video-thumbnail" src="${pageContext.request.contextPath}'+this.coverPath + this.coverName+'" alt="Image" />');
                 row.push('        <div class="uk-overlay-panel uk-overlay-fade uk-overlay-background  uk-overlay-icon"></div>');
                 row.push('        <a class="uk-position-cover video-media" data-kind-seq="'+this.videoKindSeq+'"></a>');
                 row.push('    </div>');
                 row.push('    <div class="uk-panel" >');
-                row.push('        <h5 class="uk-panel-title video-title">'+this.title1+this.title2+'</h5>');
+                row.push('        <h5 class="uk-panel-title video-title">'+this.title1+" "+this.title2+'</h5>');
                 row.push('        <p>');
                 row.push('            <span class="rating">');
                 row.push('                <i class="uk-icon-star"></i>');
@@ -209,11 +244,11 @@
         var video_kind = JSON.parse('${json_videoKind}');
         <%--var favourite = JSON.parse('${json_video_favourite}');--%>
 
-        function draw() {
-            drawGridKind(20, video_kind);
+        function draw(jsonKind) {
+            drawGridKind(20, jsonKind);
         }
 
-        draw();
+        draw(video_kind);
 
 
         $('.uk-nav li:not(#genre, #featured)').click(function(e) {
@@ -223,14 +258,14 @@
             $('.uk-nav li').removeClass('uk-active');
             $(this).addClass('uk-active');
             if($(this).attr('id') != 'all') {
-                $.each(video, function() {
+                $.each(video_kind, function() {
                     if(this.genre.indexOf(genre) > -1 ) {
                         sortVideo.push(this);
                     }
                 })
-                draw();
+                draw(sortVideo);
             } else if($(this).attr('id') == 'all') {
-                draw();
+                draw(video_kind);
             }
         })
 
@@ -242,18 +277,117 @@
             if(search != oldSearch) {
 
                 if(search != "" && search != null) {
-                    $.each(video, function() {
-                        if(this.title3.indexOf(search) > -1 ) {
+                    $.each(video_kind, function() {
+                        var title3 = this.title1 + " "+ this.title2;
+                        if(title3.indexOf(search) > -1 ) {
                             sortVideo.push(this);
                         }
                     })
 
-                    draw();
+                    draw(sortVideo);
                 } else {
-                    draw();
+                    draw(video_kind);
                 }
             }
             oldSearch = search;
         });
+
+
+        $(document).on('click', '#playList-info-play', function() {
+            var movie_file = $(this).attr('data-movie-file');
+            var movie_type = $(this).attr('data-movie-type');
+            var video = '<video controls="controls" class="mv-video">';
+            video += '<source src="${pageContext.request.contextPath}'+movie_file+'" type="video/mp4"/>';
+            video += '</video>'
+            $('#video video').remove();
+            $('#video').prepend(video);
+            if(movie_type == 1) {
+                $('#movieInfo').trigger('click');
+            }
+
+            $('.uk-container').css('opacity', 0.1);
+            $('.uk-navbar').css('opacity', 0.1);
+            $('#video').show();
+        })
+
+        $(document).on('click', '#video-cancel', function() {
+            $('.uk-container').css('opacity', 1);
+            $('.uk-navbar').css('opacity', 1);
+            $('#video').hide();
+            $('#video video')[0].pause();
+        })
+        $(document).on('click','.video-media', function(e) {
+            $('#playList').hide();
+            var video_kind_seq = $(e.target).attr('data-kind-seq');
+            $.ajax({
+                url:"${pageContext.request.contextPath}/viewList/"+video_kind_seq,
+                type:'post',
+                dataType:'json',
+                success:function(data) {
+                    $('body, html').animate({scrollTop:0}, 500);
+
+                    var _playList = $('#playList');
+                    _playList.find('#playList-nav').find('#playList-info-play').closest('li').remove();
+                    _playList.find('#playList-nav #videoList').remove();
+                    _playList.find('.slide-main').remove();
+
+                    if(data.length == 1) {
+
+                        _playList.find('#playList-info-title3').text(data[0].title3);
+                        _playList.find('#playList-info-story').text(data[0].story);
+                        _playList.find('#playList-info-star').text(data[0].videoKindEntity.star);
+                        _playList.find('#playList-info-genre').text(data[0].videoKindEntity.genre);
+                        _playList.find('#playList-info-actor').text(data[0].videoKindEntity.actor);
+                        _playList.find('#playList-cover').attr('src', '${pageContext.request.contextPath}'+data[0].videoKindEntity.coverPath+data[0].videoKindEntity.coverName);
+                        _playList.find('#playList-nav').append('<li><a id="playList-info-play" data-movie-type="1" data-video-seq="'+data[0].video_seq+'" data-movie-file="'+data[0].file_path+data[0].file_name+'"><i class="uk-icon-play"></i> 재생</a></li>   ');
+                        $('#video').css({
+                            height:$(window).height()+'px'
+                        })
+
+                    } else {
+                        var nav = '<li class="" id="videoList"><a href="#">회차정보</a></li>';
+
+                        _playList.find('#playList-info-title3').text(data[0].title3);
+                        _playList.find('#playList-info-story').text(data[0].story);
+                        _playList.find('#playList-info-star').text(data[0].videoKindEntity.star);
+                        _playList.find('#playList-info-genre').text(data[0].videoKindEntity.genre);
+                        _playList.find('#playList-info-actor').text(data[0].videoKindEntity.actor);
+                        _playList.find('#playList-cover').attr('src', '${pageContext.request.contextPath}'+data[0].videoKindEntity.coverPath+data[0].videoKindEntity.coverName);
+                        _playList.find('#playList-nav').append(nav);
+
+                        var slide = [];
+                        slide.push('<div class="uk-margin slide-main">')
+                        slide.push('<div class="uk-slidenav-position uk-margin">')
+                        slide.push('<ul id="playList-slide" class="uk-slideset uk-grid uk-flex-center uk-grid-width-1-1 uk-grid-width-large-1-6 uk-grid-width-medium-1-4 uk-grid-width-small-1-2">')
+
+
+                        $.each(data, function(i) {
+                            if(i < 7) {
+                                slide.push('<li class="uk-active slideView" id="playList-info-play" data-movie-type="2" data-video-seq="'+this.video_seq+'" data-movie-file="'+this.file_path+this.file_name+'"><img src="${pageContext.request.contextPath}'+this.file_path+'thumbnail/'+this.thumbnail+'" data-holder-rendered="true">'+this.title3+'</li>');
+                            }else {
+                                slide.push('<li style="display: none;" class="slideView" id="playList-info-play" data-movie-type="2" data-video-seq=""><img src="${pageContext.request.contextPath}'+this.file_path+'thumbnail/'+this.thumbnail+'" data-holder-rendered="true">'+this.title3+'</li>');
+                            }
+                        })
+                        slide.push('</ul>');
+                        slide.push('<a href="#" class="uk-slidenav uk-slidenav-previous" data-uk-slideset-item="previous"></a>');
+                        slide.push('<a href="#" class="uk-slidenav uk-slidenav-next" data-uk-slideset-item="next"></a>');
+                        slide.push('</div>');
+                        slide.push('<ul class="uk-slideset-nav uk-dotnav uk-flex-center"><li data-uk-slideset-item="0" class="uk-active"><a></a></li><li data-uk-slideset-item="1" class=""><a></a></li></ul>');
+                        slide.push('</div>');
+                        _playList.find('.slide-append-target').append(slide.join(''));
+                        var slideset = UIkit.slideset('.slide-main', {small: 1, medium: 2, large: 4, animation: "scale", duration:200});
+                        $('#video').css({
+                            height:$(window).height()+'px'
+                        })
+                    }
+
+
+                }, error:function(xhr, status, error) {
+                    console.log(error);
+                }, complete:function() {
+                    $('#playList').slideDown(800);
+                }
+            })
+        })
     })
 </script>

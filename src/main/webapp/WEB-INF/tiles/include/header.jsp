@@ -23,10 +23,10 @@
     <div class="uk-container uk-container-center ">
         <a class="uk-navbar-brand uk-hidden-small" href="${pageContext.request.contextPath}/"><i class="uk-icon-small uk-text-primary uk-margin-small-right uk-icon-play-circle"></i> WEBFLIX</a>
 
-        <form class="uk-search uk-margin-small-top uk-margin-left uk-hidden-small" style="display:none;">
+        <div class="uk-search uk-margin-small-top uk-margin-left uk-hidden-small" style="display:none;">
             <input id="video_search" class="uk-search-field" type="search" placeholder="Search..." autocomplete="off"/>
             <div class="uk-dropdown uk-dropdown-flip uk-dropdown-search" aria-expanded="false"></div>
-        </form>
+        </div>
 
         <sec:authorize access="isAnonymous()">
             <div class="uk-navbar-flip uk-hidden-small">
@@ -43,8 +43,8 @@
                     <div class="uk-dropdown uk-dropdown-bottom" style="top:30px;left:-100px">
                         <ul class="uk-nav uk-nav-dropdown">
                             <li class="nav-header">USER</li>
-                            <li><a href="#">HTML</a></li>
-                            <li><a href="#">CSS</a></li>
+                            <li><a href="">HTML</a></li>
+                            <li><a href="">CSS</a></li>
                             <sec:authorize access="hasRole('ROLE_ADMIN')">
                                 <li class="uk-nav-divider"></li>
                                 <li class="nav-header">ADMIN</li>

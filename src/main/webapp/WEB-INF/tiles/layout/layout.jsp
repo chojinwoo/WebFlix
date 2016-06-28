@@ -56,6 +56,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/components/pagination.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/components/grid.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/components/slideset.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/components/slider.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/core/tab.js"></script>
 </head>
 <body>

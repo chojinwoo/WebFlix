@@ -156,4 +156,21 @@ public class VideoKindEntity {
         result = 31 * result + (title2 != null ? title2.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "VideoKindEntity{" +
+                "videoKindSeq=" + videoKindSeq +
+                ", coverName='" + coverName + '\'' +
+                ", coverPath='" + coverPath + '\'' +
+                ", actor='" + actor + '\'' +
+                ", country='" + country + '\'' +
+                ", genre='" + genre + '\'' +
+                ", title1='" + title1 + '\'' +
+                ", title2='" + title2 + '\'' +
+                ", star=" + star +
+                ", start_date='" + start_date + '\'' +
+                ", flag=" + flag +
+                '}';
+    }
 }

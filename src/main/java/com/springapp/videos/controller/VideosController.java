@@ -91,11 +91,12 @@ public class VideosController implements Serializable {
 
     @RequestMapping(value="/media/{video_seq}", method = RequestMethod.GET)
     public String media(Model model, @PathVariable("video_seq") String video_seq, Principal principal) {
-        UsersEntity usersEntity = (UsersEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         VideosEntity videosEntity = videosService.findOne(Integer.parseInt(video_seq));
+        System.out.println(videosEntity.toString());
         model.addAttribute("video", videosEntity);
-        model.addAttribute("video_favourites", videosService.findFavouritesIdAndSeq(usersEntity.getId(), video_seq));
-        model.addAttribute("same_video", videosService.findVideoTitle1AndTitle2(videosEntity.getVideoKindEntity().getTitle1(), videosEntity.getVideoKindEntity().getTitle2()));
+        model.addAttribute("same_video",videosService.findVideoKindSeq(String.valueOf(videosEntity.getVideo_kind_seq())));
+        model.addAttribute("video_favourites", videosService.findFavouritesIdAndSeq(principal.getName(), video_seq));
+//        model.addAttribute("same_video", videosService.findVideoTitle1AndTitle2(videosEntity.getVideoKindEntity().getTitle1(), videosEntity.getVideoKindEntity().getTitle2()));
         return "main/media";
     }
 

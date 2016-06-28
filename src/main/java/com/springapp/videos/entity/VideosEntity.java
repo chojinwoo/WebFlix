@@ -119,15 +119,14 @@ public class VideosEntity {
     public String toString() {
         return "VideosEntity{" +
                 "video_seq=" + video_seq +
-//                ", genre=" + genre +
-//                ", title1='" + title1 + '\'' +
-//                ", title2='" + title2 + '\'' +
+                ", video_kind_seq=" + video_kind_seq +
                 ", title3='" + title3 + '\'' +
+                ", story='" + story + '\'' +
                 ", reg_date='" + reg_date + '\'' +
                 ", file_name='" + file_name + '\'' +
                 ", file_path='" + file_path + '\'' +
                 ", thumbnail='" + thumbnail + '\'' +
-//                ", flag=" + flag +
+                ", videoKindEntity=" + videoKindEntity +
                 '}';
     }
 }

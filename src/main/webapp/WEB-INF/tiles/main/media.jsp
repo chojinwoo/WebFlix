@@ -90,11 +90,10 @@
                 <ul id="media-tabs" class="uk-switcher">
 
                     <!--     start Tab Panel 1 (Reviews Sections) -->
-
                     <li>
-                        <h2 id="title3" class="uk-text-contrast uk-margin-large-top">${video.title3}
+                        <h2 id="title3" class="uk-text-contrast uk-margin-large-top"><%--${video.title3}--%>
                             <span class="rating uk-margin-small-left uk-h4 uk-text-warning">
-                                <c:set var="rate" value="${video.star}"/>
+                                <c:set var="rate" value="0"/>
                                 <c:if test="${rate == 0}">
                                     <i class="uk-icon-star-o"></i>
                                     <i class="uk-icon-star-o"></i>
@@ -175,24 +174,24 @@
                             </span>
                         </h2>
                         <ul class="uk-subnav uk-subnav-line">
-                            <li ><i class="uk-icon-star uk-margin-small-right"></i> ${video.star}</li>
+                            <li ><i class="uk-icon-star uk-margin-small-right"></i> <%--${video.star}--%></li>
                             <li id="play_time"><i class="uk-icon-clock-o uk-margin-small-right"></i> </li>
-                            <li>    ${video.start_date}</li>
+                            <li>    <%--${video.start_date}--%></li>
                         </ul>
                         <hr/>
-                        <p class="uk-text-muted uk-h4">${video.story}</p>
+                        <p class="uk-text-muted uk-h4"><%--${video.story}--%></p>
                         <dl class="uk-description-list-horizontal uk-margin-top">
                             <dt>Starring</dt>
                             <dd><ul class="uk-subnav ">
-                                <li><a href="#">${video.actor}</a></li>
+                                <li><a href="#"><%--${video.actor}--%></a></li>
                             </ul></dd>
                             <dt>Genres</dt>
                             <dd><ul class="uk-subnav ">
-                                <li><a href="#">${video.genre}</a></li>
+                                <li><a href="#"><%--${video.genre}--%></a></li>
                             </ul></dd>
                             <dt>Countries</dt>
                             <dd><ul class="uk-subnav ">
-                                <li><a href="#">${video.country}</a></li>
+                                <li><a href="#"><%--${video.country}--%></a></li>
                             </ul></dd>
                         </dl>
 
@@ -328,13 +327,13 @@
         <div class="uk-margin" data-uk-slideset="{small: 2, medium: 4, large: 6}">
             <div class="uk-slidenav-position uk-margin">
                 <ul class="uk-slideset uk-grid uk-flex-center">
-                    <c:forEach items="${same_video}" var="video">
-                        <li>
-                            <a href="${pageContext.request.contextPath}/media/${video.video_seq}"><img src="${pageContext.request.contextPath}${video.file_path}thumbnail/${video.thumbnail}" width="600" height="400" alt=""/>
-                                <span class="uk-preview-title">${video.title3}</span>
-                            </a>
-                        </li>
-                    </c:forEach>
+                    <%--<c:forEach items="${same_video}" var="video">--%>
+                        <%--<li>--%>
+                            <%--<a href="${pageContext.request.contextPath}/media/${video.video_seq}"><img src="${pageContext.request.contextPath}${video.file_path}thumbnail/${video.thumbnail}" width="600" height="400" alt=""/>--%>
+                                <%--<span class="uk-preview-title">${video.title3}</span>--%>
+                            <%--</a>--%>
+                        <%--</li>--%>
+                    <%--</c:forEach>--%>
                 </ul>
                 <a href="#" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slideset-item="previous"></a>
                 <a href="#" class="uk-slidenav uk-slidenav-next uk-slidenav-contrast" data-uk-slideset-item="next"></a>
