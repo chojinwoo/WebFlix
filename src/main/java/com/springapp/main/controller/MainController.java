@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,5 +48,11 @@ public class MainController {
     private void mainSet(Model model, UsersEntity usersEntity) {
         List<VideoKindEntity> videoKindEntities = this.videosService.findVideoKindAll();
         model.addAttribute("json_videoKind", new Gson().toJson(videoKindEntities));
+    }
+
+    @RequestMapping(value="/viewList/{videoKindSeq}", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String findVideoKindSeq(@PathVariable("videoKindSeq")String videoKindSeq) {
+        return  new Gson().toJson(this.videosService.findVideoKindSeq(videoKindSeq));
     }
 }

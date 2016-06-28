@@ -15,8 +15,7 @@ import java.util.List;
  * Created by bangae11 on 2016-06-19.
  */
 @Service
-public class
-VideosServiceImpl implements VideosService {
+public class VideosServiceImpl implements VideosService {
 
     @Autowired
     private VideosDao videosDao;
@@ -73,5 +72,10 @@ VideosServiceImpl implements VideosService {
     @Override
     public List<VideoKindEntity> findVideoKindAll() {
         return this.videosDao.findVideoKindAll();
+    }
+
+    @Override
+    public List<VideosEntity> findVideoKindSeq(String videoKindSeq) {
+        return this.videosDao.findVideoKindSeq(videoKindSeq);
     }
 }

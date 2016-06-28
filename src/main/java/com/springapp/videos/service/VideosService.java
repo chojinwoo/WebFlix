@@ -18,4 +18,5 @@ public interface VideosService {
     public List<VideosEntity> findVideoTitle1AndTitle2(String title1, String title2);
     public List<VideosEntity> findVideoListFavouriteId(String id);
     public List<VideoKindEntity> findVideoKindAll();
+    public List<VideosEntity> findVideoKindSeq(String videoKindSeq);
 }

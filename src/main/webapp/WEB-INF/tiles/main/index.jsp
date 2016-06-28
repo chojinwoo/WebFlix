@@ -134,6 +134,20 @@
 <script>
     $(document).ready(function() {
 
+        $(document).on('click',$('.video-media'), function(e) {
+            var video_kind_seq = $(e.target).attr('data-kind-seq');
+            $.ajax({
+                url:"${pageContext.request.contextPath}/viewList/"+video_kind_seq,
+                type:'post',
+                dataType:'json',
+                success:function(data) {
+                    alert(data);
+                }, error:function(xhr, status, error) {
+                    console.log(error);
+                }
+            })
+        })
+
         function drawGridKind(rowCount, video_kind) {
             $('#tm-right-section').empty();
             var row = [];
@@ -144,7 +158,7 @@
                 row.push('    <div class="uk-overlay uk-overlay-hover">');
                 row.push('        <img class="video-thumbnail" src="${pageContext.request.contextPath}'+this.coverPath + this.coverName+'" alt="Image" />');
                 row.push('        <div class="uk-overlay-panel uk-overlay-fade uk-overlay-background  uk-overlay-icon"></div>');
-                row.push('        <a class="uk-position-cover video-media" href="${pageContext.request.contextPath}/viewList/' + this.video_kind_seq+'"></a>');
+                row.push('        <a class="uk-position-cover video-media" data-kind-seq="'+this.videoKindSeq+'"></a>');
                 row.push('    </div>');
                 row.push('    <div class="uk-panel" >');
                 row.push('        <h5 class="uk-panel-title video-title">'+this.title1+this.title2+'</h5>');
@@ -201,9 +215,6 @@
 
         draw();
 
-        $('#kind_view').click(function() {
-            draw();
-        })
 
         $('.uk-nav li:not(#genre, #featured)').click(function(e) {
             var sortVideo = new Array();
