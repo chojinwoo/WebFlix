@@ -299,6 +299,7 @@
             var video_seq = $(this).attr('data-video-seq');
             var movie_file = $(this).attr('data-movie-file');
             var movie_type = $(this).attr('data-movie-type');
+            var video_kind_seq = $(this).attr('data-video-kind-seq');
             var video = '<video controls="controls" class="mv-video" data-video-seq="'+video_seq+'"  autoplay="autoplay">';
             video += '<source src="${pageContext.request.contextPath}'+movie_file+'" type="video/mp4"/>';
             video += '</video>'
@@ -307,6 +308,8 @@
 
             $('.mv-video').remove();
             $('#video').prepend(video);
+
+            localStorage.setItem(video_kind_seq, video_seq);
 
             /* 재생종료시*/
             $('.mv-video').on('ended', function() {
@@ -369,7 +372,7 @@
                         _playList.find('#playList-info-genre').text(data[0].videoKindEntity.genre);
                         _playList.find('#playList-info-actor').text(data[0].videoKindEntity.actor);
                         _playList.find('#playList-cover').attr('src', '${pageContext.request.contextPath}'+data[0].videoKindEntity.coverPath+data[0].videoKindEntity.coverName);
-                        _playList.find('#playList-nav').append('<li><a id="playList-info-play" data-movie-type="1" data-video-seq="'+data[0].video_seq+'" data-movie-file="'+data[0].file_path+data[0].file_name+'"><i class="uk-icon-play"></i> 재생</a></li>   ');
+                        _playList.find('#playList-nav').append('<li><a id="playList-info-play" data-movie-type="1" data-video-kind-seq="'+data[0].videoKindEntity.videoKindSeq+'" data-video-seq="'+data[0].video_seq+'" data-movie-file="'+data[0].file_path+data[0].file_name+'"><i class="uk-icon-play"></i> 재생</a></li>   ');
                         $('#video').css({
                             height:$(window).height()+'px'
                         })
@@ -377,13 +380,36 @@
                     } else {
                         var nav = '<li class="" id="videoList"><a href="#">회차정보</a></li>';
 
-                        _playList.find('#playList-info-title3').text(data[0].title3);
-                        _playList.find('#playList-info-story').text(data[0].story);
-                        _playList.find('#playList-info-star').text(data[0].videoKindEntity.star);
-                        _playList.find('#playList-info-genre').text(data[0].videoKindEntity.genre);
-                        _playList.find('#playList-info-actor').text(data[0].videoKindEntity.actor);
-                        _playList.find('#playList-cover').attr('src', '${pageContext.request.contextPath}'+data[0].videoKindEntity.coverPath+data[0].videoKindEntity.coverName);
-                        _playList.find('#playList-nav').append(nav);
+                        var flag = true;
+                        $.each(data, function() {
+                            var kind_seq = this.videoKindEntity.videoKindSeq;
+                            if(this.video_seq == localStorage.getItem(kind_seq)) {
+                                _playList.find('#playList-info-title3').text(this.title3);
+                                _playList.find('#playList-info-story').text(this.story);
+                                _playList.find('#playList-info-star').text(this.videoKindEntity.star);
+                                _playList.find('#playList-info-genre').text(this.videoKindEntity.genre);
+                                _playList.find('#playList-info-actor').text(this.videoKindEntity.actor);
+                                _playList.find('#playList-cover').attr('src', '${pageContext.request.contextPath}'+this.videoKindEntity.coverPath+this.videoKindEntity.coverName);
+
+                                _playList.find('#playList-nav').append(nav);
+                                _playList.find('#playList-nav').append('<li><a id="playList-info-play" data-movie-type="1" data-video-kind-seq="'+this.videoKindEntity.videoKindSeq+'" data-video-seq="'+this.video_seq+'" data-movie-file="'+this.file_path+this.file_name+'"><i class="uk-icon-play"></i> 재생</a></li>   ');
+                                flag = false;
+                            }
+                        })
+
+                        if(flag) {
+                            _playList.find('#playList-info-title3').text(data[0].title3);
+                            _playList.find('#playList-info-story').text(data[0].story);
+                            _playList.find('#playList-info-star').text(data[0].videoKindEntity.star);
+                            _playList.find('#playList-info-genre').text(data[0].videoKindEntity.genre);
+                            _playList.find('#playList-info-actor').text(data[0].videoKindEntity.actor);
+                            _playList.find('#playList-cover').attr('src', '${pageContext.request.contextPath}'+data[0].videoKindEntity.coverPath+data[0].videoKindEntity.coverName);
+
+                            _playList.find('#playList-nav').append(nav);
+                            _playList.find('#playList-nav').append('<li><a id="playList-info-play" data-movie-type="1" data-video-kind-seq="'+data[0].videoKindEntity.videoKindSeq+'" data-video-seq="'+data[0].video_seq+'" data-movie-file="'+data[0].file_path+data[0].file_name+'"><i class="uk-icon-play"></i> 재생</a></li>   ');
+                        }
+
+
 
                         var slide = [];
                         slide.push('<div class="uk-margin slide-main">')
@@ -393,9 +419,9 @@
 
                         $.each(data, function(i) {
                             if(i < 7) {
-                                slide.push('<li class="uk-active slideView" id="playList-info-play" data-movie-type="2" data-video-seq="'+this.video_seq+'" data-movie-file="'+this.file_path+this.file_name+'"><img src="${pageContext.request.contextPath}'+this.file_path+'thumbnail/'+this.thumbnail+'" data-holder-rendered="true">'+this.title3+'</li>');
+                                slide.push('<li class="uk-active slideView" id="playList-info-play" data-movie-type="2" data-video-kind-seq="'+data[0].videoKindEntity.videoKindSeq+'" data-video-seq="'+this.video_seq+'" data-movie-file="'+this.file_path+this.file_name+'"><img src="${pageContext.request.contextPath}'+this.file_path+'thumbnail/'+this.thumbnail+'" data-holder-rendered="true">'+this.title3+'</li>');
                             }else {
-                                slide.push('<li style="display: none;" class="slideView" id="playList-info-play" data-movie-type="2" data-video-seq="'+this.video_seq+'"><img src="${pageContext.request.contextPath}'+this.file_path+'thumbnail/'+this.thumbnail+'" data-holder-rendered="true">'+this.title3+'</li>');
+                                slide.push('<li style="display: none;" class="slideView" id="playList-info-play" data-movie-type="2" data-video-kind-seq="'+data[0].videoKindEntity.videoKindSeq+'" data-video-seq="'+this.video_seq+'"><img src="${pageContext.request.contextPath}'+this.file_path+'thumbnail/'+this.thumbnail+'" data-holder-rendered="true">'+this.title3+'</li>');
                             }
                         })
                         slide.push('</ul>');
