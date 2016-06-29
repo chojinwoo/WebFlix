@@ -48,6 +48,7 @@
 
     .uk-dotnav > .uk-active > * {
         background: rgba(100, 100, 100, 1);
+        background: rgba(100, 100, 100, 1);
     }
 
     .uk-dotnav > * > * {
@@ -123,7 +124,7 @@
                     <li><a href="#movie">영화</a></li>
                     <li><a href="#drama">드라마</a></li>
                     <li class="uk-parent" id="genre">
-                        <a href="#genre">장르</a>
+                        <a href="#">장르</a>
                         <ul class="uk-nav-sub">
                             <li><a href="#action">액션</a></li>
                             <li><a href="#fantasy">판타지</a></li>
@@ -294,13 +295,38 @@
 
 
         $(document).on('click', '#playList-info-play', function() {
+            var _this = $(this);
+            var video_seq = $(this).attr('data-video-seq');
             var movie_file = $(this).attr('data-movie-file');
             var movie_type = $(this).attr('data-movie-type');
-            var video = '<video controls="controls" class="mv-video">';
+            var video = '<video controls="controls" class="mv-video" data-video-seq="'+video_seq+'"  autoplay="autoplay">';
             video += '<source src="${pageContext.request.contextPath}'+movie_file+'" type="video/mp4"/>';
             video += '</video>'
-            $('#video video').remove();
+
+            var mv_video = $('.mv-video');
+
+            $('.mv-video').remove();
             $('#video').prepend(video);
+
+            /* 재생종료시*/
+            $('.mv-video').on('ended', function() {
+                localStorage.removeItem(video_seq);
+                if(_this.next().attr('id') == 'playList-info-play') {
+                    _this.next().trigger('click');
+                }
+
+            });
+
+            /* 재생정지시 */
+            $('.mv-video').on('pause', function() {
+                localStorage.setItem(video_seq, $(this)[0].currentTime);
+            });
+
+            /* 이전 재생시점 로드 */
+            if(localStorage.getItem(video_seq) != null) {
+                $('.mv-video')[0].currentTime = localStorage.getItem(video_seq);
+            }
+
             if(movie_type == 1) {
                 $('#movieInfo').trigger('click');
             }
@@ -311,11 +337,15 @@
         })
 
         $(document).on('click', '#video-cancel', function() {
+            var currentTime = $('.mv-video')[0].currentTime;
+            var video_seq = $('.mv-video').attr('data-video-seq');
+            localStorage.setItem(video_seq, currentTime);
             $('.uk-container').css('opacity', 1);
             $('.uk-navbar').css('opacity', 1);
             $('#video').hide();
-            $('#video video')[0].pause();
+            $('.mv-video')[0].pause();
         })
+
         $(document).on('click','.video-media', function(e) {
             $('#playList').hide();
             var video_kind_seq = $(e.target).attr('data-kind-seq');
@@ -365,7 +395,7 @@
                             if(i < 7) {
                                 slide.push('<li class="uk-active slideView" id="playList-info-play" data-movie-type="2" data-video-seq="'+this.video_seq+'" data-movie-file="'+this.file_path+this.file_name+'"><img src="${pageContext.request.contextPath}'+this.file_path+'thumbnail/'+this.thumbnail+'" data-holder-rendered="true">'+this.title3+'</li>');
                             }else {
-                                slide.push('<li style="display: none;" class="slideView" id="playList-info-play" data-movie-type="2" data-video-seq=""><img src="${pageContext.request.contextPath}'+this.file_path+'thumbnail/'+this.thumbnail+'" data-holder-rendered="true">'+this.title3+'</li>');
+                                slide.push('<li style="display: none;" class="slideView" id="playList-info-play" data-movie-type="2" data-video-seq="'+this.video_seq+'"><img src="${pageContext.request.contextPath}'+this.file_path+'thumbnail/'+this.thumbnail+'" data-holder-rendered="true">'+this.title3+'</li>');
                             }
                         })
                         slide.push('</ul>');
@@ -386,6 +416,7 @@
                     console.log(error);
                 }, complete:function() {
                     $('#playList').slideDown(800);
+                    $('#movieInfo').trigger('click');
                 }
             })
         })
