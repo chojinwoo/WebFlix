@@ -72,7 +72,7 @@
     .mv-cancel {
         position: absolute;
         top: 20px;
-        left: 20px;
+        left: 30px;
         z-index: 3000;
         cursor: pointer;
     }
@@ -83,12 +83,148 @@
         display: none;
     }
 </style>
-<!--     start Main Section   -->
-<div id="video" class="mv-container">
+<%-- next video view --%>
+<style>
+    #next-container {
+        display:none;
+        background-image:url("${pageContext.request.contextPath}/attach/HeroesReborn/cover/HeroesReborn.png;");
+        background-size:100% 100%;
+        height: 100%;
+        width:100%;
+    }
 
+    @media(max-width: 1960px) {
+        .nc-story {
+            width:40%;
+        }
+    }
+    @media(max-width: 768px) {
+        .nc-story {
+            width:50%;
+        }
+    }
+    @media(max-width: 480px) {
+        .nc-story {
+            width:100%;
+        }
+    }
+
+    .nc-play-icon {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 10px;
+        margin: auto;
+        height: 40%;
+        cursor: pointer;
+        text-align: right;
+        right: 0;
+    }
+
+    .nc-title {
+        padding-top: 20px;
+    }
+
+    .nc-timer-panel {
+        position: absolute;
+        right: 0px;
+        margin-top: 10px;
+    }
+
+    @media(max-width: 1960px) {
+        .nc-play-icon {
+            width: 65%;
+            font-size: 150px;
+        }
+    }
+    @media(max-width: 768px) {
+        .nc-play-icon {
+            width: 60%;
+            font-size: 120px;
+        }
+    }
+
+
+    @media(max-width: 480px) {
+        .nc-play-icon {
+            width:50%;
+            text-align:center;
+        }
+    }
+
+    @media(max-width: 1960px) {
+        .nc-play-img {
+            width: 50%;
+        }
+    }
+
+    @media(max-width: 768px) {
+        .nc-play-img {
+            width: 60%;
+        }
+    }
+
+    @media(max-width: 480px) {
+        .nc-play-img {
+            width: 100%;
+        }
+    }
+
+    .mv-container p {
+        padding-bottom:10px;
+    }
+
+    .mv-container h3 {
+        padding-top:15px;
+    }
+
+    .video-start-date {
+        float: right;
+    }
+</style>
+<div id="next-container" class="mv-container">
+    <div class="uk-container">
+        <div class="uk-grid">
+            <div class="uk-width-1-1">
+                <h2 class="nc-title">히어로즈 리본 2화</h2>
+            </div>
+            <div class="uk-width-1-1">
+                <h3>줄거리</h3>
+                <p class="nc-story"></p>
+            </div>
+            <div class="uk-width-1-1">
+                <p>출연배우 : <span class="nc-actor"></span></p>
+            </div>
+            <div class="uk-width-1-1">
+                <p>제작국가 : <span class="nc-country"></span></p>
+            </div>
+            </div>
+            <div class="uk-width-1-1">
+                <p>장르 : <span class="nc-genre"></span></p>
+            </div>
+            <div class="uk-width-1-1">
+                <p>평점 : <span class="nc-star"></span></p>
+            </div>
+            <div class="uk-width-1-1" style="position: absolute;bottom: 10px;text-align: right;right: 10px;">
+                <div class="nc-timer-panel">
+                    <label>
+                        <h4><span class="nc-timer">5</span>초후 자동재생 됩니다.</h4>
+                    </label>
+                </div>
+                <div>
+                    <i class="uk-icon-play-circle-o nc-play-icon"></i>
+                    <img class="nc-play-img" src="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%--video view--%>
+<div id="video" class="mv-container">
     <div id="video-cancel" class="mv-cancel"><i class="uk-icon-arrow-circle-left uk-icon-large"></i></div>
 </div>
-<div class="uk-container uk-container-center uk-margin-large-top uk-margin-large-bottom">
+<!--     start Main Section   -->
+<div id="main-container" class="uk-container uk-container-center uk-margin-large-top uk-margin-large-bottom">
     <div id="playList" class="uk-grid">
         <div class="uk-width-medium-2-3">
             <div style="height:90%">
@@ -96,9 +232,9 @@
                     <li class="uk-active" id="playList-info">
                         <h2 id="playList-info-title3"></h2>
                         <p id="playList-info-story"></p>
-                        <p id="playList-info-genre"></p>
-                        <p id="playList-info-star"></p>
-                        <p id="playList-info-actor"></p>
+                        <p>출연배우 : <span id="playList-info-actor"></span></p>
+                        <p>제작국가 : <span id="playList-info-genre"></span></p>
+                        <p>평점 : <span id="playList-info-star"></span></p>
                     </li>
                     <li class="slide-append-target">
 
@@ -304,7 +440,6 @@
             video += '<source src="${pageContext.request.contextPath}'+movie_file+'" type="video/mp4"/>';
             video += '</video>'
 
-            var mv_video = $('.mv-video');
 
             $('.mv-video').remove();
             $('#video').prepend(video);
@@ -314,8 +449,45 @@
             /* 재생종료시*/
             $('.mv-video').on('ended', function() {
                 localStorage.removeItem(video_seq);
+                var next_video_seq = _this.next().attr('data-video-seq');
+
                 if(_this.next().attr('id') == 'playList-info-play') {
-                    _this.next().trigger('click');
+                    /* 다음 재생 정보 받아 오기 */
+                    $.ajax({
+                        url:'${pageContext.request.contextPath}/videoFindOne/'+next_video_seq,
+                        type:'post',
+                        success:function(data) {
+                            $('#next-container').fadeIn(500);
+                            $('#main-container').hide();
+                            $('#video').hide();
+
+                            /* 데이터 주입 */
+                            $('.nc-title').text(data.title3);
+                            $('.nc-story').text(data.story);
+                            $('.nc-actor').text(data.videoKindEntity.actor);
+                            $('.nc-genre').text(data.videoKindEntity.genre);
+                            $('.nc-country').text(data.videoKindEntity.country);
+                            $('.nc-star').text(data.videoKindEntity.star);
+                            $('.nc-play-img').attr('src', '${pageContext.request.contextPath}'+data.file_path+'thumbnail/'+data.thumbnail);
+
+                            var timerCount = 5;
+                            function timerInterval() {
+                                if(timerCount > 0) {
+                                    $('.nc-timer').text(timerCount);
+                                } else {
+                                    clearInterval(inter);
+                                    _this.next().trigger('click');
+                                    $('#next-container').fadeOut(500);
+                                }
+                                timerCount--;
+                            }
+                            var inter = setInterval(timerInterval, 1000);
+
+                        }, error:function(xhr, status, error) {
+                            alert(error);
+                        }
+                    })
+
                 }
 
             });
@@ -334,9 +506,9 @@
                 $('#movieInfo').trigger('click');
             }
 
-            $('.uk-container').css('opacity', 0.1);
             $('.uk-navbar').css('opacity', 0.1);
             $('#video').show();
+            $('#main-container').hide();
         })
 
         $(document).on('click', '#video-cancel', function() {
@@ -347,6 +519,7 @@
             $('.uk-navbar').css('opacity', 1);
             $('#video').hide();
             $('.mv-video')[0].pause();
+            $('#main-container').show();
         })
 
         $(document).on('click','.video-media', function(e) {
@@ -414,7 +587,7 @@
                         var slide = [];
                         slide.push('<div class="uk-margin slide-main">')
                         slide.push('<div class="uk-slidenav-position uk-margin">')
-                        slide.push('<ul id="playList-slide" class="uk-slideset uk-grid uk-flex-center uk-grid-width-1-1 uk-grid-width-large-1-6 uk-grid-width-medium-1-4 uk-grid-width-small-1-2">')
+                        slide.push('<ul id="playList-slide" class="uk-slideset uk-grid uk-flex-center uk-width-1-1-1 uk-grid-width-large-1-6 uk-grid-width-medium-1-4 uk-grid-width-small-1-2">')
 
 
                         $.each(data, function(i) {

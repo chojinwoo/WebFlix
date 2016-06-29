@@ -1,5 +1,6 @@
 package com.springapp.videos.controller;
 
+import com.google.gson.Gson;
 import com.springapp.users.entity.UsersEntity;
 import com.springapp.videos.entity.VideoFavouritesEntity;
 import com.springapp.videos.entity.VideosEntity;
@@ -98,6 +99,12 @@ public class VideosController implements Serializable {
         model.addAttribute("video_favourites", videosService.findFavouritesIdAndSeq(principal.getName(), video_seq));
 //        model.addAttribute("same_video", videosService.findVideoTitle1AndTitle2(videosEntity.getVideoKindEntity().getTitle1(), videosEntity.getVideoKindEntity().getTitle2()));
         return "main/media";
+    }
+
+    @RequestMapping(value="/videoFindOne/{video_seq}", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String videoFindOne(@PathVariable("video_seq")String video_seq) {
+        return new Gson().toJson(this.videosService.findOne(Integer.parseInt(video_seq)));
     }
 
     @RequestMapping(value = "/video_favourite", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
