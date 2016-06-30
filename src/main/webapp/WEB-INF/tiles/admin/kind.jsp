@@ -25,17 +25,17 @@
     <table class="uk-table">
         <thead>
             <tr>
-                <th>제목</th>
-                <th>장르</th>
-                <th>파일명</th>
-                <th>반영일</th>
-                <th>등록일</th>
+                <th>타이틀명</th>
+                <th>시즌명</th>
+                <th>커버 파일명</th>
+                <th>배우</th>
+                <th>사용여부</th>
                 <th>삭제</th>
             </tr>
         </thead>
 
         <c:set var="tbodyIdx" value="1"/>
-        <c:forEach var="video" items="${videos}" varStatus="idx">
+        <c:forEach var="videoKind" items="${videoKinds}" varStatus="idx">
             <c:if test="${idx.count % 8 == 1}">
                 <c:if test="${tbodyIdx == 1}">
                     <tbody class="tbody-${tbodyIdx}">
@@ -45,11 +45,11 @@
                 </c:if>
             </c:if>
             <tr>
-                <td>${video.title3}</td>
-                <td>${video.videoKindEntity.genre}</td>
-                <td>${video.file_name}</td>
-                <td>${video.videoKindEntity.start_date}</td>
-                <td>${video.reg_date}</td>
+                <td>${videoKind.title1}</td>
+                <td>${videoKind.title2}</td>
+                <td>${videoKind.coverName}</td>
+                <td>${videoKind.actor}</td>
+                <td><input type="checkbox" <c:if test="${videoKind.flag}">checked="checked"</c:if> disabled="disabled" ></td>
                 <td><button type="button" class="uk-button uk-button-danger uk-align-right">삭제</button></td>
             </tr>
             <c:if test="${idx.count % 8 == 0 || idx.last}">
@@ -72,8 +72,6 @@
         <tfoot>
             <tr>
                 <td colspan="6">
-                    <button type="button" id="excel_temp" class="uk-button uk-button-primary uk-align-right">샘플다운</button>
-                    <button type="button" id="excel_upload" class="uk-button uk-button-success uk-align-right" style="margin-right:10px;">엑셀업로드</button>
                     <button type="button" id="file_upload" name="file_upload" class="uk-button uk-align-right" style="margin-right:10px;" data-uk-modal="{target:'#upload-modal',bgclose:false}">파일업로드</button>
                 </td>
             </tr>
@@ -83,29 +81,48 @@
 <div class="uk-modal" id="upload-modal">
     <div class="uk-modal-dialog">
         <button type="button" class="uk-modal-close uk-close"></button>
-        <div class="uk-modal-header"><h2>영화업로드</h2></div>
+        <div class="uk-modal-header"><h2>카테고리등록</h2></div>
         <p>
         <form id="movieUploadForm" enctype="multipart/form-data">
             <div class="uk-form">
-                <label class="uk-form-label">카테고리</label>
-                <%--<input type="text" class="uk-width-1-1" name="filePath"/>--%>
-                <select name="video_kind_seq" class="uk-width-1-1">
-                    <c:forEach items="${videoKinds}" var="videoKind">
-                        <option value="${videoKind.videoKindSeq}">${videoKind.title1}${videoKind.title2}</option>
-                    </c:forEach>
-                </select>
+                <label class="uk-form-label">카테고리명</label>
+                <input type="text" class="uk-width-1-1" name="title1" placeholder="ex) 히어로즈"/>
             </div>
             <div class="uk-form">
-                <label class="uk-form-label">제목</label>
-                <input type="text" class="uk-width-1-1" name="title3" placeholder="다중업로드시 /// 로  구분해주세요."/>
+                <label class="uk-form-label">시즌</label>
+                <input type="text" class="uk-width-1-1" name="title2" placeholder="ex) 시즌1 영화는 제외"/>
             </div>
             <div class="uk-form">
-                <label class="uk-form-label">줄거리</label>
-                <textarea class="uk-width-1-1" name="story" rows="4" style="resize:none;" placeholder="다중업로드시 /// 로  구분해주세요."></textarea>
+                <label class="uk-form-label">장르</label>
+                <input type="text" class="uk-width-1-1" name="genre" placeholder="ex) 스릴러, 영화, 공포"/>
             </div>
             <div class="uk-form">
+                <label class="uk-form-label">배우</label>
+                <input type="text" class="uk-width-1-1" name="actor" placeholder="ex) 곽도원, 황정민, 쿠니무라준"/>
+            </div>
+            <div class="uk-form">
+                <label class="uk-form-label">제작국가</label>
+                <input type="text" class="uk-width-1-1" name="country"/>
+            </div>
+            <div class="uk-form">
+                <label class="uk-form-label">평점</label>
+                <input type="text" class="uk-width-1-1" name="star" placeholder="ex) 9.2"/>
+            </div>
+            <div class="uk-form">
+                <label class="uk-form-label">제작년도</label>
+                <input type="text" class="uk-width-1-1" name="start_date" placeholder="ex) 2015.05.12"/>
+            </div>
+            <div class="uk-form">
+                <label class="uk-form-label">커버경로</label>
+                <input type="text" class="uk-width-1-1" name="coverPath" placeholder="ex) GokSeong/cover/"/>
+            </div>
+            <div class="uk-form">
+                <label class="uk-form-label">사용여부</label>
+                <input type="checkbox" class="uk-width-1-1" id="flag_temp" name="flag_temp"/>
+                <input type="hidden" id="flag" name="flag" value="false">
+            </div>
             <div id="upload-drop" class="uk-placeholder uk-text-center">
-                <i class="uk-icon-cloud-upload uk-icon-medium uk-text-muted uk-margin-small-right"></i> 영화업로드 : <a class="uk-form-file">파일선택<input id="upload-select" name="files" type="file" multiple="multiple" accept="video/*"></a>.
+                <i class="uk-icon-cloud-upload uk-icon-medium uk-text-muted uk-margin-small-right"></i> 커버사진 업로드 : <a class="uk-form-file">파일선택<input id="upload-select" name="file" type="file" accept="image/*"></a>.
             </div>
             <div id="progressbar" class="uk-progress uk-hidden">
                 <div class="uk-progress-bar" style="width: 0%;">0%</div>
@@ -123,6 +140,9 @@
     <input type="file" id="file" name="file" style="display:none; position:absolute; z-index:-1">
 </form>
     <script>
+        $('#flag_temp').click(function() {
+            $('#flag').val($(this).prop('checked'));
+        })
 
         $('#upload-select').change(function() {
             $('#movieUploadForm .uk-grid').remove();
@@ -144,7 +164,7 @@
             var formData = new FormData($('#movieUploadForm')[0]);
             var bar         = progressbar.find('.uk-progress-bar');
             $.ajax({
-                url:'${pageContext.request.contextPath}/admin/video_up',
+                url:'${pageContext.request.contextPath}/admin/kind_up',
                 data:formData,
                 type:'post',
                 processData:false,
@@ -185,34 +205,6 @@
             })
         })
 
-
-        $('#excel_upload').click(function() {
-            $('#file').trigger('click');
-        })
-
-        $('#file').change(function() {
-            var form = $('#uploadForm')[0];
-            var formData = new FormData(form)
-            $.ajax({
-                url:'${pageContext.request.contextPath}/admin/video_excel_up',
-                type:'post',
-                processData:false,
-                contentType:false,
-                data:formData,
-                success:function(data) {
-                    alert(data);
-                }, error:function(xhr, status, error) {
-                    alert(error);
-                }
-            })
-        })
-
-        $('#excel_temp').click(function() {
-            $('#hiddenForm').attr({
-                'action':'${pageContext.request.contextPath}/admin/video_excel_temp',
-                'method':'post'
-            }).submit();
-        })
 
         $(document).on('click', '#prev:not(.uk-disabled)',function() {
             var firstPaging = $('#pageFirst span').text();

@@ -1,5 +1,7 @@
 package com.springapp.common.service;
 
+import com.springapp.videos.entity.VideoKindEntity;
+import com.springapp.videos.entity.VideosEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -18,27 +20,39 @@ public class UploadServiceImpl implements UploadService, Serializable {
     @Autowired
     private Environment env;
 
-    public String videoUpload(List<MultipartFile> files, String filePath) {
-        String msg = "Send To Success";
-        InputStream is = null;
-        FileOutputStream fos = null;
+    public boolean videoUpload(MultipartFile file, VideosEntity videosEntity) {
+        boolean msg = true;
 
         String absolutePath = env.getProperty("file.absolutePath");
-        File createDir = new File(absolutePath + filePath);
-        System.out.println(absolutePath + filePath);
-        if(!createDir.isDirectory()) {
-            System.out.println("Folder create");
-            createDir.mkdir();
-        }
-        for(MultipartFile file : files) {
-            String fileName = file.getOriginalFilename();
-            try {
-                file.transferTo(new File(absolutePath + filePath + "/" + fileName));
-            } catch (IOException e) {
-                e.printStackTrace();
-                msg = "Send To Filed";
-            }
+        String filePath = videosEntity.getFile_path();
+        filePath = filePath.substring(filePath.indexOf("/", 2));
+        String fileName = file.getOriginalFilename();
+        System.out.println(absolutePath + filePath + fileName);
+        try {
+            file.transferTo(new File(absolutePath + filePath + fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+            msg = false;
         }
         return msg;
     }
+
+    public boolean kindUpload(MultipartFile file, VideoKindEntity videoKindEntity) {
+        boolean flag = true;
+        File newDir = new File(env.getProperty("file.path") + videoKindEntity.getCoverPath());
+        String absolutePath = env.getProperty("file.absolutePath");
+        if(!newDir.exists()) {
+            newDir.mkdirs();
+        }
+
+        try {
+            file.transferTo(new File(absolutePath + videoKindEntity.getCoverPath() + videoKindEntity.getCoverName()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            flag = false;
+        }
+
+        return flag;
+    }
+
 }

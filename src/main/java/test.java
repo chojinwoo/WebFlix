@@ -20,5 +20,8 @@ public class test {
     public static void main(String[] args) {
         ShaPasswordEncoder encoder = new ShaPasswordEncoder();
         System.out.println(encoder.encodePassword("aa", null));
+
+        String path = "/attach/HeroesSeason2/cover/";
+        System.out.println(path.substring(path.indexOf("/", 2)));
     }
 }

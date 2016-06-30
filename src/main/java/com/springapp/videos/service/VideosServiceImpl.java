@@ -78,4 +78,21 @@ public class VideosServiceImpl implements VideosService {
     public List<VideosEntity> findVideoKindSeq(String videoKindSeq) {
         return this.videosDao.findVideoKindSeq(videoKindSeq);
     }
+
+    @Override
+    public VideoKindEntity findVideoKindOne(int videoKindSeq) {
+        return this.videosDao.findVideoKindOne(videoKindSeq);
+    }
+
+    @Override
+    @Transactional
+    public void saveVideo(VideosEntity videosEntity) {
+        this.videosDao.saveVideo(videosEntity);
+    }
+
+    @Override
+    @Transactional
+    public void saveVideoKind(VideoKindEntity videoKindEntity) {
+        this.videosDao.saveVideoKind(videoKindEntity);
+    }
 }

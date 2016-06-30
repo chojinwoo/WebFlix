@@ -86,4 +86,19 @@ public class VideosDaoImpl implements VideosDao {
         return this.videosRepository.findVideoKindSeq(videoKindSeq);
     }
 
+    @Override
+    public VideoKindEntity findVideoKindOne(int videoKindSeq) {
+        return this.videoKindRepository.findOne(videoKindSeq);
+    }
+
+    @Override
+    public void saveVideo(VideosEntity videosEntity) {
+        this.videosRepository.save(videosEntity);
+    }
+
+    @Override
+    public void saveVideoKind(VideoKindEntity videoKindEntity) {
+        this.videoKindRepository.save(videoKindEntity);
+    }
+
 }

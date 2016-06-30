@@ -3,22 +3,23 @@ package com.springapp.admin.contoller;
 import com.springapp.admin.service.AdminService;
 import com.springapp.common.service.ExcelService;
 import com.springapp.common.service.UploadService;
+import com.springapp.videos.entity.VideoKindEntity;
+import com.springapp.videos.entity.VideosEntity;
 import com.springapp.videos.service.VideosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,20 +47,56 @@ public class AdminController {
 
     @RequestMapping(value="/main", method = RequestMethod.GET)
     public String admin(Model model) {
+        model.addAttribute("videoKinds", this.videosService.findVideoKindAll());
         model.addAttribute("videos", this.videosService.adminFindAll());
         return "admin/admin";
     }
 
     @RequestMapping(value="/video_up", method = RequestMethod.POST)
     @ResponseBody
-    public String video_up(MultipartRequest multipartRequest, @RequestParam("filePath")String filePath) {
+    public String video_up(MultipartRequest multipartRequest, @ModelAttribute("command")VideosEntity videosEntity) {
+        String resultMsg = "업로드 완료";
         List<MultipartFile> files = multipartRequest.getFiles("files");
+        System.out.println(videosEntity.toString());
+        VideoKindEntity videoKindEntity = this.videosService.findVideoKindOne(videosEntity.getVideo_kind_seq());
+        String coverPath = videoKindEntity.getCoverPath();
+        String filePath = coverPath.substring(0, coverPath.lastIndexOf("cover"));
 
-        uploadService.videoUpload(files, filePath);
-        return "success";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+        String[] title = videosEntity.getTitle3().split("///");
+        String[] story = videosEntity.getStory().split("///");
+
+        int fileSize = files.size();
+        if((fileSize == title.length) && (fileSize == story.length)) {
+
+            int fileCount = 0;
+            try {
+                for(MultipartFile file : files) {
+                    String fileName = file.getOriginalFilename();
+                    VideosEntity en = videosEntity;
+                    en.setStory(story[fileCount]);
+                    en.setFile_path(filePath);
+                    en.setFile_name(fileName);
+                    en.setTitle3(title[fileCount]);
+                    en.setReg_date(sdf.format(new Date()));
+                    en.setThumbnail(fileName.substring(0, fileName.lastIndexOf("mp4")) + "jpg");
+                    boolean flag = uploadService.videoUpload(file, en);
+                    if (flag) {
+                        this.videosService.saveVideo(en);
+                    }
+                }
+                fileCount++;
+            } catch(Exception e) {
+                resultMsg = "전송실패 : " + e.toString();
+            }
+
+        } else {
+            resultMsg = "업로드파일갯수와 제목 스토리의 갯수가 동일 하지못합니다.";
+        }
+        return resultMsg;
     }
 
-    @RequestMapping(value="/excel_up", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
+    @RequestMapping(value="/video_excel_up", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String excel_up(MultipartRequest multipartRequest) throws IOException {
         MultipartFile multipartFile = multipartRequest.getFile("file");
@@ -68,7 +105,7 @@ public class AdminController {
 
     }
 
-    @RequestMapping(value="/excel_temp", method = RequestMethod.POST)
+    @RequestMapping(value="/video_excel_temp", method = RequestMethod.POST)
     @ResponseBody
     public void excelTemp(HttpServletRequest req, HttpServletResponse res) {
         File file = new File(env.getProperty("file.absolutePath")+env.getProperty("download.excelTemp"));
@@ -107,4 +144,27 @@ public class AdminController {
             }
         }
     }
+
+    @RequestMapping(value="/kind", method = RequestMethod.GET)
+    public String videoKind(Model model) {
+        model.addAttribute("videoKinds", this.videosService.findVideoKindAll());
+        return "admin/kind";
+    }
+
+    @RequestMapping(value="/kind_up", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String videoKindUp(MultipartRequest multipartRequest, @ModelAttribute("command") VideoKindEntity videoKindEntity) {
+        String msg = "전송완료";
+        MultipartFile file = multipartRequest.getFile("file");
+        videoKindEntity.setCoverName(file.getOriginalFilename());
+        try {
+            this.uploadService.kindUpload(file, videoKindEntity);
+            videoKindEntity.setCoverPath(env.getProperty("file.path") + videoKindEntity.getCoverPath());
+            this.videosService.saveVideoKind(videoKindEntity);
+            System.out.println(videoKindEntity.toString());
+        } catch(Exception e) {
+            msg = "전송실패 : " + e.toString();
+        }
+        return msg;
+    };
 }

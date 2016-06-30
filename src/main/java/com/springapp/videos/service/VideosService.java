@@ -19,4 +19,7 @@ public interface VideosService {
     public List<VideosEntity> findVideoListFavouriteId(String id);
     public List<VideoKindEntity> findVideoKindAll();
     public List<VideosEntity> findVideoKindSeq(String videoKindSeq);
+    public VideoKindEntity findVideoKindOne(int videoKindSeq);
+    public void saveVideo(VideosEntity videosEntity);
+    public void saveVideoKind(VideoKindEntity videoKindEntity);
 }

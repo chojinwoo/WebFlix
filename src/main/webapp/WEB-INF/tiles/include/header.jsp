@@ -48,8 +48,8 @@
                             <sec:authorize access="hasRole('ROLE_ADMIN')">
                                 <li class="uk-nav-divider"></li>
                                 <li class="nav-header">ADMIN</li>
-                                <li><a href="${pageContext.request.contextPath}/admin/kind">USER</a></li>
-                                <li><a href="${pageContext.request.contextPath}/admin/main">VIDEO</a></li>
+                                <li><a href="${pageContext.request.contextPath}/admin/kind">카테고리</a></li>
+                                <li><a href="${pageContext.request.contextPath}/admin/main">영화</a></li>
                             </sec:authorize>
 
                             <li class="uk-nav-divider"></li>

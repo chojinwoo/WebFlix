@@ -9,184 +9,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script>
-    $(document).ready(function() {
-        $('.uk-search').css('display','inline-block');
-    })
-</script>
-<style>
-    .slideView > img {
-        width:100%;
-    }
-    .uk-overlay {
-        display:block;
-    }
-    @media (min-width: 960px) {
-        .uk-grid-width-large-1-4 > * {
-            width: 25%;
-        }
-    }
-
-    @media (min-width: 768px) and (max-width: 960px) {
-        .uk-grid-width-medium-1-4 > * {
-            width: 50%;
-        }
-    }
-
-    #playList-slide {
-        height:300px;
-    }
-
-    .slideView > img {
-        height:250px;
-        cursor:pointer;
-    }
-
-    .uk-slidenav {
-        color:white;
-    }
-
-    .uk-dotnav > .uk-active > * {
-        background: rgba(100, 100, 100, 1);
-        background: rgba(100, 100, 100, 1);
-    }
-
-    .uk-dotnav > * > * {
-        background: rgba(50, 50, 50, 0.7);
-    }
-
-    .mv-container {
-        position: absolute;
-        display: none;
-        width: 100%;
-        top: 0px;
-        z-index: 2000;
-    }
-
-    .mv-video {
-        width: 100%;
-        height: 100%;
-        position: absolute
-    }
-
-    .mv-cancel {
-        position: absolute;
-        top: 20px;
-        left: 30px;
-        z-index: 3000;
-        cursor: pointer;
-    }
-
-    #playList {
-        width: 100%;
-        padding: 10px 0px 10px 0px;
-        display: none;
-    }
-</style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/custom/index.css"/>
 <%-- next video view --%>
-<style>
-    #next-container {
-        display:none;
-        background-image:url("${pageContext.request.contextPath}/attach/HeroesReborn/cover/HeroesReborn.png;");
-        background-size:100% 100%;
-        height: 100%;
-        width:100%;
-    }
-
-    @media(max-width: 1960px) {
-        .nc-story {
-            width:40%;
-        }
-    }
-    @media(max-width: 768px) {
-        .nc-story {
-            width:50%;
-        }
-    }
-    @media(max-width: 480px) {
-        .nc-story {
-            width:100%;
-        }
-    }
-
-    .nc-play-icon {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 10px;
-        margin: auto;
-        height: 40%;
-        cursor: pointer;
-        text-align: right;
-        right: 0;
-    }
-
-    .nc-title {
-        padding-top: 20px;
-    }
-
-    .nc-timer-panel {
-        position: absolute;
-        right: 0px;
-        margin-top: 10px;
-    }
-
-    @media(max-width: 1960px) {
-        .nc-play-icon {
-            width: 65%;
-            font-size: 150px;
-        }
-    }
-    @media(max-width: 768px) {
-        .nc-play-icon {
-            width: 60%;
-            font-size: 120px;
-        }
-    }
-
-
-    @media(max-width: 480px) {
-        .nc-play-icon {
-            width:50%;
-            text-align:center;
-        }
-    }
-
-    @media(max-width: 1960px) {
-        .nc-play-img {
-            width: 50%;
-        }
-    }
-
-    @media(max-width: 768px) {
-        .nc-play-img {
-            width: 60%;
-        }
-    }
-
-    @media(max-width: 480px) {
-        .nc-play-img {
-            width: 100%;
-        }
-    }
-
-    .mv-container p {
-        padding-bottom:10px;
-    }
-
-    .mv-container h3 {
-        padding-top:15px;
-    }
-
-    .video-start-date {
-        float: right;
-    }
-</style>
 <div id="next-container" class="mv-container">
     <div class="uk-container">
         <div class="uk-grid">
             <div class="uk-width-1-1">
-                <h2 class="nc-title">히어로즈 리본 2화</h2>
+                <h2 class="nc-title"></h2>
             </div>
             <div class="uk-width-1-1">
                 <h3>줄거리</h3>
@@ -242,7 +71,7 @@
                 </ul>
             </div>
             <div style="height:10%; padding-bottom:10px;">
-                <ul id="playList-nav" class="uk-subnav uk-subnav-pill" data-uk-switcher="{connect:'#subnav-pill-content'}">
+                <ul id="playList-nav" class="uk-subnav uk-subnav-pill" data-uk-switcher="{connect:'#subnav-pill-content', swiping:false}">
                     <li class="uk-active" id="movieInfo"><a href="#">영화정보</a></li>
                 </ul>
             </div>
@@ -320,6 +149,8 @@
 <!--     ./ Main Section   -->
 <script>
     $(document).ready(function() {
+        $('.uk-search').css('display','inline-block');
+
         function drawGridKind(rowCount, video_kind) {
             $('#tm-right-section').empty();
             var row = [];

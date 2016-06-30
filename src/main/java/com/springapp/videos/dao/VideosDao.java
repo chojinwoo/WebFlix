@@ -21,4 +21,7 @@ public interface VideosDao {
     public List<VideosEntity> findVideoTitle1AndTitle2(String title1, String title2);
     public List<VideoKindEntity> findVideoKindAll();
     public List<VideosEntity> findVideoKindSeq(String videoKindSeq);
+    public VideoKindEntity findVideoKindOne(int videoKindSeq);
+    public void saveVideo(VideosEntity videosEntity);
+    public void saveVideoKind(VideoKindEntity videoKindEntity);
 }
