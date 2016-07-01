@@ -1,6 +1,8 @@
 package com.springapp.admin.service;
 
 import com.springapp.admin.dao.AdminDao;
+import com.springapp.videos.dao.VideosDao;
+import com.springapp.videos.entity.VideoKindEntity;
 import com.springapp.videos.entity.VideosEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -23,32 +25,25 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private AdminDao adminDao;
 
+    @Autowired
+    private VideosDao videosDao;
+
     @Override
     @Transactional
     public String videoSave(List<HashMap> videoList) {
         try {
             for (HashMap map : videoList) {
                 VideosEntity en = new VideosEntity();
-                en.getVideoKindEntity().setActor((String) map.get("actor"));
-                en.getVideoKindEntity().setCountry((String) map.get("country"));
                 en.setFile_name((String) map.get("file_name"));
-                en.setFile_path(env.getProperty("file.path") + map.get("file_path"));
-                if (map.get("flag").equals("Y")) {
-                    en.getVideoKindEntity().setFlag(true);
-                } else {
-                    en.getVideoKindEntity().setFlag(false);
-                }
-                en.getVideoKindEntity().setGenre((String) map.get("genre"));
-                en.setReg_date((String) map.get("reg_date"));
-                en.getVideoKindEntity().setStar(Double.parseDouble((String) map.get("star")));
-                en.getVideoKindEntity().setStart_date((String) map.get("start_date"));
+                VideoKindEntity videoKindEntity = videosDao.findVideoKindOne(Integer.parseInt((String) map.get("video_kind_seq")));
+                String coverPath = videoKindEntity.getCoverPath();
+                en.setFile_path(lastIndexOfLoop(coverPath, "/", 2, true));
                 en.setStory((String) map.get("story"));
                 en.setThumbnail((String) map.get("thumbnail"));
-                en.getVideoKindEntity().setTitle1((String) map.get("title1"));
-                en.getVideoKindEntity().setTitle2((String) map.get("title2"));
                 en.setTitle3((String) map.get("title3"));
+                en.setVideo_kind_seq(Integer.parseInt((String) map.get("video_kind_seq")));
 
-
+                System.out.println(en.toString());
                 this.adminDao.videoSave(en);
             }
             return "success";
@@ -56,5 +51,18 @@ public class AdminServiceImpl implements AdminService {
             e.printStackTrace();
             return "failed";
         }
+    }
+
+    public static String lastIndexOfLoop(String str, String targetStr, int index, boolean targetStrAppend) {
+        String strs = str;
+        int i= 0;
+        while(i < index) {
+            strs = str.substring(0, strs.lastIndexOf(targetStr));
+            i++;
+        }
+        if(targetStrAppend) {
+            strs += targetStr;
+        }
+        return strs;
     }
 }

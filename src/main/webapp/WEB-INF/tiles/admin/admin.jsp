@@ -163,6 +163,7 @@
                     }, 250);
 
                     alert(data)
+                    window.location.reload();
                 }, xhr: function () {
                     var xhr = new window.XMLHttpRequest();
                     console.log(1);

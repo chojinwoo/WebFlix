@@ -20,7 +20,7 @@ public class ExcelServiceImpl implements ExcelService {
     @Override
     public List<HashMap> ExcelRead(InputStream is) {
         List<HashMap> excelList = new LinkedList<HashMap>();
-        String[] columns = new String[]{"actor","country","file_name","file_path","flag","genre","reg_date","star","start_date","story","thumbnail","title1","title2","title3"};
+        String[] columns = new String[]{"file_name","story","thumbnail","title3","video_kind_seq"};
 
         FileInputStream fis = null;
         XSSFWorkbook workbook = null;
@@ -66,6 +66,7 @@ public class ExcelServiceImpl implements ExcelService {
                             value=cell.getErrorCellValue()+"";
                             break;
                     }
+                    System.out.println(columns[ii] + " : " + value);
                     cellMap.put(columns[ii], value);
                 }
 
@@ -90,4 +91,5 @@ public class ExcelServiceImpl implements ExcelService {
         }
         return excelList;
     }
+
 }

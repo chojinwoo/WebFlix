@@ -22,6 +22,151 @@ public class test {
         System.out.println(encoder.encodePassword("aa", null));
 
         String path = "/attach/HeroesSeason2/cover/";
-        System.out.println(path.substring(path.indexOf("/", 2)));
+        System.out.println(lastIndexOfLoop(path, "/", 2, true));
+    }
+
+    public static String lastIndexOfLoop(String str, String targetStr, int index, boolean targetStrAppend) {
+        String strs = str;
+        int i= 0;
+        while(i < index) {
+            strs = str.substring(0, strs.lastIndexOf(targetStr));
+            i++;
+        }
+        if(targetStrAppend) {
+            strs += targetStr;
+        }
+        return strs;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

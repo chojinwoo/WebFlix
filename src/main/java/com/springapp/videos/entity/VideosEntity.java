@@ -3,6 +3,8 @@ package com.springapp.videos.entity;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by bangae11 on 2016-06-19.
@@ -98,6 +100,8 @@ public class VideosEntity {
     @Basic
     @Column(name = "reg_date")
     public String getReg_date() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+        reg_date = sdf.format(new Date());
         return reg_date;
     }
 

@@ -14,30 +14,19 @@
 <div id="next-container" class="mv-container">
     <div class="uk-container">
         <div class="uk-grid">
-            <div class="uk-width-1-1">
-                <h2 class="nc-title"></h2>
-            </div>
-            <div class="uk-width-1-1">
-                <h3>줄거리</h3>
-                <p class="nc-story"></p>
-            </div>
-            <div class="uk-width-1-1">
-                <p>출연배우 : <span class="nc-actor"></span></p>
-            </div>
-            <div class="uk-width-1-1">
-                <p>제작국가 : <span class="nc-country"></span></p>
-            </div>
-            </div>
-            <div class="uk-width-1-1">
-                <p>장르 : <span class="nc-genre"></span></p>
-            </div>
-            <div class="uk-width-1-1">
-                <p>평점 : <span class="nc-star"></span></p>
+            <div style="position:absolute; left:0px; bottom:0px;">
+                <div class="uk-width-1-1">
+                    <h2 class="nc-title"></h2>
+                </div>
+                <div class="uk-width-1-1">
+                    <h3>줄거리</h3>
+                    <p class="nc-story">토미는 자신과 evos을 죽이고 누가 복음과 조앤 콜린스, 그의 친구 에밀리을 저장하려면 자신의 능력을 사용하지만, 거의 자신이 잡은 가져옵니다. 르네 Shimosawa 그녀의 아버지를 구출하기 위해 그녀와 함께 최대 미코의 컴퓨터와 팀에서 실행되는 게임 Evernow을 찾습니다. 그가 오는 것을 잊지해야하는 이유 궁금, 노아는 쿠엔틴 Frady, Renautas에서 전 임시 근로자, PRIMATECH을 구입 한 회사와 우크라이나에서 PRIMATECH의 원래 위치로 돌아갑니다. 오스카의 노트를 겪고, 카를로스 캐나다로 탈출 evos에 대한 오스카의 지하 철도에 실수를 한단다. 누가 복음과 조앤 자체가 PRIMATECH의 레벨 5에서​​ 토미의 오래된 방으로 순간 이동 찾을 때, 그들은 회사에 여전히 모든 사람을 죽이고 모든 에보 (Evo)의 알려진 위치에 파일을 복용 탈출.</p>
+                </div>
             </div>
             <div class="uk-width-1-1" style="position: absolute;bottom: 10px;text-align: right;right: 10px;">
                 <div class="nc-timer-panel">
                     <label>
-                        <h4><span class="nc-timer">5</span>초후 자동재생 됩니다.</h4>
+                        <h4><span class="nc-timer">10</span>초후 자동재생 됩니다.</h4>
                     </label>
                 </div>
                 <div>
@@ -149,6 +138,9 @@
 <!--     ./ Main Section   -->
 <script>
     $(document).ready(function() {
+        /* 영상 종료시점 스케줄러 변수*/
+        var playEndInterval;
+        var playEndIntervalCount = 0;
         $('.uk-search').css('display','inline-block');
 
         function drawGridKind(rowCount, video_kind) {
@@ -261,6 +253,7 @@
         });
 
 
+        /* 플레이 리스트의 영상 클릭시 이벤트*/
         $(document).on('click', '#playList-info-play', function() {
             var _this = $(this);
             var video_seq = $(this).attr('data-video-seq');
@@ -277,8 +270,8 @@
 
             localStorage.setItem(video_kind_seq, video_seq);
 
-            /* 재생종료시*/
-            $('.mv-video').on('ended', function() {
+            /* 재생완료시*/
+            function playEnd() {
                 localStorage.removeItem(video_seq);
                 var next_video_seq = _this.next().attr('data-video-seq');
 
@@ -290,43 +283,63 @@
                         success:function(data) {
                             $('#next-container').fadeIn(500);
                             $('#main-container').hide();
-                            $('#video').hide();
-
+                            $('#video-cancel').hide();
+                            var x = $(window).width();
+                            var width = '50%';
+                            if(x >0 && x <= 480) {
+                                width = '100%';
+                            } else if(x > 480 && x <= 768) {
+                                width = '60%';
+                            }
+                            $('.mv-video').animate({
+                                left: '0px',
+                                width: width,
+                                height: '50%',
+                                top: '0px',
+                            }, 1000);
                             /* 데이터 주입 */
                             $('.nc-title').text(data.title3);
                             $('.nc-story').text(data.story);
-                            $('.nc-actor').text(data.videoKindEntity.actor);
-                            $('.nc-genre').text(data.videoKindEntity.genre);
-                            $('.nc-country').text(data.videoKindEntity.country);
-                            $('.nc-star').text(data.videoKindEntity.star);
                             $('.nc-play-img').attr('src', '${pageContext.request.contextPath}'+data.file_path+'thumbnail/'+data.thumbnail);
                             $('#next-container').css('background-image', 'url("${pageContext.request.contextPath}'+data.videoKindEntity.coverPath+data.videoKindEntity.coverName+'"');
-
-                            var timerCount = 5;
+                            var timerCount = 10;
                             function timerInterval() {
+                                timerCount--;
+                                console.log("timer : " + timerCount);
                                 if(timerCount > 0) {
                                     $('.nc-timer').text(timerCount);
                                 } else {
-                                    clearInterval(inter);
-                                    _this.next().trigger('click');
                                     $('#next-container').fadeOut(500);
+                                    clearInterval(inter);
+                                    timerCount = 0;
+                                    _this.next().trigger('click');
                                 }
-                                timerCount--;
                             }
                             var inter = setInterval(timerInterval, 1000);
-
+                            clearInterval(playEndInterval);
                         }, error:function(xhr, status, error) {
                             alert(error);
                         }
                     })
 
                 }
-
-            });
+            }
 
             /* 재생정지시 */
             $('.mv-video').on('pause', function() {
                 localStorage.setItem(video_seq, $(this)[0].currentTime);
+
+                /* 재생 종료 10초전 다음 영상 로드 */
+                var duration = $('.mv-video')[0].duration;
+                var currentTime = $('.mv-video')[0].currentTime;
+                duration = ((duration - currentTime) - 10);
+                if(duration < 10) {
+                    playEnd();
+                } else {
+                    clearInterval(playEndInterval);
+                    clearInterval(playEndInterval);
+                    playEndInterval = setInterval(playEnd, (duration * 1000));
+                }
             });
 
             /* 이전 재생시점 로드 */
@@ -334,6 +347,7 @@
                 $('.mv-video')[0].currentTime = localStorage.getItem(video_seq);
             }
 
+            /* 영상이 드라마인지 영화 인지 확인*/
             if(movie_type == 1) {
                 $('#movieInfo').trigger('click');
             }
@@ -341,8 +355,36 @@
             $('.uk-navbar').css('opacity', 0.1);
             $('#video').show();
             $('#main-container').hide();
+
+            function videoReadyState() {
+                var state = $('.mv-video')[0].readyState;
+                $('#video-cancel').show();
+                clearInterval(playEndInterval);
+                if(playEndIntervalCount < 80) {
+                    if (state > 3) {
+                        playEndIntervalCount = 0;
+                        /* 재생 종료 10초전 다음 영상 로드 */
+                        var duration = $('.mv-video')[0].duration;
+                        var currentTime = $('.mv-video')[0].currentTime;
+                        duration = ((duration - currentTime) - 10);
+                        if (duration < 10) {
+                            playEnd();
+                        } else {
+                            playEndInterval = setInterval(playEnd, (duration * 1000));
+                        }
+                        clearInterval(stateInterval);
+                    } else {
+                        playEndIntervalCount++;
+                    }
+                } else {
+                    clearInterval(stateInterval);
+                }
+            }
+
+            var stateInterval = setInterval(videoReadyState, 200);
         })
 
+        /* 영상 보는중 뒤로가기시*/
         $(document).on('click', '#video-cancel', function() {
             var currentTime = $('.mv-video')[0].currentTime;
             var video_seq = $('.mv-video').attr('data-video-seq');
@@ -351,9 +393,11 @@
             $('.uk-navbar').css('opacity', 1);
             $('#video').hide();
             $('.mv-video')[0].pause();
+            clearInterval(playEndInterval);
             $('#main-container').show();
         })
 
+        /* 영상 카테고리 선택시 */
         $(document).on('click','.video-media', function(e) {
             $('#playList').hide();
             var video_kind_seq = $(e.target).attr('data-kind-seq');
@@ -378,9 +422,6 @@
                         _playList.find('#playList-info-actor').text(data[0].videoKindEntity.actor);
                         _playList.find('#playList-cover').attr('src', '${pageContext.request.contextPath}'+data[0].videoKindEntity.coverPath+data[0].videoKindEntity.coverName);
                         _playList.find('#playList-nav').append('<li><a id="playList-info-play" data-movie-type="1" data-video-kind-seq="'+data[0].videoKindEntity.videoKindSeq+'" data-video-seq="'+data[0].video_seq+'" data-movie-file="'+data[0].file_path+data[0].file_name+'"><i class="uk-icon-play"></i> 재생</a></li>   ');
-                        $('#video').css({
-                            height:$(window).height()+'px'
-                        })
 
                     } else {
                         var nav = '<li class="" id="videoList"><a href="#">회차정보</a></li>';
@@ -437,9 +478,6 @@
                         slide.push('</div>');
                         _playList.find('.slide-append-target').append(slide.join(''));
                         var slideset = UIkit.slideset('.slide-main', {small: 1, medium: 2, large: 4, animation: "scale", duration:200});
-                        $('#video').css({
-                            height:$(window).height()+'px'
-                        })
                     }
 
 

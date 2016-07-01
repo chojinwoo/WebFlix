@@ -25,6 +25,7 @@
     <table class="uk-table">
         <thead>
             <tr>
+                <th>KEY</th>
                 <th>타이틀명</th>
                 <th>시즌명</th>
                 <th>커버 파일명</th>
@@ -46,6 +47,7 @@
             </c:if>
             <tr>
                 <input type="hidden" id="video_kind_seq" value="${videoKind.videoKindSeq}">
+                <td class="uk-text-center">${videoKind.videoKindSeq}</td>
                 <td>${videoKind.title1}</td>
                 <td class="uk-text-center">${videoKind.title2}</td>
                 <td>${videoKind.coverName}</td>
@@ -75,7 +77,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="6">
+                <td colspan="7">
                     <button type="button" id="file_upload" name="file_upload" class="uk-button uk-align-right" style="margin-right:10px;" data-uk-modal="{target:'#upload-modal',bgclose:false}">파일업로드</button>
                 </td>
             </tr>
@@ -110,7 +112,7 @@
             </div>
             <div class="uk-form">
                 <label class="uk-form-label">평점</label>
-                <input type="text" class="uk-width-1-1" name="star" placeholder="ex) 9.2"/>
+                <input type="text" class="uk-width-1-1" name="star" placeholder="ex) 5.0"/>
             </div>
             <div class="uk-form">
                 <label class="uk-form-label">제작년도</label>
@@ -167,47 +169,61 @@
             var progressbar = $("#progressbar");
             var formData = new FormData($('#movieUploadForm')[0]);
             var bar         = progressbar.find('.uk-progress-bar');
-            $.ajax({
-                url:'${pageContext.request.contextPath}/admin/kind_up',
-                data:formData,
-                type:'post',
-                processData:false,
-                contentType:false,
-                beforeSend:function(xhr, setting) {
-                    bar.css("width", "0%").text("0%");
-                    progressbar.removeClass("uk-hidden");
-                }, error:function(xhr, status, error) {
-                    alert(error)
-                }, success: function(data) {
-                    bar.css("width", "100%").text("100%");
+            var star = $('input[name=star]').val();
+            var coverPath = $('input[name=coverPath]').val();
+            var flag = true;
+            if(Number(star) > 5) {
+                alert("평점은 5이하로 작성해주세요");
+                flag = false;
+            } else if(coverPath.substring(coverPath.length-1, coverPath.length) != '/') {
+                alert("커버 경로는 마지막을 / 로 작성되어야합니다.");
+                flag = false;
+            }
 
-                    setTimeout(function(){
-                        progressbar.addClass("uk-hidden");
-                    }, 250);
+            if(flag) {
+                $.ajax({
+                    url:'${pageContext.request.contextPath}/admin/kind_up',
+                    data:formData,
+                    type:'post',
+                    processData:false,
+                    contentType:false,
+                    beforeSend:function(xhr, setting) {
+                        bar.css("width", "0%").text("0%");
+                        progressbar.removeClass("uk-hidden");
+                    }, error:function(xhr, status, error) {
+                        alert(error)
+                    }, success: function(data) {
+                        bar.css("width", "100%").text("100%");
 
-                    $('#movieUploadForm').find('input').val("");
-                    alert(data)
-                }, xhr: function () {
-                    var xhr = new window.XMLHttpRequest();
-                    console.log(1);
-                    bar.css("width", '0%').text('0%');
-                    xhr.upload.addEventListener("progress", function (evt) {
-                        var percentComplete = evt.loaded / evt.total;
-                        bar.css("width", percentComplete * 100 + '%').text(percentComplete * 100 + '%');
-                        if (percentComplete === 1) {
+                        setTimeout(function(){
                             progressbar.addClass("uk-hidden");
-                        }
-                    }, false);
+                        }, 250);
 
-                    xhr.addEventListener("progress", function (evt) {
-                        if (evt.lengthComputable) {
+                        $('#movieUploadForm').find('input').val("");
+                        alert(data)
+                        window.location.reload();
+                    }, xhr: function () {
+                        var xhr = new window.XMLHttpRequest();
+                        console.log(1);
+                        bar.css("width", '0%').text('0%');
+                        xhr.upload.addEventListener("progress", function (evt) {
                             var percentComplete = evt.loaded / evt.total;
                             bar.css("width", percentComplete * 100 + '%').text(percentComplete * 100 + '%');
-                        }
-                    }, false);
-                    return xhr;
-                }
-            })
+                            if (percentComplete === 1) {
+                                progressbar.addClass("uk-hidden");
+                            }
+                        }, false);
+
+                        xhr.addEventListener("progress", function (evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                bar.css("width", percentComplete * 100 + '%').text(percentComplete * 100 + '%');
+                            }
+                        }, false);
+                        return xhr;
+                    }
+                })
+            }
         })
 
 
