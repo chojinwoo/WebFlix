@@ -105,7 +105,7 @@ public class VideosEntity {
         this.reg_date = reg_date;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "video_kind_seq", insertable = false, updatable = false)
     public VideoKindEntity getVideoKindEntity() {
         return videoKindEntity;

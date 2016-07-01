@@ -13,6 +13,7 @@ public interface VideosService {
     public List<VideosEntity> findAll();
     public List<VideosEntity> adminFindAll();
     public VideosEntity findOne(Integer seq);
+    public void deleteVideo(int video_seq);
     public VideoFavouritesEntity findFavouritesIdAndSeq(String id, String video_seq);
     public String favouriteSave(VideoFavouritesEntity videoFavouritesEntity);
     public List<VideosEntity> findVideoTitle1AndTitle2(String title1, String title2);
@@ -22,4 +23,6 @@ public interface VideosService {
     public VideoKindEntity findVideoKindOne(int videoKindSeq);
     public void saveVideo(VideosEntity videosEntity);
     public void saveVideoKind(VideoKindEntity videoKindEntity);
+    public void deleteVideoKind(int video_kind_seq);
+    public List<VideoKindEntity> findAdminVideoKindAll();
 }

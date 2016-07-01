@@ -35,7 +35,7 @@
                 </div>
             </sec:authorize>
         </div>
-        <ul class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav="data-uk-nav">
+        <ul id="category" class="uk-nav uk-nav-offcanvas uk-nav-parent-icon" data-uk-nav="data-uk-nav">
             <li id="all" class="uk-active">
                 <a href="#all">전체</a>
             </li>
@@ -60,7 +60,7 @@
                     <li><a href="#comic">코믹</a> </li>
                     <li><a href="#horror ">스릴러</a> </li>
                     <li><a href="#romance">로맨스</a> </li>
-                    <li><a href="#documentary">다큐</a> </li>
+                    <li><a href="#crime">범죄</a> </li>
                 </ul>
             </li>
         </ul>

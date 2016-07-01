@@ -5,17 +5,24 @@ import com.springapp.videos.entity.VideoFavouritesEntity;
 import com.springapp.videos.entity.VideoKindEntity;
 import com.springapp.videos.entity.VideosEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.List;
 
 /**
  * Created by bangae11 on 2016-06-19.
  */
 @Service
+@PropertySource("classpath:application.properties")
 public class VideosServiceImpl implements VideosService {
+
+    @Autowired
+    private Environment env;
 
     @Autowired
     private VideosDao videosDao;
@@ -35,6 +42,21 @@ public class VideosServiceImpl implements VideosService {
     @Transactional(readOnly = true)
     public VideosEntity findOne(Integer seq) {
         return videosDao.findOne(seq);
+    }
+
+    @Override
+    @Transactional
+    public void deleteVideo(int video_seq) {
+        System.out.println(video_seq);
+        VideosEntity videosEntity = this.findOne(video_seq);
+        String filePath  = env.getProperty("file.video.delete.path") + videosEntity.getFile_path()+ videosEntity.getFile_name();
+        String thumbnailPath = env.getProperty("file.video.delete.path") + videosEntity.getFile_path() + "thumbnail/" + videosEntity.getThumbnail();
+        File videoFile = new File(filePath);
+        File thumbnailFile = new File(thumbnailPath);
+
+        this.videosDao.deleteVideo(video_seq);
+        videoFile.delete();
+        thumbnailFile.delete();
     }
 
     @Override
@@ -75,6 +97,11 @@ public class VideosServiceImpl implements VideosService {
     }
 
     @Override
+    public List<VideoKindEntity> findAdminVideoKindAll() {
+        return this.videosDao.findAdminVideoKindAll();
+    }
+
+    @Override
     public List<VideosEntity> findVideoKindSeq(String videoKindSeq) {
         return this.videosDao.findVideoKindSeq(videoKindSeq);
     }
@@ -94,5 +121,11 @@ public class VideosServiceImpl implements VideosService {
     @Transactional
     public void saveVideoKind(VideoKindEntity videoKindEntity) {
         this.videosDao.saveVideoKind(videoKindEntity);
+    }
+
+    @Override
+    @Transactional
+    public void deleteVideoKind(int video_kind_seq) {
+        this.videosDao.deleteVideoKind(video_kind_seq);
     }
 }

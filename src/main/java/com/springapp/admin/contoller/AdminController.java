@@ -52,7 +52,19 @@ public class AdminController {
         return "admin/admin";
     }
 
-    @RequestMapping(value="/video_up", method = RequestMethod.POST)
+    @RequestMapping(value="/video_delete/{video_seq}", method = RequestMethod.POST,produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String video_delete(@PathVariable("video_seq")int video_seq) {
+        String msg = "삭제완료";
+        try {
+            videosService.deleteVideo(video_seq);
+        } catch (Exception e) {
+            msg = "삭제오류 : "+ e.getMessage();
+        }
+        return msg;
+    }
+
+    @RequestMapping(value="/video_up", method = RequestMethod.POST,produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String video_up(MultipartRequest multipartRequest, @ModelAttribute("command")VideosEntity videosEntity) {
         String resultMsg = "업로드 완료";
@@ -105,7 +117,7 @@ public class AdminController {
 
     }
 
-    @RequestMapping(value="/video_excel_temp", method = RequestMethod.POST)
+    @RequestMapping(value="/video_excel_temp", method = RequestMethod.POST,produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public void excelTemp(HttpServletRequest req, HttpServletResponse res) {
         File file = new File(env.getProperty("file.absolutePath")+env.getProperty("download.excelTemp"));
@@ -147,7 +159,7 @@ public class AdminController {
 
     @RequestMapping(value="/kind", method = RequestMethod.GET)
     public String videoKind(Model model) {
-        model.addAttribute("videoKinds", this.videosService.findVideoKindAll());
+        model.addAttribute("videoKinds", this.videosService.findAdminVideoKindAll());
         return "admin/kind";
     }
 
@@ -166,5 +178,53 @@ public class AdminController {
             msg = "전송실패 : " + e.toString();
         }
         return msg;
-    };
+    }
+
+    @RequestMapping(value="/kind_delete/{video_kind_seq}", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String kind_delete(@PathVariable("video_kind_seq")int video_kind_seq) {
+        String msg = "";
+        try {
+            this.videosService.deleteVideoKind(video_kind_seq);
+            msg = "삭제완료";
+        } catch(Exception e) {
+            msg = "삭제오류 : " + e.getMessage();
+
+        }
+
+        return msg;
+    }
+
+    @RequestMapping(value="/kind_thumbnail/{video_kind_seq}", method=RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    @ResponseBody
+    public String kind_thumbnail(@PathVariable("video_kind_seq")int video_kind_seq) {
+        VideoKindEntity videoKindEntity = this.videosService.findVideoKindOne(video_kind_seq);
+        String coverPath = videoKindEntity.getCoverPath();
+        String path = "/appl/WebFlix"+lastIndexOfLoop(coverPath, "/", 2) + "/";
+        String command = "/appl/WebFlix/attach/thumbnailAuto.sh "+path;
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process process = runtime.exec(command);
+            InputStream is = process.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+            String line = "";
+            while((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "seuccess";
+    }
+
+    public String lastIndexOfLoop(String str, String targetStr, int index) {
+        String strs = str;
+        int i= 0;
+        while(i < index) {
+            strs = str.substring(0, strs.lastIndexOf(targetStr));
+            i++;
+        }
+        return strs;
+    }
 }

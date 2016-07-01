@@ -45,12 +45,16 @@
                 </c:if>
             </c:if>
             <tr>
+                <input type="hidden" id="video_kind_seq" value="${videoKind.videoKindSeq}">
                 <td>${videoKind.title1}</td>
-                <td>${videoKind.title2}</td>
+                <td class="uk-text-center">${videoKind.title2}</td>
                 <td>${videoKind.coverName}</td>
                 <td>${videoKind.actor}</td>
-                <td><input type="checkbox" <c:if test="${videoKind.flag}">checked="checked"</c:if> disabled="disabled" ></td>
-                <td><button type="button" class="uk-button uk-button-danger uk-align-right">삭제</button></td>
+                <td class="uk-text-center"><input type="checkbox" <c:if test="${videoKind.flag}">checked="checked"</c:if> disabled="disabled" ></td>
+                <td class="uk-text-center">
+                    <button type="button" class="thumbnail_btn uk-button uk-button-primary">썸네일</button>
+                    <button type="button" class="delete_btn uk-button uk-button-danger">삭제</button>
+                </td>
             </tr>
             <c:if test="${idx.count % 8 == 0 || idx.last}">
             </tbody>
@@ -181,6 +185,7 @@
                         progressbar.addClass("uk-hidden");
                     }, 250);
 
+                    $('#movieUploadForm').find('input').val("");
                     alert(data)
                 }, xhr: function () {
                     var xhr = new window.XMLHttpRequest();
@@ -225,6 +230,37 @@
                     console.log(page);
                     $(this).find('span').text(page);
                     page++;
+                })
+            }
+        })
+
+        $('.thumbnail_btn').click(function() {
+            var _this = $(this).closest('tr');
+            if(confirm("썸네일을 생성하시겠습니까?")) {
+                $.ajax({
+                    url:'${pageContext.request.contextPath}/admin/kind_thumbnail/'+_this.find('#video_kind_seq').val(),
+                    type:'post',
+                    success:function(data) {
+                        alert(data);
+                    }, error:function(xhr, status, error) {
+                        alert(error);
+                    }
+                })
+            }
+        });
+
+        $('.delete_btn').click(function() {
+            var _this = $(this).closest('tr');
+            if(confirm("삭제하시겠습니까?")){
+                $.ajax({
+                    url:'${pageContext.request.contextPath}/admin/kind_delete/'+_this.find('#video_kind_seq').val(),
+                    type:'post',
+                    success:function(data) {
+                        alert(data);
+                        _this.remove();
+                    }, error:function(xhr, status, error) {
+                        alert(error)
+                    }
                 })
             }
         })

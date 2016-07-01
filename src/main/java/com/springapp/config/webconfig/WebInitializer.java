@@ -1,5 +1,6 @@
 package com.springapp.config.webconfig;
 
+import com.springapp.common.filter.SecureFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.web.DefaultSecurityFilterChain;
@@ -38,6 +39,14 @@ public class WebInitializer implements WebApplicationInitializer {
         filter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/");
         filter.setInitParameter("encoding", "UTF-8");
         filter.setInitParameter("forceEncoding", "true");
+
+
+        /* secure Filter*/
+        FilterRegistration.Dynamic secureFilter =  servletContext.addFilter("SecureFilter", new SecureFilter());
+        secureFilter.setAsyncSupported(true);
+        secureFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/");
+
+
 
         /* Spring Security Filter */
 //        FilterRegistration.Dynamic filterChain =  servletContext.addFilter("springSecurityFilterChain",new DelegatingFilterProxy());

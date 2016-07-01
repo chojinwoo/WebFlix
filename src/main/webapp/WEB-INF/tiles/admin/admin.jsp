@@ -45,12 +45,13 @@
                 </c:if>
             </c:if>
             <tr>
+                <input type="hidden" id="video_seq" value="${video.video_seq}">
                 <td>${video.title3}</td>
                 <td>${video.videoKindEntity.genre}</td>
                 <td>${video.file_name}</td>
-                <td>${video.videoKindEntity.start_date}</td>
-                <td>${video.reg_date}</td>
-                <td><button type="button" class="uk-button uk-button-danger uk-align-right">삭제</button></td>
+                <td class="uk-text-center">${video.videoKindEntity.start_date}</td>
+                <td class="uk-text-center">${video.reg_date}</td>
+                <td class="uk-text-center"><button type="button" class="delete_btn uk-button uk-button-danger">삭제</button></td>
             </tr>
             <c:if test="${idx.count % 8 == 0 || idx.last}">
             </tbody>
@@ -241,4 +242,21 @@
             $('.uk-table tbody:not(.tbody-paging)').hide();
             $('.tbody-'+(Number(pageIndex)+1)).show();
         });
+
+        $(document).on('click', '.delete_btn', function() {
+            var _this = $(this).closest('tr');
+            var video_seq = _this.find('#video_seq').val();
+            if(confirm("삭제 하시겠습니까?")){
+                $.ajax({
+                    url:'${pageContext.request.contextPath}/admin/video_delete/'+video_seq,
+                    type:'post',
+                    success:function(data) {
+                        alert(data);
+                        _this.remove();
+                    }, error:function(xhr, status, error) {
+                        alert(error);
+                    }
+                })
+            }
+        })
     </script>

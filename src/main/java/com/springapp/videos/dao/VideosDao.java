@@ -13,6 +13,7 @@ public interface VideosDao {
     public List<VideosEntity> findAll();
     public List<VideosEntity> adminFindAll();
     public VideosEntity findOne(Integer seq);
+    public void deleteVideo(int video_seq);
     public VideoFavouritesEntity findFavouritesIdAndSeq(String id, String video_seq);
     public List<VideosEntity> findVideoListFavouriteId(String id);
     public VideoFavouritesEntity findFavouriteVideoSeq(Integer video_seq);
@@ -24,4 +25,7 @@ public interface VideosDao {
     public VideoKindEntity findVideoKindOne(int videoKindSeq);
     public void saveVideo(VideosEntity videosEntity);
     public void saveVideoKind(VideoKindEntity videoKindEntity);
+    public void deleteVideoKind(int video_kind_seq);
+    public List<VideoKindEntity> findAdminVideoKindAll();
+
 }

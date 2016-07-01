@@ -39,10 +39,13 @@ public class UploadServiceImpl implements UploadService, Serializable {
 
     public boolean kindUpload(MultipartFile file, VideoKindEntity videoKindEntity) {
         boolean flag = true;
-        File newDir = new File(env.getProperty("file.path") + videoKindEntity.getCoverPath());
+        System.out.println(env.getProperty("file.absolutePath") + videoKindEntity.getCoverPath());
+        File newDir = new File(env.getProperty("file.absolutePath") + videoKindEntity.getCoverPath());
         String absolutePath = env.getProperty("file.absolutePath");
-        if(!newDir.exists()) {
-            newDir.mkdirs();
+        if(!newDir.mkdirs()) {
+            System.out.println("create Folder Filed");
+        } else {
+            System.out.println("create Folder success");
         }
 
         try {

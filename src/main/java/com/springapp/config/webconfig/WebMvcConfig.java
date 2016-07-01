@@ -1,5 +1,6 @@
 package com.springapp.config.webconfig;
 
+import com.springapp.common.util.CustomCommonsMultipartResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,8 +31,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     private Environment env;
 
     @Bean
-    public CommonsMultipartResolver multipartResolver() {
-        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+    public CustomCommonsMultipartResolver multipartResolver() {
+        CustomCommonsMultipartResolver multipartResolver = new CustomCommonsMultipartResolver();
         multipartResolver.setDefaultEncoding("utf-8");
         return multipartResolver;
     }

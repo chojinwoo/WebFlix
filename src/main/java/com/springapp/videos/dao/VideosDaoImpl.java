@@ -47,6 +47,11 @@ public class VideosDaoImpl implements VideosDao {
     }
 
     @Override
+    public void deleteVideo(int video_seq) {
+        this.videosRepository.delete(video_seq);
+    }
+
+    @Override
     public VideoFavouritesEntity findFavouritesIdAndSeq(String id, String video_seq) {
         return this.videoFavouritesRepository.findFavouritesIdAndSeq(id, video_seq);
     }
@@ -101,4 +106,13 @@ public class VideosDaoImpl implements VideosDao {
         this.videoKindRepository.save(videoKindEntity);
     }
 
+    @Override
+    public void deleteVideoKind(int video_kind_seq) {
+        this.videoKindRepository.delete(video_kind_seq);
+    }
+
+    @Override
+    public List<VideoKindEntity> findAdminVideoKindAll() {
+        return this.videoKindRepository.findAll();
+    }
 }

@@ -83,7 +83,7 @@
     <div class="uk-grid">
         <div id="tm-left-section" class="uk-width-medium-3-10 uk-width-large-2-10 uk    -hidden-small">
             <div class="uk-panel">
-                <ul class="uk-nav  uk-nav-side uk-nav-parent-icon uk-margin-bottom" data-uk-nav="">
+                <ul id="category" class="uk-nav  uk-nav-side uk-nav-parent-icon uk-margin-bottom" data-uk-nav="">
                     <li id="all" class="uk-active"><a href="#all">전체</a></li>
                     <li id="featured"><a href="#featured">추천</a></li>
                     <li><a href="#movie">영화</a></li>
@@ -99,7 +99,7 @@
                             <li><a href="#comic">코믹</a> </li>
                             <li><a href="#horror ">스릴러</a> </li>
                             <li><a href="#romance">로맨스</a> </li>
-                            <li><a href="#documentary">다큐</a> </li>
+                            <li><a href="#crime">범죄</a> </li>
                         </ul>
                     </li>
                     <li class="uk-nav-divider"></li>
@@ -219,7 +219,7 @@
         draw(video_kind);
 
 
-        $('.uk-nav li:not(#genre, #featured)').click(function(e) {
+        $('#category li:not(#genre, #featured)').click(function(e) {
             var sortVideo = new Array();
             var genre = $(this).find('a').text();
 
@@ -300,6 +300,7 @@
                             $('.nc-country').text(data.videoKindEntity.country);
                             $('.nc-star').text(data.videoKindEntity.star);
                             $('.nc-play-img').attr('src', '${pageContext.request.contextPath}'+data.file_path+'thumbnail/'+data.thumbnail);
+                            $('#next-container').css('background-image', 'url("${pageContext.request.contextPath}'+data.videoKindEntity.coverPath+data.videoKindEntity.coverName+'"');
 
                             var timerCount = 5;
                             function timerInterval() {
