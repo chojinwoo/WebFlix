@@ -43,8 +43,7 @@
                     <div class="uk-dropdown uk-dropdown-bottom" style="top:30px;left:-100px">
                         <ul class="uk-nav uk-nav-dropdown">
                             <li class="nav-header">USER</li>
-                            <li><a href="">HTML</a></li>
-                            <li><a href="">CSS</a></li>
+                            <li><a href="${pageContext.request.contextPath}/playList">플레이리스트</a></li>
                             <sec:authorize access="hasRole('ROLE_ADMIN')">
                                 <li class="uk-nav-divider"></li>
                                 <li class="nav-header">ADMIN</li>

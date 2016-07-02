@@ -22,4 +22,7 @@ public interface VideosRepository extends JpaRepository<VideosEntity, Integer> {
 
     @Query(value = "select * from videos where video_kind_seq = :video_kind_seq order by file_name", nativeQuery = true)
     List<VideosEntity> findVideoKindSeq(@Param("video_kind_seq")String video_kind_seq);
+
+    @Query(value = "select * from videos where video_seq in (select video_seq from video_favourites where id = :id)", nativeQuery = true)
+    List<VideosEntity> findPlayLIst(@Param("id")String id);
 }

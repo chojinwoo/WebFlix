@@ -34,11 +34,7 @@ public class VideosDaoImpl implements VideosDao {
 
     @Override
     public List<VideosEntity> adminFindAll() {
-        return this.videosRepository.findAll();
-    }
-
-    private Sort sortByTitle3() {
-        return new Sort(Sort.Direction.ASC, "title3");
+        return this.videosRepository.findAll(sortByTitle3());
     }
 
     @Override
@@ -83,7 +79,7 @@ public class VideosDaoImpl implements VideosDao {
 
     @Override
     public List<VideoKindEntity> findVideoKindAll() {
-        return this.videoKindRepository.findAll();
+        return this.videoKindRepository.findByFlag(true, sortByTitle1Title2());
     }
 
     @Override
@@ -113,6 +109,18 @@ public class VideosDaoImpl implements VideosDao {
 
     @Override
     public List<VideoKindEntity> findAdminVideoKindAll() {
-        return this.videoKindRepository.findAll();
+        return this.videoKindRepository.findAll(sortByTitle1Title2());
+    }
+
+    @Override
+    public List<VideosEntity> findPlayList(String id) {
+        return this.videosRepository.findPlayLIst(id);
+    }
+
+    private Sort sortByTitle3() {
+        return new Sort(Sort.Direction.ASC, "title3");
+    }
+    private Sort sortByTitle1Title2() {
+        return new Sort(Sort.Direction.ASC, new String[]{"title1", "title2"});
     }
 }

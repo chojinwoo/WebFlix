@@ -40,6 +40,7 @@
 <%--video view--%>
 <div id="video" class="mv-container">
     <div id="video-cancel" class="mv-cancel"><i class="uk-icon-arrow-circle-left uk-icon-large"></i></div>
+    <div id="video-heart" class="mv-heart"><i class="uk-icon-heart-o uk-icon-large"></i></div>
 </div>
 <!--     start Main Section   -->
 <div id="main-container" class="uk-container uk-container-center uk-margin-large-top uk-margin-large-bottom">
@@ -255,11 +256,19 @@
 
         /* 플레이 리스트의 영상 클릭시 이벤트*/
         $(document).on('click', '#playList-info-play', function() {
+            /* video-heart css 제거*/
+            $('#video-heart i').removeClass('uk-icon-heart').addClass('uk-icon-heart-o');
             var _this = $(this);
             var video_seq = $(this).attr('data-video-seq');
             var movie_file = $(this).attr('data-movie-file');
             var movie_type = $(this).attr('data-movie-type');
             var video_kind_seq = $(this).attr('data-video-kind-seq');
+            var favourites = JSON.parse('${json_favorite}');
+            $.each(favourites, function() {
+                if(this.video_seq == video_seq) {
+                    $('#video-heart i').removeClass('uk-icon-heart-o').addClass('uk-icon-heart');
+                }
+            })
             var video = '<video controls="controls" class="mv-video" data-video-seq="'+video_seq+'"  autoplay="autoplay">';
             video += '<source src="${pageContext.request.contextPath}'+movie_file+'" type="video/mp4"/>';
             video += '</video>'
@@ -277,6 +286,7 @@
 
                 if(_this.next().attr('id') == 'playList-info-play') {
                     /* 다음 재생 정보 받아 오기 */
+                    clearInterval(playEndInterval);
                     $.ajax({
                         url:'${pageContext.request.contextPath}/videoFindOne/'+next_video_seq,
                         type:'post',
@@ -284,6 +294,7 @@
                             $('#next-container').fadeIn(500);
                             $('#main-container').hide();
                             $('#video-cancel').hide();
+                            $('#video-heart').show();
                             var x = $(window).width();
                             var width = '50%';
                             if(x >0 && x <= 480) {
@@ -359,6 +370,7 @@
             function videoReadyState() {
                 var state = $('.mv-video')[0].readyState;
                 $('#video-cancel').show();
+                $('#video-heart').show();
                 clearInterval(playEndInterval);
                 if(playEndIntervalCount < 80) {
                     if (state > 3) {
@@ -395,6 +407,24 @@
             $('.mv-video')[0].pause();
             clearInterval(playEndInterval);
             $('#main-container').show();
+        })
+
+        /*플레이리스트 추가*/
+        $(document).on('click', '#video-heart', function() {
+            var video_seq = $('.mv-video').attr('data-video-seq');
+            $.ajax({
+                url:'${pageContext.request.contextPath}/video_favourite/'+video_seq,
+                type:'post',
+                success:function(data) {
+                    if(data == 1) {
+                        $('#video-heart i').removeClass('uk-icon-heart-o').addClass('uk-icon-heart');
+                    } else {
+                        $('#video-heart i').removeClass('uk-icon-heart').addClass('uk-icon-heart-o');
+                    }
+                }, error:function(xhr, status, error) {
+                    alert(error);
+                }
+            })
         })
 
         /* 영상 카테고리 선택시 */
@@ -467,7 +497,7 @@
                             if(i < 7) {
                                 slide.push('<li class="uk-active slideView" id="playList-info-play" data-movie-type="2" data-video-kind-seq="'+data[0].videoKindEntity.videoKindSeq+'" data-video-seq="'+this.video_seq+'" data-movie-file="'+this.file_path+this.file_name+'"><img src="${pageContext.request.contextPath}'+this.file_path+'thumbnail/'+this.thumbnail+'" data-holder-rendered="true">'+this.title3+'</li>');
                             }else {
-                                slide.push('<li style="display: none;" class="slideView" id="playList-info-play" data-movie-type="2" data-video-kind-seq="'+data[0].videoKindEntity.videoKindSeq+'" data-video-seq="'+this.video_seq+'"><img src="${pageContext.request.contextPath}'+this.file_path+'thumbnail/'+this.thumbnail+'" data-holder-rendered="true">'+this.title3+'</li>');
+                                slide.push('<li style="display: none;" class="slideView" id="playList-info-play" data-movie-type="2" data-video-kind-seq="'+data[0].videoKindEntity.videoKindSeq+'" data-video-seq="'+this.video_seq+'" data-movie-file="'+this.file_path+this.file_name+'"><img src="${pageContext.request.contextPath}'+this.file_path+'thumbnail/'+this.thumbnail+'" data-holder-rendered="true">'+this.title3+'</li>');
                             }
                         })
                         slide.push('</ul>');

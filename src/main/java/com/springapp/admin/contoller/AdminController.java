@@ -55,11 +55,11 @@ public class AdminController {
     @RequestMapping(value="/video_delete/{video_seq}", method = RequestMethod.POST,produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String video_delete(@PathVariable("video_seq")int video_seq) {
-        String msg = "삭제완료";
+        String msg = "DeleteSuccess";
         try {
             videosService.deleteVideo(video_seq);
         } catch (Exception e) {
-            msg = "삭제오류 : "+ e.getMessage();
+            msg = "DeleteError : "+ e.getMessage();
         }
         return msg;
     }
@@ -67,7 +67,7 @@ public class AdminController {
     @RequestMapping(value="/video_up", method = RequestMethod.POST,produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String video_up(MultipartRequest multipartRequest, @ModelAttribute("command")VideosEntity videosEntity) {
-        String resultMsg = "업로드 완료";
+        String resultMsg = "Upload Complete";
         List<MultipartFile> files = multipartRequest.getFiles("files");
         System.out.println(videosEntity.toString());
         VideoKindEntity videoKindEntity = this.videosService.findVideoKindOne(videosEntity.getVideo_kind_seq());
@@ -99,11 +99,11 @@ public class AdminController {
                 }
                 fileCount++;
             } catch(Exception e) {
-                resultMsg = "전송실패 : " + e.toString();
+                resultMsg = "Upload Filed : " + e.toString();
             }
 
         } else {
-            resultMsg = "업로드파일갯수와 제목 스토리의 갯수가 동일 하지못합니다.";
+            resultMsg = "Story count No Match Upload Count ";
         }
         return resultMsg;
     }
@@ -166,7 +166,7 @@ public class AdminController {
     @RequestMapping(value="/kind_up", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String videoKindUp(MultipartRequest multipartRequest, @ModelAttribute("command") VideoKindEntity videoKindEntity) {
-        String msg = "전송완료";
+        String msg = "Upload Complete";
         MultipartFile file = multipartRequest.getFile("file");
         videoKindEntity.setCoverName(file.getOriginalFilename());
         try {
@@ -175,7 +175,7 @@ public class AdminController {
             this.videosService.saveVideoKind(videoKindEntity);
             System.out.println(videoKindEntity.toString());
         } catch(Exception e) {
-            msg = "전송실패 : " + e.toString();
+            msg = "Upload Error : " + e.toString();
         }
         return msg;
     }
@@ -186,9 +186,9 @@ public class AdminController {
         String msg = "";
         try {
             this.videosService.deleteVideoKind(video_kind_seq);
-            msg = "삭제완료";
+            msg = "Delete Complete";
         } catch(Exception e) {
-            msg = "삭제오류 : " + e.getMessage();
+            msg = "Delete Error : " + e.getMessage();
 
         }
 

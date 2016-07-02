@@ -102,6 +102,11 @@ public class VideosServiceImpl implements VideosService {
     }
 
     @Override
+    public List<VideosEntity> findPlayList(String id) {
+        return this.videosDao.findPlayList(id);
+    }
+
+    @Override
     public List<VideosEntity> findVideoKindSeq(String videoKindSeq) {
         return this.videosDao.findVideoKindSeq(videoKindSeq);
     }

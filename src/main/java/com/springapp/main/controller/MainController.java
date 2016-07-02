@@ -2,12 +2,8 @@ package com.springapp.main.controller;
 
 import com.google.gson.Gson;
 import com.springapp.users.entity.UsersEntity;
-import com.springapp.videos.entity.VideoFavouritesEntity;
 import com.springapp.videos.entity.VideoKindEntity;
-import com.springapp.videos.entity.VideosEntity;
 import com.springapp.videos.service.VideosService;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -48,11 +44,20 @@ public class MainController {
     private void mainSet(Model model, UsersEntity usersEntity) {
         List<VideoKindEntity> videoKindEntities = this.videosService.findVideoKindAll();
         model.addAttribute("json_videoKind", new Gson().toJson(videoKindEntities));
+        model.addAttribute("json_favorite", new Gson().toJson(this.videosService.findVideoListFavouriteId(usersEntity.getId())));
     }
 
     @RequestMapping(value="/viewList/{videoKindSeq}", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public String findVideoKindSeq(@PathVariable("videoKindSeq")String videoKindSeq) {
         return  new Gson().toJson(this.videosService.findVideoKindSeq(videoKindSeq));
+    }
+
+    @RequestMapping(value="/playList", method = RequestMethod.GET)
+    public String playList(Model model) {
+        UsersEntity usersEntity = (UsersEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("json_videos", new Gson().toJson(this.videosService.findPlayList(usersEntity.getId())));
+        model.addAttribute("json_favorite", new Gson().toJson(this.videosService.findVideoListFavouriteId(usersEntity.getId())));
+        return "main/playList";
     }
 }
