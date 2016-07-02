@@ -133,4 +133,10 @@ public class VideosServiceImpl implements VideosService {
     public void deleteVideoKind(int video_kind_seq) {
         this.videosDao.deleteVideoKind(video_kind_seq);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<VideosEntity> lastUpdateVideo() {
+        return this.videosDao.lastUpdateVideo();
+    }
 }

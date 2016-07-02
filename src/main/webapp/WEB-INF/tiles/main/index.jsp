@@ -95,11 +95,10 @@
                     <li class="uk-nav-divider"></li>
                 </ul>
                 <ul class="uk-nav uk-nav-comments uk-nav-side" data-uk-nav="">
-                    <li class="uk-nav-header uk-margin-small-bottom">Latest Comments</li>
-                    <li><a href="#">Media title goes here<div> Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam </div></a></li>
-                    <li><a href="#">Media title goes here<div> Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium </div></a></li>
-                    <li><a href="#">Media title goes here<div> vel illum qui dolorem eum fugiat quo voluptas nulla pariatu </div></a></li>
-
+                    <li class="uk-nav-header uk-margin-small-bottom">최근 업로드</li>
+                    <c:forEach items="${lastUpdate}" var="last">
+                    <li><a href="#">${last.title3}<div> ${last.story} </div></a></li>
+                    </c:forEach>
                     <li class="uk-nav-divider" sec:authorize="isAnonymous()"></li>
                 </ul>
                 <sec:authorize access="isAnonymous()">

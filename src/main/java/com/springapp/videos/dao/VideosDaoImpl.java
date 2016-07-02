@@ -117,6 +117,11 @@ public class VideosDaoImpl implements VideosDao {
         return this.videosRepository.findPlayLIst(id);
     }
 
+    @Override
+    public List<VideosEntity> lastUpdateVideo() {
+        return this.videosRepository.lastUpdateVideo();
+    }
+
     private Sort sortByTitle3() {
         return new Sort(Sort.Direction.ASC, "title3");
     }

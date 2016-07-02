@@ -42,11 +42,10 @@
                     <li class="uk-nav-divider"></li>
                 </ul>
                 <ul class="uk-nav uk-nav-comments uk-nav-side" data-uk-nav="">
-                    <li class="uk-nav-header uk-margin-small-bottom">Latest Comments</li>
-                    <li><a href="#">Media title goes here<div> Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam </div></a></li>
-                    <li><a href="#">Media title goes here<div> Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium </div></a></li>
-                    <li><a href="#">Media title goes here<div> vel illum qui dolorem eum fugiat quo voluptas nulla pariatu </div></a></li>
-
+                    <li class="uk-nav-header uk-margin-small-bottom">최근 업로드</li>
+                    <c:forEach items="${lastUpdate}" var="last">
+                        <li><a href="#">${last.title3}<div> ${last.story} </div></a></li>
+                    </c:forEach>
                     <li class="uk-nav-divider" sec:authorize="isAnonymous()"></li>
                 </ul>
                 <sec:authorize access="isAnonymous()">
@@ -100,8 +99,7 @@
                 row.push('<div class="video-row uk-width-large-1-4 uk-width-medium-1-3 uk-row-first">');
                 row.push('    <div class="uk-overlay uk-overlay-hover">');
                 row.push('        <img class="video-thumbnail" src="${pageContext.request.contextPath}'+this.file_path + 'thumbnail/' + this.thumbnail+'" alt="Image" />');
-                row.push('        <div data-video-seq="'+this.video_seq+'" data-movie-file="${pageContext.request.contextPath}'+this.file_path+this.file_name+'" class="uk-overlay-panel uk-overlay-fade uk-overlay-background uk-overlay-icon video_play"></div>');
-                row.push('    </div>');
+                row.push('        <div data-video-seq="'+this.video_seq+'" data-movie-file="'+this.file_path+this.file_name+'" class="uk-overlay-panel uk-overlay-fade uk-overlay-background uk-overlay-icon video_play"></div>');                row.push('    </div>');
                 row.push('    <div class="uk-panel" >');
                 row.push('        <h5 class="uk-panel-title video-title">'+this.title3+'</h5>');
                 row.push('        <p>');

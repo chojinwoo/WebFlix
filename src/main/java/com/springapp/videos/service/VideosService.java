@@ -26,4 +26,5 @@ public interface VideosService {
     public void deleteVideoKind(int video_kind_seq);
     public List<VideoKindEntity> findAdminVideoKindAll();
     public List<VideosEntity> findPlayList(String id);
+    public List<VideosEntity> lastUpdateVideo();
 }
