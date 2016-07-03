@@ -11,7 +11,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Webflix - Streaming Media Theme - Log in</title>
+    <title>Webflix - WebFlix Free Movie - Log in</title>
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/img/favicon.ico" type="/resources/img/x-icon"/>
     <link rel="apple-touch-icon-precomposed" href="${pageContext.request.contextPath}/resources/img/apple-touch-icon.png"/>
 

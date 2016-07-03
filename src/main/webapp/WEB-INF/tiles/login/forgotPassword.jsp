@@ -11,7 +11,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Webflix - Streaming Media Theme - Recover Password</title>
+    <title>Webflix - WebFlix Free Movie - Recover Password</title>
     <link rel="shortcut icon" href="/resources/img/favicon.ico" type="/resources/img/x-icon"/>
     <link rel="apple-touch-icon-precomposed" href="/resources/img/apple-touch-icon.png"/>
 

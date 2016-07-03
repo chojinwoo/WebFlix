@@ -28,7 +28,12 @@ public class WebInitializer implements WebApplicationInitializer {
         servletContext.addListener(new ContextLoaderListener(applicationContext));
 
         /* Dispatcher Servlet*/
-        ServletRegistration.Dynamic servlet = servletContext.addServlet("DispatcherServlet", new DispatcherServlet(applicationContext));
+
+        /* Exception Handler */
+        DispatcherServlet dispatcherServlet =  new DispatcherServlet(applicationContext);
+        dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
+
+        ServletRegistration.Dynamic servlet = servletContext.addServlet("DispatcherServlet", dispatcherServlet);
         servlet.setLoadOnStartup(1);
         servlet.setAsyncSupported(true);
         servlet.addMapping("/");
@@ -45,8 +50,6 @@ public class WebInitializer implements WebApplicationInitializer {
         FilterRegistration.Dynamic secureFilter =  servletContext.addFilter("SecureFilter", new SecureFilter());
         secureFilter.setAsyncSupported(true);
         secureFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/");
-
-
 
         /* Spring Security Filter */
 //        FilterRegistration.Dynamic filterChain =  servletContext.addFilter("springSecurityFilterChain",new DelegatingFilterProxy());

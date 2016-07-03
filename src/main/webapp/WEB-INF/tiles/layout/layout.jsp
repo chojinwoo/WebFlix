@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Spring Boot and Thymeleaf - Thymeleaf Layout Dialect</title>
+    <title>Webflix - WebFlix Free Movie</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Webflix - Streaming Media Theme - Homepage v1</title>

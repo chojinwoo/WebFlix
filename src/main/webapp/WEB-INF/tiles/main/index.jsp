@@ -285,7 +285,7 @@
 
                 if(_this.next().attr('id') == 'playList-info-play') {
                     /* 다음 재생 정보 받아 오기 */
-                    clearInterval(playEndInterval);
+                    window.clearInterval(playEndInterval);
                     $.ajax({
                         url:'${pageContext.request.contextPath}/videoFindOne/'+next_video_seq,
                         type:'post',
@@ -320,13 +320,13 @@
                                     $('.nc-timer').text(timerCount);
                                 } else {
                                     $('#next-container').fadeOut(500);
-                                    clearInterval(inter);
+                                    window.clearInterval(inter);
                                     timerCount = 0;
                                     _this.next().trigger('click');
                                 }
                             }
                             var inter = setInterval(timerInterval, 1000);
-                            clearInterval(playEndInterval);
+                            window.clearInterval(playEndInterval);
                         }, error:function(xhr, status, error) {
                             alert(error);
                         }
@@ -346,8 +346,7 @@
                 if(duration < 10) {
                     playEnd();
                 } else {
-                    clearInterval(playEndInterval);
-                    clearInterval(playEndInterval);
+                    window.clearInterval(playEndInterval);
                     playEndInterval = setInterval(playEnd, (duration * 1000));
                 }
             });
@@ -370,7 +369,7 @@
                 var state = $('.mv-video')[0].readyState;
                 $('#video-cancel').show();
                 $('#video-heart').show();
-                clearInterval(playEndInterval);
+                window.clearInterval(playEndInterval);
                 if(playEndIntervalCount < 80) {
                     if (state > 3) {
                         playEndIntervalCount = 0;
@@ -383,12 +382,12 @@
                         } else {
                             playEndInterval = setInterval(playEnd, (duration * 1000));
                         }
-                        clearInterval(stateInterval);
+                        window.clearInterval(stateInterval);
                     } else {
                         playEndIntervalCount++;
                     }
                 } else {
-                    clearInterval(stateInterval);
+                    window.clearInterval(stateInterval);
                 }
             }
 
@@ -404,7 +403,7 @@
             $('.uk-navbar').css('opacity', 1);
             $('#video').hide();
             $('.mv-video')[0].pause();
-            clearInterval(playEndInterval);
+            window.clearInterval(playEndInterval);
             $('#main-container').show();
         })
 
