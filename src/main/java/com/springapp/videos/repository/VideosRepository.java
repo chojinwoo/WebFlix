@@ -26,7 +26,7 @@ public interface VideosRepository extends JpaRepository<VideosEntity, Integer> {
     @Query(value = "select * from videos where video_seq in (select video_seq from video_favourites where id = :id)", nativeQuery = true)
     List<VideosEntity> findPlayLIst(@Param("id")String id);
 
-    @Query(value = "select video_seq, file_name,  file_path,  reg_date, concat(substr(story, 1, 100), '...') as story,  thumbnail,  title3,  video_kind_seq from (select a.*, @rnum \\:= @rnum + 1 as no from videos as a order by video_seq desc) as aa, (select @rnum \\:= 0) as bb where no < 4 order by no desc", nativeQuery = true)
+    @Query(value = "select video_seq, file_name,  file_path,  reg_date, concat(substr(story, 1, 100), '...') as story,  thumbnail,  title3,  video_kind_seq from (select a.*, @rnum \\:= @rnum + 1 as no from videos as a order by reg_date desc, video_seq desc) as aa, (select @rnum \\:= 0) as bb where no < 4 order by no desc", nativeQuery = true)
     List<VideosEntity> lastUpdateVideo();
 
 }

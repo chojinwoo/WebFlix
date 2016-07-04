@@ -22,6 +22,13 @@
     }
 </style>
 <div class="uk-overflow-container" style="padding:50px 50px 0px 50px;">
+    <form class="uk-form">
+        <fieldset>
+            <div class="uk-form-row">
+                <input type="text" name="search" id="search" style="width:100%;" placeholder="Search..."/>
+            </div>
+        </fieldset>
+    </form>
     <table class="uk-table">
         <thead>
             <tr>
@@ -146,6 +153,61 @@
     <input type="file" id="file" name="file" style="display:none; position:absolute; z-index:-1">
 </form>
     <script>
+        $('#search').change(function() {
+            var trArr = [];
+            var search = $(this).val();
+            $.each($('table tr'), function() {
+                $.each($(this).find('td'), function() {
+                    if((($(this).text().indexOf(search))) > -1) {
+                        trArr.push($(this).closest('tr'))
+                        return false;
+                    }
+                })
+            })
+
+            $('table').find('tbody').remove();
+
+            var tbody;
+            var tbodyCount = 1;
+            for(var i=0; i<trArr.length; i++) {
+
+                if(i % 8 == 0) {
+                    tbody = $('<tbody class="tbody-'+tbodyCount+'"></tbody>')
+                    if(tbodyCount != 1) {
+                        tbody.css('display', 'none');
+                    }
+                }
+                tbody.append(trArr[i]);
+                if(i % 8 == 0) {
+                    $('table').append(tbody);
+                    tbodyCount++;
+                }
+
+                if(i == (trArr.length - 1)) {
+                    var tfoot = [];
+                    tfoot.push('<tbody class="tbody-paging">');
+                    tfoot.push('<tr>');
+                    tfoot.push('<td rowspan="2" colspan="6">');
+                    tfoot.push('<div class="uk-margin-large-top uk-margin-bottom">');
+                    tfoot.push('<ul class="uk-pagination"');
+                    tfoot.push('</ul>');
+                    tfoot.push('</div>');
+                    tfoot.push('</td>');
+                    tfoot.push('</tr>');
+                    tfoot.push('</tbody>');
+                    $('table').append(tfoot.join(''));
+                    var pagination = UIkit.pagination($('.uk-pagination'), {
+                        items:(tbodyCount - 1),
+                        itemOnPage:1
+                    });
+                    $('.uk-pagination').on('select.uk.pagination', function(e, pageIndex){
+                        $('.uk-table tbody:not(.tbody-paging)').hide();
+                        $('.tbody-'+(Number(pageIndex)+1)).show();
+                    });
+                }
+            }
+        })
+
         $('#flag_temp').click(function() {
             $('#flag').val($(this).prop('checked'));
         })
@@ -226,31 +288,7 @@
             }
         })
 
-
-        $(document).on('click', '#prev:not(.uk-disabled)',function() {
-            var firstPaging = $('#pageFirst span').text();
-            var lastPaging = $('#pagingMax span').text();
-            var page = Number(firstPaging) - 1;
-
-            if(lastPaging == '${tbodyIdx}') {
-                $('#next').addClass('uk-disabled')
-            }
-
-            if(lastPaging < '${tbodyIdx}') {
-                $('#next').removeClass('uk-disabled')
-            }
-
-            if(firstPaging > 1) {
-                var target = $('.uk-pagination li:not(#prev, #next, #empty)');
-                $(target).each(function() {
-                    console.log(page);
-                    $(this).find('span').text(page);
-                    page++;
-                })
-            }
-        })
-
-        $('.thumbnail_btn').click(function() {
+        $(document).on('click', '.thumbnail_btn', function() {
             var _this = $(this).closest('tr');
             if(confirm("썸네일을 생성하시겠습니까?")) {
                 $.ajax({
@@ -265,7 +303,7 @@
             }
         });
 
-        $('.delete_btn').click(function() {
+        $(document).on('click', '.delete_btn', function() {
             var _this = $(this).closest('tr');
             if(confirm("삭제하시겠습니까?")){
                 $.ajax({
