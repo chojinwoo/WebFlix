@@ -59,17 +59,26 @@
     <script src="${pageContext.request.contextPath}/resources/js/components/slider.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/core/tab.js"></script>
     <script>
+
+
         $(document).ready(function() {
+
             $.alert = function(content) {
                 $('.uk-alert-container').find('p').text(content);
                 $('.uk-alert-container').show();;
                 $('.uk-alert').slideDown('slow');
+                $(document).keydown(function(e) {
+                    if(e.which == 27) {
+                        $('.uk-alert-container').find('.uk-close').trigger('click');
+                    }
+                })
             }
 
             $('.uk-alert-container').find('.uk-close').click(function(e) {
                 e.preventDefault();
                 $('.uk-alert').fadeOut(800);
                 $('.uk-alert-container').hide(1000);
+                $(document).unbind('keydown');
             })
         })
     </script>
