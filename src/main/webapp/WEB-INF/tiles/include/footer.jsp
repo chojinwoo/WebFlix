@@ -54,7 +54,7 @@
                 <ul class="uk-nav-sub">
                     <li><a href="#action">액션</a></li>
                     <li><a href="#fantasy">판타지</a></li>
-                    <li><a href="#animation">애니메이션</a> </li>
+                    <li><a href="#animation">애니</a> </li>
                     <li><a href="#sf">SF</a> </li>
                     <li><a href="#advence">어드벤쳐</a> </li>
                     <li><a href="#comic">코믹</a> </li>

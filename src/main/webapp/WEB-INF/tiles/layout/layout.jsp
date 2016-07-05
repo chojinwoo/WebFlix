@@ -58,8 +58,56 @@
     <script src="${pageContext.request.contextPath}/resources/js/components/slideset.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/components/slider.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/core/tab.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.alert = function(content) {
+                $('.uk-alert-container').find('p').text(content);
+                $('.uk-alert-container').show();;
+                $('.uk-alert').slideDown('slow');
+            }
+
+            $('.uk-alert-container').find('.uk-close').click(function(e) {
+                e.preventDefault();
+                $('.uk-alert').fadeOut(800);
+                $('.uk-alert-container').hide(1000);
+            })
+        })
+    </script>
 </head>
 <body>
+<style>
+    .uk-alert-container{
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 5000;
+        display:none;
+    }
+
+    .uk-alert {
+        width: 40%;
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 10px;
+        height: auto;
+        margin: auto;
+        margin-top: 40%;
+        margin-bottom: 40%;
+        display:none;
+    }
+
+    .uk-alert > p {
+        overflow: hidden;
+        overflow-wrap: break-word;
+    }
+</style>
+<div class="uk-alert-container">
+    <div class="uk-alert uk-alert-success" data-uk-alert >
+        <a href="" class="uk-close"></a>
+        <p class="uk-alert-content"></p>
+    </div>
+</div>
+
 <tiles:insertAttribute name="header"/>
 <tiles:insertAttribute name="body"/>
 <tiles:insertAttribute name="footer"/>

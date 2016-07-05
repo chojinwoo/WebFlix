@@ -215,7 +215,7 @@
                     bar.css("width", "0%").text("0%");
                     progressbar.removeClass("uk-hidden");
                 }, error:function(xhr, status, error) {
-                    alert(error)
+                    $.alert(error)
                 }, success: function(data) {
                     bar.css("width", "100%").text("100%");
 
@@ -223,7 +223,7 @@
                         progressbar.addClass("uk-hidden");
                     }, 250);
 
-                    alert(data)
+                    $.alert(data)
                     window.location.reload();
                 }, xhr: function () {
                     var xhr = new window.XMLHttpRequest();
@@ -263,9 +263,9 @@
                 contentType:false,
                 data:formData,
                 success:function(data) {
-                    alert(data);
+                    $.alert(data);
                 }, error:function(xhr, status, error) {
-                    alert(error);
+                    $.alert(error);
                 }
             })
         })
@@ -313,10 +313,10 @@
                     url:'${pageContext.request.contextPath}/admin/video_delete/'+video_seq,
                     type:'post',
                     success:function(data) {
-                        alert(data);
+                        $.alert(data);
                         _this.remove();
                     }, error:function(xhr, status, error) {
-                        alert(error);
+                        $.alert(error);
                     }
                 })
             }

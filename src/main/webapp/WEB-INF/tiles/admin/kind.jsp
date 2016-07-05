@@ -235,10 +235,10 @@
             var coverPath = $('input[name=coverPath]').val();
             var flag = true;
             if(Number(star) > 5) {
-                alert("평점은 5이하로 작성해주세요");
+                $.alert("평점은 5이하로 작성해주세요");
                 flag = false;
             } else if(coverPath.substring(coverPath.length-1, coverPath.length) != '/') {
-                alert("커버 경로는 마지막을 / 로 작성되어야합니다.");
+                $.alert("커버 경로는 마지막을 / 로 작성되어야합니다.");
                 flag = false;
             }
 
@@ -253,7 +253,7 @@
                         bar.css("width", "0%").text("0%");
                         progressbar.removeClass("uk-hidden");
                     }, error:function(xhr, status, error) {
-                        alert(error)
+                        $.alert(error)
                     }, success: function(data) {
                         bar.css("width", "100%").text("100%");
 
@@ -262,7 +262,7 @@
                         }, 250);
 
                         $('#movieUploadForm').find('input').val("");
-                        alert(data)
+                        $.alert(data)
                         window.location.reload();
                     }, xhr: function () {
                         var xhr = new window.XMLHttpRequest();
@@ -295,9 +295,9 @@
                     url:'${pageContext.request.contextPath}/admin/kind_thumbnail/'+_this.find('#video_kind_seq').val(),
                     type:'post',
                     success:function(data) {
-                        alert(data);
+                        $.alert(data);
                     }, error:function(xhr, status, error) {
-                        alert(error);
+                        $.alert(error);
                     }
                 })
             }
@@ -310,10 +310,10 @@
                     url:'${pageContext.request.contextPath}/admin/kind_delete/'+_this.find('#video_kind_seq').val(),
                     type:'post',
                     success:function(data) {
-                        alert(data);
+                        $.alert(data);
                         _this.remove();
                     }, error:function(xhr, status, error) {
-                        alert(error)
+                        $.alert(error)
                     }
                 })
             }
