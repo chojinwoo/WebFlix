@@ -53,12 +53,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().authenticated().antMatchers("/login").permitAll().antMatchers("/signup").permitAll().antMatchers("/admin").hasRole("ADMIN")
+        http.authorizeRequests().anyRequest().authenticated().antMatchers("/login").permitAll().antMatchers("/admin").hasRole("ADMIN")
                 .and().csrf().disable()
                 .formLogin().loginPage("/login").loginProcessingUrl("/loginProcess").permitAll().usernameParameter("id").passwordParameter("password").defaultSuccessUrl("/")
                 .failureHandler(customAuthenticationFailureHandler()).successForwardUrl("/").permitAll()
                 .and().logout().deleteCookies("JSESSIONID").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").permitAll()
-                .and().rememberMe().tokenValiditySeconds(1209600).rememberMeParameter("remember-me").key("uniqueAndSecret");
+                .and().rememberMe().tokenValiditySeconds(1209600).rememberMeParameter("remember-me").key("uniqueAndSecret")
+                .and().sessionManagement().maximumSessions(2).expiredUrl("/login");
 
     }
 

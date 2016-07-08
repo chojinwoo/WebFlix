@@ -158,12 +158,31 @@
                 row.push('    <div class="uk-panel" >');
                 row.push('        <h5 class="uk-panel-title video-title">'+this.title1+" "+this.title2+'</h5>');
                 row.push('        <p>');
-                row.push('            <span class="rating">');
-                row.push('                <i class="uk-icon-star"></i>');
-                row.push('                <i class="uk-icon-star"></i>');
-                row.push('                <i class="uk-icon-star"></i>');
-                row.push('                <i class="uk-icon-star"></i>');
-                row.push('                <i class="uk-icon-star"></i>');
+                row.push('            <span class="rating" data-uk-tooltip="{pos:<c:out value="top"/> }" title="'+this.star+'">');
+                var starInt = this.star.toString().substring(0, 1);
+                var starDouble = this.star.toString().substring(2);
+                var starIndex = 0;
+                for(var ii=0; ii<starInt; ii++) {
+                    starIndex++;
+                    row.push('                <i class="uk-icon-star"></i>');
+                }
+
+                if((5-starIndex) != 0) {
+                    if(starDouble > 4) {
+                        starIndex++;
+                        row.push('                <i class="uk-icon-star-half-full"></i>');
+                    } else {
+                        starIndex++;
+                        row.push('                <i class="uk-icon-star-o"></i>');
+                    }
+                }
+
+                for(var aa=0; aa<(5-starIndex); aa++) {
+                    row.push('                <i class="uk-icon-star-o"></i>');
+                }
+
+
+
                 row.push('            </span>');
                 row.push('            <span class="video-start-date" class="uk-float-right">'+this.start_date.substr(0, 4)+'</span>');
                 row.push('        </p>');

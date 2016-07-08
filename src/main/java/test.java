@@ -19,7 +19,7 @@ import java.util.List;
 public class test {
     public static void main(String[] args) {
         ShaPasswordEncoder encoder = new ShaPasswordEncoder();
-        System.out.println(encoder.encodePassword("aa", null));
+        System.out.println(encoder.encodePassword("bb22", null));
 
         String path = "/attach/HeroesSeason2/cover/";
         System.out.println(lastIndexOfLoop(path, "/", 2, true));
@@ -38,8 +38,6 @@ public class test {
         return strs;
     }
 }
-
-//(\[)[0-9]{1,2}(\])
 
 
 
