@@ -46,6 +46,7 @@ public class MainController {
         model.addAttribute("json_videoKind", new Gson().toJson(videoKindEntities));
         model.addAttribute("json_favorite", new Gson().toJson(this.videosService.findVideoListFavouriteId(usersEntity.getId())));
         model.addAttribute("lastUpdate", this.videosService.lastUpdateVideo());
+        model.addAttribute("json_videoLog", new Gson().toJson(this.videosService.findVideoLogList(usersEntity.getId())));
     }
 
     @RequestMapping(value="/viewList/{videoKindSeq}", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
@@ -60,6 +61,7 @@ public class MainController {
         model.addAttribute("json_videos", new Gson().toJson(this.videosService.findPlayList(usersEntity.getId())));
         model.addAttribute("json_favorite", new Gson().toJson(this.videosService.findVideoListFavouriteId(usersEntity.getId())));
         model.addAttribute("lastUpdate", this.videosService.lastUpdateVideo());
+        model.addAttribute("json_videoLog", new Gson().toJson(this.videosService.findVideoLogList(usersEntity.getId())));
         return "main/playList";
     }
 }

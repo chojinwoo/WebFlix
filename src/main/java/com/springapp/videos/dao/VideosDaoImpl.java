@@ -2,9 +2,11 @@ package com.springapp.videos.dao;
 
 import com.springapp.videos.entity.VideoFavouritesEntity;
 import com.springapp.videos.entity.VideoKindEntity;
+import com.springapp.videos.entity.VideoLogEntity;
 import com.springapp.videos.entity.VideosEntity;
 import com.springapp.videos.repository.VideoFavouritesRepository;
 import com.springapp.videos.repository.VideoKindRepository;
+import com.springapp.videos.repository.VideoLogRepository;
 import com.springapp.videos.repository.VideosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -20,6 +22,9 @@ public class VideosDaoImpl implements VideosDao {
 
     @Autowired
     private VideosRepository videosRepository;
+
+    @Autowired
+    private VideoLogRepository videoLogRepository;
 
     @Autowired
     private VideoFavouritesRepository videoFavouritesRepository;
@@ -120,6 +125,16 @@ public class VideosDaoImpl implements VideosDao {
     @Override
     public List<VideosEntity> lastUpdateVideo() {
         return this.videosRepository.lastUpdateVideo();
+    }
+
+    @Override
+    public void saveVideoLog(VideoLogEntity videoLogEntity) {
+        this.videoLogRepository.save(videoLogEntity);
+    }
+
+    @Override
+    public List<VideoLogEntity> findVideoLogList(String id) {
+        return this.videoLogRepository.findVideoLogList(id);
     }
 
     private Sort sortByTitle3() {

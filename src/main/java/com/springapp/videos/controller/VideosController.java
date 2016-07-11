@@ -3,6 +3,7 @@ package com.springapp.videos.controller;
 import com.google.gson.Gson;
 import com.springapp.users.entity.UsersEntity;
 import com.springapp.videos.entity.VideoFavouritesEntity;
+import com.springapp.videos.entity.VideoLogEntity;
 import com.springapp.videos.entity.VideosEntity;
 import com.springapp.videos.service.VideosService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,12 @@ public class VideosController {
         videoFavouritesEntity.setVideo_seq(video_seq);
         videoFavouritesEntity.setId(usersEntity.getId());
         return this.videosService.favouriteSave(videoFavouritesEntity);
+    }
+
+    @RequestMapping(value = "/video_log", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
+    @ResponseBody
+    public String video_log(@ModelAttribute("command")VideoLogEntity videoLogEntity) {
+        this.videosService.saveVideoLog(videoLogEntity);
+        return "";
     }
 }

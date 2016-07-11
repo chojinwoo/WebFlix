@@ -2,6 +2,7 @@ package com.springapp.videos.service;
 
 import com.springapp.videos.entity.VideoFavouritesEntity;
 import com.springapp.videos.entity.VideoKindEntity;
+import com.springapp.videos.entity.VideoLogEntity;
 import com.springapp.videos.entity.VideosEntity;
 
 import java.util.List;
@@ -27,4 +28,6 @@ public interface VideosService {
     public List<VideoKindEntity> findAdminVideoKindAll();
     public List<VideosEntity> findPlayList(String id);
     public List<VideosEntity> lastUpdateVideo();
+    public void saveVideoLog(VideoLogEntity videoLogEntity);
+    public List<VideoLogEntity> findVideoLogList(String id);
 }

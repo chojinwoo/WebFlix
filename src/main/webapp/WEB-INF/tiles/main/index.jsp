@@ -147,7 +147,21 @@
             $('#tm-right-section').empty();
             var row = [];
             var pageMax = 1;
+            var video_log = JSON.parse('${json_videoLog}');
+
             row.push('<div class="uk-grid" data-uk-grid-margin>');
+
+//            $.each(video_log, function() {
+//                console.log(JSON.stringify(this));
+//                '<div data-uk-slideset="{default: 4}">';
+//                '    <ul class="uk-grid uk-slideset">';
+//                '        <li>';
+//
+//                '        </li>';
+//                '    </ul>';
+//                '</div>';
+//            });
+
             $.each(video_kind, function(i) {
                 row.push('<div class="video-row uk-width-large-1-4 uk-width-medium-1-3 uk-row-first" data-genre="'+this.genre+'" data-title3="'+this.title1+ " " +this.title2+'">');
                 row.push('    <div class="uk-overlay uk-overlay-hover">');
@@ -290,6 +304,17 @@
             var video = '<video controls="controls" class="mv-video" data-video-seq="'+video_seq+'"  autoplay="autoplay">';
             video += '<source src="${pageContext.request.contextPath}'+movie_file+'" type="video/mp4"/>';
             video += '</video>'
+
+            $.ajax({
+                url:'${pageContext.request.contextPath}/video_log',
+                data:"id=<sec:authentication property="principal.id"/>&videos_seq="+video_seq,
+                type:'post',
+                success:function(data) {
+                    console.log(data);
+                }, error:function(xhr, status, error) {
+                    console.log(error);
+                }
+            })
 
 
             $('.mv-video').remove();

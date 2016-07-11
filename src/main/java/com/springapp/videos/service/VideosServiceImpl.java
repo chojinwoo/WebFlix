@@ -3,6 +3,7 @@ package com.springapp.videos.service;
 import com.springapp.videos.dao.VideosDao;
 import com.springapp.videos.entity.VideoFavouritesEntity;
 import com.springapp.videos.entity.VideoKindEntity;
+import com.springapp.videos.entity.VideoLogEntity;
 import com.springapp.videos.entity.VideosEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -138,5 +139,16 @@ public class VideosServiceImpl implements VideosService {
     @Transactional(readOnly = true)
     public List<VideosEntity> lastUpdateVideo() {
         return this.videosDao.lastUpdateVideo();
+    }
+
+    @Override
+    @Transactional
+    public void saveVideoLog(VideoLogEntity videoLogEntity) {
+        this.videosDao.saveVideoLog(videoLogEntity);
+    }
+
+    @Override
+    public List<VideoLogEntity> findVideoLogList(String id) {
+        return this.videosDao.findVideoLogList(id);
     }
 }

@@ -34,6 +34,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     public CustomCommonsMultipartResolver multipartResolver() {
         CustomCommonsMultipartResolver multipartResolver = new CustomCommonsMultipartResolver();
         multipartResolver.setDefaultEncoding("utf-8");
+        multipartResolver.setMaxInMemorySize(5000000);
         return multipartResolver;
     }
 
